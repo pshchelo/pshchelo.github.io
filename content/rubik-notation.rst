@@ -1,5 +1,10 @@
-Rubick's Cube
+Rubik's Cube
 =============
+
+:date: 2014-04-13
+:tags: puzzles, rubik
+:slug: ribik-notation
+:summary: Notation used in posts on Rubik's Cube
 
 About
 -----

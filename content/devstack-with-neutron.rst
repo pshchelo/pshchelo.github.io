@@ -1,4 +1,10 @@
 How to set DevStack with Neutron
+################################
+
+:date: 2014-04-15
+:tags: devstack, openstack
+:slug: devstack-with-neutron
+:summary: tips and tricks on setting DevStack
 
 These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I've tried to accommodate

@@ -1,4 +1,10 @@
 UEFI boot order on dualbooted HP EliteBook 840
+##############################################
+
+:date: 2014-04-14
+:tags: hp, dualboot, uefi
+:slug: uefi-boot-hp
+:summary: setting up dualbooted HP notebook in UEFI mode
 
 Problem
 =======

@@ -1,5 +1,10 @@
-Figures from the solved Rubick's Cube
+Figures from the solved Rubik's Cube
 =====================================
+
+:date: 2014-04-14
+:tags: puzzles, rubik
+:slug: ribik-figures
+:summary: Figures from solved Rubik's Cube
 
 see notation for details
 
