@@ -1,0 +1,2552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:ooo="http://xml.openoffice.org/svg/export"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="646.97241"
+   height="569.16138"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4">
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(8211)">
+      <path
+         id="path3023"
+         d="m -4,459 1139,0 0,147 -1139,0 0,-147 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(8226)">
+      <path
+         id="path3020"
+         d="m 346,457 c -73,0 -137,26 -191,78 -54,51 -81,114 -81,188 0,73 27,136 81,188 54,52 118,78 191,78 73,0 134,-26 185,-79 51,-51 77,-114 77,-187 0,-75 -25,-137 -76,-188 -50,-52 -112,-78 -186,-78 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(9679)">
+      <path
+         id="path3017"
+         d="M 813,0 C 632,0 489,54 383,161 276,268 223,411 223,592 c 0,181 53,324 160,431 106,107 249,161 430,161 179,0 323,-54 432,-161 108,-107 162,-251 162,-431 0,-180 -54,-324 -162,-431 C 1136,54 992,0 813,0 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(10004)">
+      <path
+         id="path3014"
+         d="M 285,-33 C 182,-33 111,30 74,156 52,228 41,333 41,471 c 0,78 14,145 41,201 34,71 87,106 158,106 53,0 88,-31 106,-94 l 23,-176 c 8,-64 28,-97 59,-98 l 735,706 c 11,11 33,17 66,17 42,0 63,-15 63,-46 l 0,-122 c 0,-36 -10,-64 -30,-84 L 442,47 C 390,-6 338,-33 285,-33 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(10007)">
+      <path
+         id="path3011"
+         d="m 0,-2 c -7,16 -16,29 -25,39 l 381,530 c -94,256 -141,385 -141,387 0,25 13,38 40,38 9,0 21,-2 34,-5 21,4 42,12 65,25 l 27,-13 111,-251 280,301 64,-25 24,25 c 21,-10 41,-24 62,-43 C 886,937 835,863 770,784 769,783 710,716 594,584 L 774,223 c 0,-27 -21,-55 -63,-84 l 16,-20 C 717,90 699,76 672,76 641,76 570,178 457,381 L 164,-76 c -22,-34 -53,-51 -92,-51 -42,0 -63,17 -64,51 -7,9 -10,24 -10,44 0,9 1,19 2,30 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(10132)">
+      <path
+         id="path3008"
+         d="M 2015,739 1276,0 717,0 l 543,543 -1086,0 0,393 1086,0 -543,545 557,0 741,-742 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(10146)">
+      <path
+         id="path3005"
+         d="M 174,0 602,739 174,1481 1456,739 174,0 z m 1184,739 -1049,607 350,-607 699,0 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(57354)">
+      <path
+         id="path3002"
+         d="m 8,1128 1129,0 L 1137,0 8,0 8,1128 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="scale(4.8828125e-4,-4.8828125e-4)"
+       id="bullet-char-template(57356)">
+      <path
+         id="path2999"
+         d="M 580,1141 1163,571 580,0 -4,571 580,1141 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g2994"
+       ooo:id-list="id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19 id20 id21 id22 id23 id24 id25 id26 id27 id28 id29 id30 id31 id32 id33 id34 id35 id36 id37 id38 id39 id40 id41 id42 id43 id44 id45 id46 id47 id48 id49 id50 id51 id52 id53 id54 id55 id56 id57 id58 id59 id60 id61 id62 id63 id64 id65 id66 id67 id68 id69 id70 id71 id72 id73 id74 id75 id76 id77 id78 id79 id80 id81 id82 id83 id84 id85 id86 id87 id88 id89 id90 id91 id92 id93 id94 id95 id96 id97 id98 id99 id100 id101 id102 id103 id104 id105 id106 id107 id108 id109 id110 id111 id112 id113 id114 id115 id116 id117 id118 id119 id120 id121 id122 id123 id124 id125 id126 id127 id128 id129 id130 id131 id132 id133 id134 id135 id136 id137 id138 id139 id140 id141 id142 id143 id144 id145 id146 id147 id148 id149 id150 id151 id152 id153 id154 id155 id156 id157 id158 id159 id160 id161 id162 id163 id164 id165 id166 id167 id168 id169 id170 id171 id172 id173 id174 id175 id176 id177 id178 id179 id180 id181 id182 id183 id184 id185 id186 id187 id188 id189 id190 id191 id192 id193 id194 id195 id196 id197 id198 id199 id200 id201 id202 id203 id204 id205 id206 id207 id208 id209 id210 id211 id212 id213 id214 id215 id216 id217 id218 id219 id220 id221 id222 id223 id224 id225 id226 id227"
+       ooo:slide="id1" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="presentation_clip_path">
+      <rect
+         id="rect2990"
+         height="29700"
+         width="21000"
+         y="0"
+         x="0" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="175.62907"
+     inkscape:cy="170.29499"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="472"
+     inkscape:window-height="383"
+     inkscape:window-x="267"
+     inkscape:window-y="194"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-199.37093,-133.49577)">
+    <g
+       style="fill-rule:evenodd;stroke-width:28.22200012;stroke-linejoin:round"
+       id="g4099"
+       transform="matrix(0.03543307,0,0,0.03543307,160.85518,130.37766)">
+      <g
+         id="g3027">
+        <g
+           class="Master_Slide"
+           id="id2">
+          <g
+             class="Background"
+             id="bg-id2" />
+          <g
+             class="BackgroundObjects"
+             id="bo-id2" />
+        </g>
+      </g>
+      <g
+         id="g3032"
+         class="SlideGroup">
+        <g
+           id="g3034">
+          <g
+             clip-path="url(#presentation_clip_path)"
+             class="Slide"
+             id="id1">
+            <g
+               id="g3037"
+               class="Page">
+              <g
+                 id="g3039"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id3" />
+              </g>
+              <g
+                 id="g3042"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id4" />
+              </g>
+              <g
+                 id="g3045"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id5" />
+              </g>
+              <g
+                 id="g3048"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id6" />
+              </g>
+              <g
+                 id="g3051"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id7" />
+              </g>
+              <g
+                 id="g3054"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id8" />
+              </g>
+              <g
+                 id="g3057"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id9">
+                  <path
+                     id="path3060"
+                     d="m 4607,2430 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3062"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id10">
+                  <path
+                     id="path3065"
+                     d="m 1109,2430 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3067"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id11">
+                  <path
+                     id="path3070"
+                     d="m 1109,2430 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3072"
+                     d="m 1109,2430 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3074"
+                     d="m 4608,2430 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3076"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id12" />
+              </g>
+              <g
+                 id="g3079"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id13">
+                  <path
+                     id="path3082"
+                     d="m 2217,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3084"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id14" />
+              </g>
+              <g
+                 id="g3087"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id15">
+                  <path
+                     id="path3090"
+                     d="m 3444,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3092"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id16" />
+              </g>
+              <g
+                 id="g3095"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id17">
+                  <path
+                     id="path3098"
+                     d="m 4596,3600 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3100"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id18" />
+              </g>
+              <g
+                 id="g3103"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id19">
+                  <path
+                     id="path3106"
+                     d="m 4596,4796 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3108"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id20" />
+              </g>
+              <g
+                 id="g3111"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id21">
+                  <path
+                     id="path3114"
+                     d="m 5011,2035 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3116"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id22" />
+              </g>
+              <g
+                 id="g3119"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id23">
+                  <path
+                     id="path3122"
+                     d="m 5426,1614 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3124"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id24" />
+              </g>
+              <g
+                 id="g3127"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id25">
+                  <path
+                     id="path3130"
+                     d="M 4607,3593 5773,2427"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3132"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id26" />
+              </g>
+              <g
+                 id="g3135"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id27">
+                  <path
+                     id="path3138"
+                     d="M 4607,4790 5773,3624"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3140"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id28" />
+              </g>
+              <g
+                 id="g3143"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id29">
+                  <path
+                     id="path3146"
+                     d="m 4997,2033 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3148"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id30" />
+              </g>
+              <g
+                 id="g3151"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id31">
+                  <path
+                     id="path3154"
+                     d="m 5411,1612 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3156"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id32" />
+              </g>
+              <g
+                 id="g3159"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id33">
+                  <path
+                     id="path3162"
+                     d="M 2211,2430 3423,1264"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3164"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id34" />
+              </g>
+              <g
+                 id="g3167"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id35">
+                  <path
+                     id="path3170"
+                     d="M 3473,2431 4700,1247"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3172"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id36" />
+              </g>
+              <g
+                 id="g3175"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id37" />
+              </g>
+              <g
+                 id="g3178"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id38" />
+              </g>
+              <g
+                 id="g3181"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id39" />
+              </g>
+              <g
+                 id="g3184"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id40">
+                  <path
+                     id="path3187"
+                     d="m 4607,10709 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3189"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id41">
+                  <path
+                     id="path3192"
+                     d="m 1109,10709 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3194"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id42">
+                  <path
+                     id="path3197"
+                     d="m 1109,10709 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3199"
+                     d="m 1109,10709 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3201"
+                     d="m 4608,10709 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3203"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id43" />
+              </g>
+              <g
+                 id="g3206"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id44">
+                  <path
+                     id="path3209"
+                     d="m 2217,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3211"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id45" />
+              </g>
+              <g
+                 id="g3214"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id46">
+                  <path
+                     id="path3217"
+                     d="m 3444,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3219"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id47" />
+              </g>
+              <g
+                 id="g3222"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id48">
+                  <path
+                     id="path3225"
+                     d="m 4596,11879 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3227"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id49" />
+              </g>
+              <g
+                 id="g3230"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id50">
+                  <path
+                     id="path3233"
+                     d="m 4596,13075 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3235"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id51" />
+              </g>
+              <g
+                 id="g3238"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id52">
+                  <path
+                     id="path3241"
+                     d="m 5011,10314 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3243"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id53" />
+              </g>
+              <g
+                 id="g3246"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id54">
+                  <path
+                     id="path3249"
+                     d="m 5426,9892 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3251"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id55" />
+              </g>
+              <g
+                 id="g3254"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id56">
+                  <path
+                     id="path3257"
+                     d="M 4607,11872 5773,10706"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3259"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id57" />
+              </g>
+              <g
+                 id="g3262"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id58">
+                  <path
+                     id="path3265"
+                     d="M 4607,13069 5773,11903"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3267"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id59" />
+              </g>
+              <g
+                 id="g3270"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id60">
+                  <path
+                     id="path3273"
+                     d="m 4997,10312 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3275"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id61" />
+              </g>
+              <g
+                 id="g3278"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id62">
+                  <path
+                     id="path3281"
+                     d="m 5411,9891 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3283"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id63" />
+              </g>
+              <g
+                 id="g3286"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id64">
+                  <path
+                     id="path3289"
+                     d="M 2211,10709 3423,9543"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3291"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id65" />
+              </g>
+              <g
+                 id="g3294"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id66">
+                  <path
+                     id="path3297"
+                     d="M 3473,10709 4700,9525"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3299"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id67" />
+              </g>
+              <g
+                 id="g3302"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id68" />
+              </g>
+              <g
+                 id="g3305"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id69" />
+              </g>
+              <g
+                 id="g3308"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id70" />
+              </g>
+              <g
+                 id="g3311"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id71">
+                  <path
+                     id="path3314"
+                     d="m 11383,10709 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3316"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id72">
+                  <path
+                     id="path3319"
+                     d="m 7884,10709 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3321"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id73">
+                  <path
+                     id="path3324"
+                     d="m 7884,10709 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3326"
+                     d="m 7884,10709 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3328"
+                     d="m 11383,10709 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3330"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id74" />
+              </g>
+              <g
+                 id="g3333"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id75">
+                  <path
+                     id="path3336"
+                     d="m 8993,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3338"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id76" />
+              </g>
+              <g
+                 id="g3341"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id77">
+                  <path
+                     id="path3344"
+                     d="m 10220,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3346"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id78" />
+              </g>
+              <g
+                 id="g3349"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id79">
+                  <path
+                     id="path3352"
+                     d="m 11371,11879 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3354"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id80" />
+              </g>
+              <g
+                 id="g3357"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id81">
+                  <path
+                     id="path3360"
+                     d="m 11371,13075 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3362"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id82" />
+              </g>
+              <g
+                 id="g3365"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id83">
+                  <path
+                     id="path3368"
+                     d="m 11786,10314 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3370"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id84" />
+              </g>
+              <g
+                 id="g3373"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id85">
+                  <path
+                     id="path3376"
+                     d="m 12201,9892 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3378"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id86" />
+              </g>
+              <g
+                 id="g3381"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id87">
+                  <path
+                     id="path3384"
+                     d="m 11383,11872 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3386"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id88" />
+              </g>
+              <g
+                 id="g3389"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id89">
+                  <path
+                     id="path3392"
+                     d="m 11383,13069 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3394"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id90" />
+              </g>
+              <g
+                 id="g3397"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id91">
+                  <path
+                     id="path3400"
+                     d="m 11773,10312 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3402"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id92" />
+              </g>
+              <g
+                 id="g3405"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id93">
+                  <path
+                     id="path3408"
+                     d="m 12186,9891 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3410"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id94" />
+              </g>
+              <g
+                 id="g3413"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id95">
+                  <path
+                     id="path3416"
+                     d="M 8987,10709 10199,9543"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3418"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id96" />
+              </g>
+              <g
+                 id="g3421"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id97">
+                  <path
+                     id="path3424"
+                     d="M 10248,10709 11475,9525"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3426"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id98" />
+              </g>
+              <g
+                 id="g3429"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id99" />
+              </g>
+              <g
+                 id="g3432"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id100" />
+              </g>
+              <g
+                 id="g3435"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id101" />
+              </g>
+              <g
+                 id="g3438"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id102">
+                  <path
+                     id="path3441"
+                     d="m 18158,10709 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3443"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id103">
+                  <path
+                     id="path3446"
+                     d="m 14659,10709 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3448"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id104">
+                  <path
+                     id="path3451"
+                     d="m 14659,10709 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3453"
+                     d="m 14659,10709 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3455"
+                     d="m 18158,10709 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3457"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id105" />
+              </g>
+              <g
+                 id="g3460"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id106">
+                  <path
+                     id="path3463"
+                     d="m 15768,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3465"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id107" />
+              </g>
+              <g
+                 id="g3468"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id108">
+                  <path
+                     id="path3471"
+                     d="m 16995,10726 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3473"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id109" />
+              </g>
+              <g
+                 id="g3476"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id110">
+                  <path
+                     id="path3479"
+                     d="m 18146,11879 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3481"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id111" />
+              </g>
+              <g
+                 id="g3484"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id112">
+                  <path
+                     id="path3487"
+                     d="m 18146,13075 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3489"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id113" />
+              </g>
+              <g
+                 id="g3492"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id114">
+                  <path
+                     id="path3495"
+                     d="m 18562,10314 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3497"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id115" />
+              </g>
+              <g
+                 id="g3500"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id116">
+                  <path
+                     id="path3503"
+                     d="m 18977,9892 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3505"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id117" />
+              </g>
+              <g
+                 id="g3508"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id118">
+                  <path
+                     id="path3511"
+                     d="m 18158,11872 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3513"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id119" />
+              </g>
+              <g
+                 id="g3516"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id120">
+                  <path
+                     id="path3519"
+                     d="m 18158,13069 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3521"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id121" />
+              </g>
+              <g
+                 id="g3524"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id122">
+                  <path
+                     id="path3527"
+                     d="m 18548,10312 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3529"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id123" />
+              </g>
+              <g
+                 id="g3532"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id124">
+                  <path
+                     id="path3535"
+                     d="m 18962,9891 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3537"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id125" />
+              </g>
+              <g
+                 id="g3540"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id126">
+                  <path
+                     id="path3543"
+                     d="M 15762,10709 16974,9543"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3545"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id127" />
+              </g>
+              <g
+                 id="g3548"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id128">
+                  <path
+                     id="path3551"
+                     d="M 17024,10709 18251,9525"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3553"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id129" />
+              </g>
+              <g
+                 id="g3556"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id130" />
+              </g>
+              <g
+                 id="g3559"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id131" />
+              </g>
+              <g
+                 id="g3562"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id132" />
+              </g>
+              <g
+                 id="g3565"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id133">
+                  <path
+                     id="path3568"
+                     d="m 11383,2430 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3570"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id134">
+                  <path
+                     id="path3573"
+                     d="m 7884,2430 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3575"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id135">
+                  <path
+                     id="path3578"
+                     d="m 7884,2430 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3580"
+                     d="m 7884,2430 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3582"
+                     d="m 11383,2430 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3584"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id136" />
+              </g>
+              <g
+                 id="g3587"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id137">
+                  <path
+                     id="path3590"
+                     d="m 8993,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3592"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id138" />
+              </g>
+              <g
+                 id="g3595"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id139">
+                  <path
+                     id="path3598"
+                     d="m 10220,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3600"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id140" />
+              </g>
+              <g
+                 id="g3603"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id141">
+                  <path
+                     id="path3606"
+                     d="m 11371,3600 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3608"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id142" />
+              </g>
+              <g
+                 id="g3611"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id143">
+                  <path
+                     id="path3614"
+                     d="m 11371,4796 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3616"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id144" />
+              </g>
+              <g
+                 id="g3619"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id145">
+                  <path
+                     id="path3622"
+                     d="m 11786,2035 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3624"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id146" />
+              </g>
+              <g
+                 id="g3627"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id147">
+                  <path
+                     id="path3630"
+                     d="m 12201,1614 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3632"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id148" />
+              </g>
+              <g
+                 id="g3635"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id149">
+                  <path
+                     id="path3638"
+                     d="M 11383,3593 12549,2427"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3640"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id150" />
+              </g>
+              <g
+                 id="g3643"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id151">
+                  <path
+                     id="path3646"
+                     d="M 11383,4790 12549,3624"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3648"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id152" />
+              </g>
+              <g
+                 id="g3651"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id153">
+                  <path
+                     id="path3654"
+                     d="m 11773,2033 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3656"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id154" />
+              </g>
+              <g
+                 id="g3659"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id155">
+                  <path
+                     id="path3662"
+                     d="m 12186,1612 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3664"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id156" />
+              </g>
+              <g
+                 id="g3667"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id157">
+                  <path
+                     id="path3670"
+                     d="M 8987,2430 10199,1264"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3672"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id158" />
+              </g>
+              <g
+                 id="g3675"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id159">
+                  <path
+                     id="path3678"
+                     d="M 10248,2431 11475,1247"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3680"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id160" />
+              </g>
+              <g
+                 id="g3683"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id161" />
+              </g>
+              <g
+                 id="g3686"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id162" />
+              </g>
+              <g
+                 id="g3689"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id163" />
+              </g>
+              <g
+                 id="g3692"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id164">
+                  <path
+                     id="path3695"
+                     d="m 18158,2430 1166,-1166 0,3499 -1166,1166 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#000000;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3697"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id165">
+                  <path
+                     id="path3700"
+                     d="m 14659,2430 1166,-1166 3499,0 -1166,1166 -3499,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#ffffff;fill-opacity:0.2;stroke:#ffffff;stroke-opacity:0.2" />
+                </g>
+              </g>
+              <g
+                 id="g3702"
+                 class="com.sun.star.drawing.PolyLineShape">
+                <g
+                   id="id166">
+                  <path
+                     id="path3705"
+                     d="m 14659,2430 1166,-1166 3499,0 0,3499 -1166,1166 -3499,0 0,-3499 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3707"
+                     d="m 14659,2430 3499,0 1166,-1166"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                  <path
+                     id="path3709"
+                     d="m 18158,2430 0,3499"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3711"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id167" />
+              </g>
+              <g
+                 id="g3714"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id168">
+                  <path
+                     id="path3717"
+                     d="m 15768,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3719"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id169" />
+              </g>
+              <g
+                 id="g3722"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id170">
+                  <path
+                     id="path3725"
+                     d="m 16995,2448 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3727"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id171" />
+              </g>
+              <g
+                 id="g3730"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id172">
+                  <path
+                     id="path3733"
+                     d="m 18146,3600 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3735"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id173" />
+              </g>
+              <g
+                 id="g3738"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id174">
+                  <path
+                     id="path3741"
+                     d="m 18146,4796 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3743"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id175" />
+              </g>
+              <g
+                 id="g3746"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id176">
+                  <path
+                     id="path3749"
+                     d="m 18562,2035 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3751"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id177" />
+              </g>
+              <g
+                 id="g3754"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id178">
+                  <path
+                     id="path3757"
+                     d="m 18977,1614 -6,3487"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3759"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id179" />
+              </g>
+              <g
+                 id="g3762"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id180">
+                  <path
+                     id="path3765"
+                     d="M 18158,3593 19324,2427"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3767"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id181" />
+              </g>
+              <g
+                 id="g3770"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id182">
+                  <path
+                     id="path3773"
+                     d="M 18158,4790 19324,3624"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3775"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id183" />
+              </g>
+              <g
+                 id="g3778"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id184">
+                  <path
+                     id="path3781"
+                     d="m 18548,2033 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3783"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id185" />
+              </g>
+              <g
+                 id="g3786"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id186">
+                  <path
+                     id="path3789"
+                     d="m 18962,1612 -3487,-6"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3791"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id187" />
+              </g>
+              <g
+                 id="g3794"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id188">
+                  <path
+                     id="path3797"
+                     d="M 15762,2430 16974,1264"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3799"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id189" />
+              </g>
+              <g
+                 id="g3802"
+                 class="com.sun.star.drawing.LineShape">
+                <g
+                   id="id190">
+                  <path
+                     id="path3805"
+                     d="M 17024,2431 18251,1247"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3807"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id191">
+                  <path
+                     id="path3810"
+                     d="m 16928,139 c 0,-16 52,-29 115,-29 64,0 116,13 116,29 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3812"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id192" />
+              </g>
+              <g
+                 id="g3815"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id193">
+                  <path
+                     id="path3818"
+                     d="m 16928,8430 c 0,-16 52,-29 115,-29 64,0 116,13 116,29 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3820"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id194" />
+              </g>
+              <g
+                 id="g3823"
+                 class="com.sun.star.drawing.PolyPolygonShape">
+                <g
+                   id="id195" />
+              </g>
+              <g
+                 id="g3826"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id196">
+                  <path
+                     id="path3829"
+                     d="m 6865,3482 c -15,0 -27,49 -27,110 0,60 12,109 27,109 l -1683,0 c -15,0 -27,-49 -27,-109 0,-61 12,-110 27,-110 l 1683,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3831"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id197">
+                  <path
+                     id="path3834"
+                     d="m 6862,3481 c 16,0 28,49 28,110 0,60 -12,109 -28,109 -15,0 -27,-49 -27,-109 0,-61 12,-110 27,-110 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3836"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id198" />
+              </g>
+              <g
+                 id="g3839"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id199">
+                  <path
+                     id="path3842"
+                     d="m 6862,3700 c -15,0 -27,-49 -27,-109 0,-61 12,-110 27,-110 15,0 28,49 28,110 0,60 -13,109 -28,109 l -1683,0 c -15,0 -27,-49 -27,-109 0,-61 12,-110 27,-110 l 1683,0"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3844"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id200">
+                  <path
+                     id="path3847"
+                     d="m 6861,11754 c -16,0 -29,52 -29,115 0,64 13,116 29,116 l -1680,0 c -16,0 -29,-52 -29,-116 0,-63 13,-115 29,-115 l 1680,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3849"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id201">
+                  <path
+                     id="path3852"
+                     d="m 6861,11754 c 16,0 29,52 29,115 0,64 -13,116 -29,116 -16,0 -29,-52 -29,-116 0,-63 13,-115 29,-115 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3854"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id202" />
+              </g>
+              <g
+                 id="g3857"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id203">
+                  <path
+                     id="path3860"
+                     d="m 6861,11985 c -16,0 -29,-52 -29,-116 0,-63 13,-115 29,-115 16,0 29,52 29,115 0,64 -13,116 -29,116 l -1680,0 c -16,0 -29,-52 -29,-116 0,-63 13,-115 29,-115 l 1680,0"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3862"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id204">
+                  <path
+                     id="path3865"
+                     d="m 8492,5371 c 43,-45 40,-116 -6,-160 -46,-45 -117,-45 -160,0 L 9377,4119 c 42,-44 114,-44 160,0 46,44 48,116 6,160 L 8492,5371 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3867"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id205">
+                  <path
+                     id="path3870"
+                     d="m 8492,5371 c -42,44 -114,45 -160,0 -46,-44 -48,-115 -6,-160 43,-44 115,-44 160,0 46,44 49,116 6,160 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3872"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id206" />
+              </g>
+              <g
+                 id="g3875"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id207">
+                  <path
+                     id="path3878"
+                     d="m 8326,5211 c 43,-45 115,-45 160,0 46,44 49,115 6,160 -42,44 -114,44 -160,0 -46,-44 -48,-116 -6,-160 L 9377,4119 c 43,-44 114,-44 160,0 46,44 49,116 6,160 L 8492,5371"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3880"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id208">
+                  <path
+                     id="path3883"
+                     d="m 8492,13704 c 43,-45 40,-116 -6,-160 -46,-45 -117,-45 -160,0 l 1051,-1092 c 42,-44 114,-44 160,0 46,44 48,116 6,160 l -1051,1092 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3885"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id209">
+                  <path
+                     id="path3888"
+                     d="m 8492,13703 c -42,44 -114,45 -160,0 -46,-44 -48,-115 -6,-160 43,-44 115,-44 160,0 46,44 49,116 6,160 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#e2edf7;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3890"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id210" />
+              </g>
+              <g
+                 id="g3893"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id211">
+                  <path
+                     id="path3896"
+                     d="m 8326,13544 c 43,-45 115,-45 160,0 46,44 49,115 6,160 -42,44 -114,44 -160,0 -46,-44 -48,-116 -6,-160 l 1051,-1092 c 43,-44 114,-44 160,0 46,44 49,116 6,160 l -1051,1092"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3898"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id212">
+                  <path
+                     id="path3901"
+                     d="m 10335,754 c 1087,108 1965,599 2422,1353 81,-151 162,-302 243,-453 -9,553 -64,1135 -166,1736 -221,4 -490,28 -805,79 81,-152 163,-303 244,-455 -458,-755 -1336,-1245 -2423,-1354 161,-302 323,-604 485,-906 z m 242,-454 0,0 z m 1771,4000 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3903"
+                     d="m 10335,754 c 1087,108 1965,599 2422,1353 l 243,-453 c -9,553 -64,1135 -166,1736 -221,4 -490,28 -805,79 81,-152 163,-303 244,-455 -458,-755 -1336,-1245 -2423,-1354 161,-302 323,-604 485,-906 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3905"
+                     d="m 10577,300 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3907"
+                     d="m 12348,4300 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3909"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id213">
+                  <path
+                     id="path3912"
+                     d="m 1950,4500 c -152,-1216 328,-2413 1241,-3093 -185,0 -371,0 -557,0 677,-228 1396,-399 2140,-507 -1,108 23,279 89,507 -186,0 -372,0 -558,0 -913,680 -1393,1877 -1241,3093 -372,0 -742,0 -1114,0 z m 1710,-3600 0,0 z m -38,3600 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3914"
+                     d="M 1950,4500 C 1798,3284 2278,2087 3191,1407 l -557,0 c 677,-228 1396,-399 2140,-507 -1,108 23,279 89,507 l -558,0 C 3392,2087 2912,3284 3064,4500 l -1114,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3916"
+                     d="m 3660,900 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3918"
+                     d="m 3622,4500 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3920"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id214">
+                  <path
+                     id="path3923"
+                     d="m 3675,8950 c -1031,627 -1707,1605 -1875,2703 -173,-1 -348,0 -522,1 297,371 645,755 1043,1144 295,-387 644,-771 1049,-1139 -174,-2 -347,-3 -523,-5 176,-1095 861,-2061 1897,-2662 -355,-17 -712,-30 -1069,-42 z m -535,-12 0,0 z m 218,3860 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3925"
+                     d="m 3675,8950 c -1031,627 -1707,1605 -1875,2703 -173,-1 -348,0 -522,1 297,371 645,755 1043,1144 295,-387 644,-771 1049,-1139 -174,-2 -347,-3 -523,-5 176,-1095 861,-2061 1897,-2662 -355,-17 -712,-30 -1069,-42 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3927"
+                     d="m 3140,8938 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3929"
+                     d="m 3358,12798 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3931"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id215">
+                  <path
+                     id="path3934"
+                     d="m 17584,10400 c -1850,-31 -2602,-1129 -1006,-1474 18,-92 41,-185 67,-279 491,79 1104,228 1668,468 -621,109 -1303,327 -1819,629 0,-89 2,-178 8,-269 -1553,369 -682,1455 1171,1458 -15,-177 -44,-354 -89,-533 z m 853,-1800 0,0 z m -753,2600 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3936"
+                     d="m 17584,10400 c -1850,-31 -2602,-1129 -1006,-1474 18,-92 41,-185 67,-279 491,79 1104,228 1668,468 -621,109 -1303,327 -1819,629 0,-89 2,-178 8,-269 -1553,369 -682,1455 1171,1458 -15,-177 -44,-354 -89,-533 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3938"
+                     d="m 18437,8600 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3940"
+                     d="m 17684,11200 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3942"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id216">
+                  <path
+                     id="path3945"
+                     d="m 17159,8430 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 0,-16 52,-29 115,-29 64,0 116,13 116,29 l 0,1680 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 l 0,-1680"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3947"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id217">
+                  <path
+                     id="path3950"
+                     d="m 16515,2100 c 1850,-31 2602,-1129 1007,-1474 -19,-92 -41,-185 -67,-279 -491,79 -1105,228 -1668,468 620,109 1302,327 1819,629 0,-89 -2,-178 -9,-269 1554,369 682,1455 -1170,1458 15,-177 44,-354 88,-533 z m -852,-1800 0,0 z m 753,2600 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3952"
+                     d="m 16515,2100 c 1850,-31 2602,-1129 1007,-1474 -19,-92 -41,-185 -67,-279 -491,79 -1105,228 -1668,468 620,109 1302,327 1819,629 0,-89 -2,-178 -9,-269 1554,369 682,1455 -1170,1458 15,-177 44,-354 88,-533 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3954"
+                     d="m 15663,300 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3956"
+                     d="m 16416,2900 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3958"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id218">
+                  <path
+                     id="path3961"
+                     d="m 16928,8430 c 0,16 52,29 115,29 64,0 116,-13 116,-29 l 0,1680 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 l 0,-1680 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3963"
+                 class="com.sun.star.drawing.OpenBezierShape">
+                <g
+                   id="id219">
+                  <path
+                     id="path3966"
+                     d="m 17159,139 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 0,-16 52,-29 115,-29 64,0 116,13 116,29 l 0,1680 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 l 0,-1680"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#000000;stroke-width:44" />
+                </g>
+              </g>
+              <g
+                 id="g3968"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id220">
+                  <path
+                     id="path3971"
+                     d="m 16928,139 c 0,16 52,29 115,29 64,0 116,-13 116,-29 l 0,1680 c 0,16 -52,29 -116,29 -63,0 -115,-13 -115,-29 l 0,-1680 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#cfe2f3;stroke:none" />
+                </g>
+              </g>
+              <g
+                 id="g3973"
+                 class="com.sun.star.drawing.ClosedBezierShape">
+                <g
+                   id="id221">
+                  <path
+                     id="path3976"
+                     d="m 12500,12300 c -100,-1900 -500,-2200 -2100,-2400 -300,100 -600,200 -800,400 -100,-200 -588,-767 -700,-900 1100,-100 2100,-200 3100,-200 -200,100 -400,200 -581,270 1181,230 1581,730 1781,2230 -400,300 -348,275 -700,600 z m -4000,-3200 0,0 z m 5600,2803 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:#729fcf;stroke:none" />
+                  <path
+                     id="path3978"
+                     d="m 12500,12300 c -100,-1900 -500,-2200 -2100,-2400 -300,100 -600,200 -800,400 -100,-200 -588,-767 -700,-900 1100,-100 2100,-200 3100,-200 -200,100 -400,200 -581,270 1181,230 1581,730 1781,2230 -400,300 -348,275 -700,600 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3980"
+                     d="m 8500,9100 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                  <path
+                     id="path3982"
+                     d="m 14100,11903 0,0 z"
+                     inkscape:connector-curvature="0"
+                     style="fill:none;stroke:#3465af" />
+                </g>
+              </g>
+              <g
+                 id="g3984"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id222">
+                  <text
+                     id="text3987"
+                     class="TextShape">
+                    <tspan
+                       id="tspan3989"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan3991"
+                         y="15795"
+                         x="2663"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan3993"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G'</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan3995"
+                         y="16151"
+                         x="3527"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan3997"
+                           style="fill:#000000;stroke:none">R</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <g
+                 id="g3999"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id223">
+                  <text
+                     id="text4002"
+                     class="TextShape">
+                    <tspan
+                       id="tspan4004"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan4006"
+                         y="7414"
+                         x="16128"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4008"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan4010"
+                         y="7770"
+                         x="16788"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4012"
+                           style="fill:#000000;stroke:none">D</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <g
+                 id="g4014"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id224">
+                  <text
+                     id="text4017"
+                     class="TextShape">
+                    <tspan
+                       id="tspan4019"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan4021"
+                         y="7495"
+                         x="9228"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4023"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan4025"
+                         y="7851"
+                         x="9888"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4027"
+                           style="fill:#000000;stroke:none">F</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <g
+                 id="g4029"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id225">
+                  <text
+                     id="text4032"
+                     class="TextShape">
+                    <tspan
+                       id="tspan4034"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan4036"
+                         y="7395"
+                         x="2250"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4038"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G'</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan4040"
+                         y="7751"
+                         x="3114"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4042"
+                           style="fill:#000000;stroke:none">R</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <g
+                 id="g4044"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id226">
+                  <text
+                     id="text4047"
+                     class="TextShape">
+                    <tspan
+                       id="tspan4049"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan4051"
+                         y="15595"
+                         x="15928"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4053"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G'</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan4055"
+                         y="15951"
+                         x="16792"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4057"
+                           style="fill:#000000;stroke:none">D</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+              <g
+                 id="g4059"
+                 class="com.sun.star.drawing.TextShape">
+                <g
+                   id="id227">
+                  <text
+                     id="text4062"
+                     class="TextShape">
+                    <tspan
+                       id="tspan4064"
+                       font-weight="700"
+                       font-size="491px"
+                       class="TextParagraph"
+                       style="font-size:491px;font-weight:700;font-family:'Arial, sans-serif'">
+                      <tspan
+                         id="tspan4066"
+                         y="15595"
+                         x="9150"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4068"
+                           font-size="847px"
+                           style="font-size:847px;fill:#000000;stroke:none">G'</tspan>
+                      </tspan>
+                      <tspan
+                         id="tspan4070"
+                         y="15951"
+                         x="10014"
+                         class="TextPosition">
+                        <tspan
+                           id="tspan4072"
+                           style="fill:#000000;stroke:none">F</tspan>
+                      </tspan>
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
