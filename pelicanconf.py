@@ -33,4 +33,4 @@ DEFAULT_PAGINATION = 10
 RELATIVE_URLS = True
 
 THEME = 'pelican-bootstrap3'
-TYPOGRIFY = True
+#TYPOGRIFY = True
