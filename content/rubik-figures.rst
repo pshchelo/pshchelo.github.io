@@ -1,8 +1,9 @@
 Figures from the solved Rubik's Cube
 =====================================
 
-:date: 2014-04-14
+:date: 2014-04-02
 :tags: puzzles, rubik
+:category: play
 :slug: ribik-figures
 :summary: Figures from solved Rubik's Cube
 

@@ -1,8 +1,9 @@
 Rubik's Cube
 =============
 
-:date: 2014-04-13
+:date: 2014-04-01
 :tags: puzzles, rubik
+:category: play
 :slug: ribik-notation
 :summary: Notation used in posts on Rubik's Cube
 

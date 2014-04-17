@@ -3,6 +3,7 @@ How to set DevStack with Neutron
 
 :date: 2014-04-15
 :tags: devstack, openstack
+:category: work
 :slug: devstack-with-neutron
 :summary: tips and tricks on setting DevStack
 
