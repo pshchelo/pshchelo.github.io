@@ -6,8 +6,9 @@ Figures from the solved Rubik's Cube
 :category: play
 :slug: ribik-figures
 :summary: Figures from solved Rubik's Cube
+:status: draft
 
-see notation for details
+see `notation <{filename}rubik-notation.rst>`_.
 
 Donkey Bridge (chess cube of the 2nd order)
     M\ :sub:`R`\ :sup:`2`\  M\ :sub:`U`\ :sup:`2`\  M\ :sub:`F`\ :sup:`2`\ 
