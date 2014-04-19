@@ -13,3 +13,9 @@ Here I will file various bits and pieces I stumble upon, mostly for
 myself for future reference, but maybe someone else will find here
 something useful too.
 
+Note on images
+  I prefer plots and diagrams in SVG format. 
+  To support it in Pelican I use ``docutils`` patched as described 
+  `in this bug report <http://sourceforge.net/p/docutils/bugs/247/>`_.
+  And if you don't see the image - try to use another, modern browser, 
+  they all support SVG from `<img>` tags now.
