@@ -1,7 +1,7 @@
 How to set DevStack with Neutron
 ################################
 
-:date: 2014-04-15
+:date: 2014-04-21
 :tags: devstack, openstack
 :category: work
 :slug: devstack-with-neutron
@@ -9,15 +9,25 @@ How to set DevStack with Neutron
 
 These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I've tried to accommodate
-the solutions for recent DevStack (late Icehouse/early Juno as of this
+the solutions for recent DevStack (early Juno as of this
 writing), but some things might still be incorrect or already fixed -
 YMMV.
+
+All notes are concerning Ubuntu/Debian on an Intel CPU, so for other systems 
+some changes might be necessary.
+
+Update
+  Tried DevStack on fresh Ubuntu 14.04 LTS (Trusty Thar), updated tips.
+
+
+.. contents::
+
 
 Install DevStack
 ================
 
--  Prepare a VM for DevStack deployment (e.g. Ubuntu 12.04 LTS server)
--  in this VM install ``git`` (assuming Ubuntu/Debian)
+-  Prepare a VM for DevStack deployment
+-  in this VM install ``git``
 
    ::
 
@@ -43,9 +53,8 @@ Install DevStack
        disable_service n-net
        enable_service q-svc q-agt q-dhcp q-l3 q-meta neutron
 
-   -  I have a `repo <https://github.com/pshchelo/stackdev>`__ with some
-      standard DevStack customizations ready, you migh want to check it
-      out too.
+   -  I have a `repo <https://github.com/pshchelo/stackdev>`__ with my
+      DevStack customizations, you might want to check it out.
 
 -  install DevStack
 
@@ -54,91 +63,107 @@ Install DevStack
        ./stack.sh
 
 Now you should have a working DevStack installation. You can login into
-Horizon, or join the runnig stack with ``./rejoin_stack.sh`` command.
-There are some networks and routers pre-created by DevStack, so you can
+Horizon, or join the running stack with ``./rejoin_stack.sh`` command 
+and check console outputs of all the running services for debug and error info.
+There are some networks and routers created by default, so you can
 start VMs and attach floating IPs to them.
 
-You can ping VMs from DevStack host by both their private and public
-IPs, and ping between VMs inside one tenant (probably you have to edit
-security groups first to allow ICMP traffic).
-
-The only problem - your launched VMs might not access wide Internet or
-be accessed from Internet.
 
 Allow VM Internet connectivity
 ==============================
 
-after `this launchpad
-question <https://answers.launchpad.net/neutron/+question/208377>`__
+You might stumble on networking issues concerning outside access,
+like pinging or accessing Internet resources outside of your DevStack.
+First you need to change the Security Group settings - 
+the "default" group created by DevStack seems to allow everything
+but in fact I've always had problems with it, so just create your own 
+security group and assign your VMs to it.
+Then you need to configure ``iptables`` to pass through the traffic:
 
--  enable ipv4 forwarding
+::
 
-   ::
+    sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
-       sudo sysctl net.ipv4.ip_forward = 1
+(after this `launchpad question <https://answers.launchpad.net/neutron/+question/208377>`_).
 
--  configure ``iptables`` to pass through the traffic
 
-   ::
+Note on ``unstack.sh`` and rebooting
+====================================
 
-       sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+As I've found the hard way, if you ever need to reboot your DevStack VM, 
+**do not** run ``unstack.sh`` before that.
+Simply detach from screen and/or reboot as usual.
+The unstacking script not only stops the services run in screen,
+it also alters some configuration options of your system 
+that were introduced by running ``stack.sh`` and setting up the DevStack.
+Mostly it concerns network bridges from what I have seen.
+So if you run ``unstack.sh``, in order to have a working DevStack installation 
+you have to run ``stack.sh`` after it. 
+That has a drawback that all your cloud configuration
+(e.g. everything stored in DB tables of OpenStack and content of stack-volume-backing-file) will be reset.
 
--  Manually assign public bridge to public interface (assuming it is
-   ``eth0``):
+Thus, the work flow looks somewhat like this:
 
-   -  get the ip address of the eth0
+#. Start/configure DevStack with ``stack.sh``
 
-      ::
+#. Join the stack with ``rejoin_stack.sh``
 
-          ip addr show eth0
+#. Make changes, restarting services affected on per-service basis via screen
+   to put your changes in effect.
 
-   -  flush the IP on this interface
+#. If in need to reboot the DevStack VM, shut it down the usual way,
+   and upon restart simply run ``rejoin_stack.sh`` again, 
+   all services will be started in screen again.
 
-      ::
+#. Only if you need to change the OpenStack/DevStack configuration,
+   then run ``unstack.sh``, make changes in ``local.conf`` / wherever you have to 
+   and then run ``stack.sh``.
 
-          sudo ip addr flush dev eth0
 
-   -  flush the IP on the public bridge (assuming it is ``br-ex``)
-
-      ::
-
-          sudo ip addr flush dev br-ex
-
-   -  bring up the public bridge
-
-      ::
-
-          sudo ip link set br-ex up
-
-   -  assign the public IP to the public bridge
-
-      ::
-
-          sudo ip addr add $PUBLIC_IP dev br-ex
-
-   -  attach the public interface to the public bridge
-
-      ::
-
-          sudo ovs-vsctl add-port br-ex eth0
-
-Permanent settings
-==================
+Restore settings after reboot
+=============================
 
 After reboot of the DevStack VM the following will be lost:
 
--  iptables NAT setting
--  stack volume (this includes created storage volumes etc)
+-  stack volumes (this includes created storage volumes etc.)
+-  iptables/NAT setting
+-  bridges configurations  
 
-Here how to make these settings permanent:
+Here how to restore these settings or make them permanent:
+
+Stack volumes
+-------------
+
+**Note** - with ``Swift`` enabled actual loopback device may be other
+than ``/dev/loop0``
+
+Check that volumes are created after fresh running of ``./stack.sh``:
+
+::
+
+    sudo losetup -a
+    sudo pvs
+    sudo vgs
+
+You should see volume group ``stack-volumes`` existing and attached to
+``/opt/stack/data/stack-volumes-backing-file`` via ``/dev/loop0``.
+
+After reboot the attachment of the backing file to loopback device will
+be lost. To make it permanent add the following line to your
+``/etc/rc.local`` file, before ``exit 0`` line:
+
+::
+
+    losetup /dev/loop0 /opt/stack/data/stack-volumes-backing-file
+
 
 NAT settings
 ------------
 
-after `this mail-list
+After `this mail-list
 post <https://lists.launchpad.net/openstack/msg17016.html>`__
 
--  permanently enable ip-forwarding
+-  permanently enable IP-forwarding
 
    ::
 
@@ -150,30 +175,29 @@ post <https://lists.launchpad.net/openstack/msg17016.html>`__
 
        post up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
-Stack volume
-------------
 
-**Note** - with ``Swift`` enabled actual loopback device may be other
-than ``/dev/loop0``
+Bridges
+-------
+After `this ghist <https://gist.github.com/charlesflynn/5576114>`_.
 
-Check that volumes are created:
+Bridge ``br-ex`` has no IP after reboot.
+Use the following commands to set bridges according to default settings
+of ``stack.sh``:
 
-::
+    ::
 
-    sudo losetup -a
-    sudo pvs
-    sudo vgs
+        sudo ip addr flush dev br-ex
+        sudo ip addr add 172.24.4.1/24 dev br-ex
+        sudo ip link set br-ex up
+        sudo route add -net 10.0.0.0/24 gw 172.24.4.1  
 
-you should see volume group ``stack-volumes`` existing and attached to
-``/opt/stack/data/stack-volumes-backing-file`` via ``/dev/loop0``.
 
-After reboot the attachment of the backing file to loopback device will
-be lost. To make it permanent add the following line to your
-``/etc/rc.local`` file, before ``exit 0`` line:
-
-::
-
-    losetup /dev/loop0 /opt/stack/data/stack-volumes-backing-file
+All-in-one restore script
+-------------------------
+Technically, you could avoid changing system settings permanently and 
+combine all of the above into one script that makes all the changes
+and launches ``rejoin_stack.sh`` in the end.
+See `this script <http://github.com/pshchelo/stackdev/blob/master/scripts/resume-stack.sh>`_ as an example.
 
 Sharing files between your physical machine and DevStack host
 =============================================================
@@ -205,16 +229,48 @@ Don't forget to ``mkdir full_path_to_project_on_guest`` in the guest.
 You can then reboot the DevStack guest or just mount
 ``full_path_to_project_on_guest``.
 
+
 Problems with receiving IPs for VMs
 ===================================
 
-VirtIO network interface seems not to fill in checksums correctly in UDP
+Some versions of VirtIO network interface seem not to fill in checksums correctly in UDP
 packets (something called checksum offloading), which interferes with
 receiving DHCP lease from neutron/nova-network when everything is
-running on a single host (i.e. DevStack). To fix this add the following
+running on a single host (e.g. DevStack). To fix this add the following
 rule to ``iptables``:
 
 ::
 
-    iptables -A POSTROUTING -t mangle -p udp --dport bootpc -j CHECKSUM --checksum-fill
+    sudo iptables -A POSTROUTING -t mangle -p udp --dport bootpc -j CHECKSUM --checksum-fill
 
+
+Nested KVM
+==========
+
+If you run DevStack as a KVM guest, ensure that your host system has nested KVM enabled - 
+that will greatly speed up those VMs you run inside your DevStack guest
+(of course your CPU has to support virtualization extensions and have them enabled in BIOS).
+
+Check that nested KVM is enabled:
+
+::
+
+    cat /sys/module/kvm_intel/parameters/nested
+
+
+
+If it's ``N`` then try to load the module with
+
+::
+
+    modprobe kvm_intel nested=1
+
+
+If it worked (you get ``Y`` after checking again) to make it permanent 
+you have to add the following line to some ``.conf`` file in ``/etc/modprobe.d/``:
+
+::
+
+    options kvm-intel nested=1
+
+Reboot and check again.
