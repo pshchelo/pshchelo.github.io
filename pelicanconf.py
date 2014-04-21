@@ -25,6 +25,7 @@ SOCIAL = (('GitHub', 'https://github.com/pshchelo'),
           ('BitBucket', 'https://bitbucket.org/pshchelo'),
           ('Google+', 'https://plus.google.com/+PavloShchelokovskyy/about'),
           ('Twitter', 'https://twitter.com/pshchelo'),
+          ('LinkedIn', 'http://ua.linkedin.com/pub/pavlo-shchelokovskyy/38/676/124/'),
           )
 
 DEFAULT_PAGINATION = 10
