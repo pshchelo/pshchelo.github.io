@@ -66,7 +66,7 @@ prepublish:
 dropbox: prepublish
 	cp -r $(OUTPUTDIR)/* $(DROPBOX_DIR)
 
-publish: publish
+publish: prepublish
 	ghp-import $(OUTPUTDIR)
 	git push --force $(REMOTE) gh-pages:master
 
