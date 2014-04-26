@@ -1,0 +1,88 @@
+Index: docutils/writers/html4css1/__init__.py
+===================================================================
+--- docutils/writers/html4css1/__init__.py	(revision 7746)
++++ docutils/writers/html4css1/__init__.py	(working copy)
+@@ -1019,11 +1019,10 @@
+     def visit_image(self, node):
+         atts = {}
+         uri = node['uri']
+-        # place SVG and SWF images in an <object> element
+-        types = {'.svg': 'image/svg+xml',
+-                 '.swf': 'application/x-shockwave-flash'}
++        # place SWF images in an <object> element
++        types = { '.swf': 'application/x-shockwave-flash'}
+         ext = os.path.splitext(uri)[1].lower()
+-        if ext in ('.svg', '.swf'):
++        if ext in (types.iterkeys()):
+             atts['data'] = uri
+             atts['type'] = types[ext]
+         else:
+@@ -1078,7 +1077,7 @@
+         if 'align' in node:
+             atts['class'] = 'align-%s' % node['align']
+         self.context.append('')
+-        if ext in ('.svg', '.swf'): # place in an object element,
++        if ext in ('.swf'): # place in an object element,
+             # do NOT use an empty tag: incorrect rendering in browsers
+             self.body.append(self.starttag(node, 'object', suffix, **atts) +
+                              node.get('alt', uri) + '</object>' + suffix)
+Index: test/functional/expected/standalone_rst_html4css1.html
+===================================================================
+--- test/functional/expected/standalone_rst_html4css1.html	(revision 7746)
++++ test/functional/expected/standalone_rst_html4css1.html	(working copy)
+@@ -1087,37 +1087,30 @@
+ </div>
+ <div class="section" id="svg-images">
+ <h2><a class="toc-backref" href="#id74">2.24&nbsp;&nbsp;&nbsp;SVG Images</a></h2>
+-<object data="../../../docs/user/rst/images/biohazard.svg" style="width: 48px; height: 48px;" type="image/svg+xml">
+-../../../docs/user/rst/images/biohazard.svg</object>
++<img alt="../../../docs/user/rst/images/biohazard.svg" src="../../../docs/user/rst/images/biohazard.svg" style="width: 48px; height: 48px;" />
+ <p>Scalable vector graphics (SVG) images are not supported by all backends.
+ Rendering depends partially on the backend, especially if the size is
+ not explicitely given.</p>
+-<object class="align-left" data="../../../docs/user/rst/images/title-scaling.svg" style="width: 50%;" type="image/svg+xml">
+-../../../docs/user/rst/images/title-scaling.svg</object>
++<img alt="../../../docs/user/rst/images/title-scaling.svg" class="align-left" src="../../../docs/user/rst/images/title-scaling.svg" style="width: 50%;" />
+ <p>A scaling image occupying 50% of the line width (scales with the
+ browser window).</p>
+ <p>Whether an SVG image is scaled or clipped/padded cannot be set in the
+ containing HTML. It depends on the viewport declaration inside its
+ root &lt;svg&gt; element.</p>
+-<p>An inline SVG image <object data="../../../docs/user/rst/images/biohazard-scaling.svg" style="height: 0.8em;" type="image/svg+xml">inline-svg</object> scaled to a height of 0.8 em.</p>
+-<object class="align-right" data="../../../docs/user/rst/images/title-scaling.svg" style="width: 50%; height: 1.2em;" type="image/svg+xml">
+-../../../docs/user/rst/images/title-scaling.svg</object>
++<p>An inline SVG image <img alt="inline-svg" src="../../../docs/user/rst/images/biohazard-scaling.svg" style="height: 0.8em;" /> scaled to a height of 0.8 em.</p>
++<img alt="../../../docs/user/rst/images/title-scaling.svg" class="align-right" src="../../../docs/user/rst/images/title-scaling.svg" style="width: 50%; height: 1.2em;" />
+ <p>A scaling image occupying 50% of the line width and 1.2 em high,
+ right aligned (this SVG image keeps the aspect ratio):</p>
+-<object class="align-left" data="../../../docs/user/rst/images/biohazard-scaling.svg" style="height: 1em;" type="image/svg+xml">
+-../../../docs/user/rst/images/biohazard-scaling.svg</object>
++<img alt="../../../docs/user/rst/images/biohazard-scaling.svg" class="align-left" src="../../../docs/user/rst/images/biohazard-scaling.svg" style="height: 1em;" />
+ <p>A scaling image 1 em high, left aligned.</p>
+ <p>A scaling image 5 mm x 5 mm, centered, with hyperlink reference:</p>
+-<a class="reference internal image-reference" href="#directives"><object class="align-center" data="../../../docs/user/rst/images/biohazard-scaling.svg" style="width: 5mm; height: 5mm;" type="image/svg+xml">../../../docs/user/rst/images/biohazard-scaling.svg</object></a>
+-<object class="align-left" data="../../../docs/user/rst/images/biohazard.svg" style="width: 4cm; height: 2em;" type="image/svg+xml">
+-../../../docs/user/rst/images/biohazard.svg</object>
++<a class="reference internal image-reference" href="#directives"><img alt="../../../docs/user/rst/images/biohazard-scaling.svg" class="align-center" src="../../../docs/user/rst/images/biohazard-scaling.svg" style="width: 5mm; height: 5mm;" /></a>
++<img alt="../../../docs/user/rst/images/biohazard.svg" class="align-left" src="../../../docs/user/rst/images/biohazard.svg" style="width: 4cm; height: 2em;" />
+ <p>A fixed-size image in a  4 cm x 2 em box.</p>
+-<object class="align-left" data="../../../docs/user/rst/images/title.svg" style="width: 50%; height: 15px;" type="image/svg+xml">
+-../../../docs/user/rst/images/title.svg</object>
++<img alt="../../../docs/user/rst/images/title.svg" class="align-left" src="../../../docs/user/rst/images/title.svg" style="width: 50%; height: 15px;" />
+ <p>A fixed-size image in a box 50% the line width and 15 pixle high.</p>
+ <div class="figure">
+-<object data="../../../docs/user/rst/images/title.svg" style="width: 290px; height: 28px;" type="image/svg+xml">
+-reStructuredText, the markup syntax</object>
++<img alt="reStructuredText, the markup syntax" src="../../../docs/user/rst/images/title.svg" style="width: 290px; height: 28px;" />
+ <p class="caption">SVG image in a figure.</p>
+ </div>
+ </div>
+@@ -1163,7 +1156,7 @@
+ <div class="footer">
+ <hr class="footer" />
+ <p>Document footer</p>
+-<p><a class="reference external" href="http://validator.w3.org/check?uri=referer"><img alt="Valid XHTML 1.0!" src="http://www.w3.org/Icons/valid-xhtml10" style="width: 88px; height: 31px;" /></a> <a class="reference external" href="http://jigsaw.w3.org/css-validator/check/referer"><img alt="Valid CSS 2.1!" src="http://jigsaw.w3.org/css-validator/images/vcss" style="width: 88px; height: 31px;" /></a></p>
++<p><a class="reference external" href="http://validator.w3.org/check?uri=referer"><object alt="Valid XHTML 1.0!" src="http://www.w3.org/Icons/valid-xhtml10" style="width: 88px; height: 31px;">Valid XHTML 1.0!</object></a> <a class="reference external" href="http://jigsaw.w3.org/css-validator/check/referer"><object alt="Valid CSS 2.1!" src="http://jigsaw.w3.org/css-validator/images/vcss" style="width: 88px; height: 31px;">Valid CSS 2.1!</object></a></p>
+ 
+ </div>
+ </body>
