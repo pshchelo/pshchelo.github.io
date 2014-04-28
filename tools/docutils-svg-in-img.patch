@@ -10,7 +10,7 @@ Index: docutils/writers/html4css1/__init__.py
 -        types = {'.svg': 'image/svg+xml',
 -                 '.swf': 'application/x-shockwave-flash'}
 +        # place SWF images in an <object> element
-+        types = { '.swf': 'application/x-shockwave-flash'}
++        types = {'.swf': 'application/x-shockwave-flash'}
          ext = os.path.splitext(uri)[1].lower()
 -        if ext in ('.svg', '.swf'):
 +        if ext in (types.iterkeys()):
@@ -22,7 +22,7 @@ Index: docutils/writers/html4css1/__init__.py
              atts['class'] = 'align-%s' % node['align']
          self.context.append('')
 -        if ext in ('.svg', '.swf'): # place in an object element,
-+        if ext in ('.swf'): # place in an object element,
++        if ext in (types.iterkeys()): # place in an object element,
              # do NOT use an empty tag: incorrect rendering in browsers
              self.body.append(self.starttag(node, 'object', suffix, **atts) +
                               node.get('alt', uri) + '</object>' + suffix)
