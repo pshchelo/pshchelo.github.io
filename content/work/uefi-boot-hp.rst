@@ -78,3 +78,23 @@ seconds to press F9 and go into UEFI boot menu manually), and very short
 delay on GRUB (2 sec just for an emergency need to boot not into
 standard Ubuntu) gives me a system that's fast enough to boot in
 unattended mode.
+
+Update
+======
+
+After living with this configuration for several months I realized two things:
+
+#. I do not use Windows more than once a month;
+#. Using hibernate via TuxOnIce has some problems.
+
+
+The last one is due to rc.local not being processed on resume from hibernate,
+and unfortunately I failed to configure TuxOnIce to execute the ``efibootmgr``
+properly on resume.
+
+I again turned to BIOS settings and this time noticed that I can 
+in fact configure "Custom" boot section and make it the first one to boot.
+So now I have Ubuntu booting by default, and from Grub I can start Windows 
+if I need, and also I can safely use SAVE_DEFAULT option of Grub. 
+For those times when Windows *has* to be booted directly from EFI,
+there is still possibility to override first boot option during POST.
