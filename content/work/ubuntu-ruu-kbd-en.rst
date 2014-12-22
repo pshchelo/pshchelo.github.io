@@ -93,7 +93,8 @@ It turns out there is one layout included in Ubuntu, one just has to manually tu
 
 
 Now you can choose a "Russian (with Ukrainian-Belorussian layout)" from available layouts.
-It is a standard Russian layout, plus you can input Ukrainian- or Belorussian-specific
-characters via AltGr (usually right Alt), plus some more extra symbols are available
-via AltGr, like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
+It is mostly a standard Russian layout (the biggest difference being position of "ё" character),
+plus you can input Ukrainian- or Belorussian-specific characters via AltGr
+(usually right Alt), plus some more extra symbols are available via AltGr,
+like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
 Check out the "Keyboard Layout Chart" for this layout to see all available characters.
