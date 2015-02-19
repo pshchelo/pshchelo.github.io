@@ -13,7 +13,7 @@ the solutions for recent DevStack (early Juno as of this
 writing), but some things might still be incorrect or already fixed -
 YMMV.
 
-All notes are concerning Ubuntu/Debian on an Intel CPU, so for other systems 
+All notes are concerning Ubuntu/Debian on an Intel CPU, so for other systems
 some changes might be necessary.
 
 Update
@@ -63,7 +63,7 @@ Install DevStack
        ./stack.sh
 
 Now you should have a working DevStack installation. You can login into
-Horizon, or join the running stack with ``./rejoin_stack.sh`` command 
+Horizon, or join the running stack with ``./rejoin_stack.sh`` command
 and check console outputs of all the running services for debug and error info.
 There are some networks and routers created by default, so you can
 start VMs and attach floating IPs to them.
@@ -74,9 +74,9 @@ Allow VM Internet connectivity
 
 You might stumble on networking issues concerning outside access,
 like pinging or accessing Internet resources outside of your DevStack.
-First you need to change the Security Group settings - 
+First you need to change the Security Group settings -
 the "default" group created by DevStack seems to allow everything
-but in fact I've always had problems with it, so just create your own 
+but in fact I've always had problems with it, so just create your own
 security group and assign your VMs to it.
 Then you need to configure ``iptables`` to pass through the traffic:
 
@@ -90,15 +90,15 @@ Then you need to configure ``iptables`` to pass through the traffic:
 Note on ``unstack.sh`` and rebooting
 ====================================
 
-As I've found the hard way, if you ever need to reboot your DevStack VM, 
+As I've found the hard way, if you ever need to reboot your DevStack VM,
 **do not** run ``unstack.sh`` before that.
 Simply detach from screen and/or reboot as usual.
 The unstacking script not only stops the services run in screen,
-it also alters some configuration options of your system 
+it also alters some configuration options of your system
 that were introduced by running ``stack.sh`` and setting up the DevStack.
 Mostly it concerns network bridges from what I have seen.
-So if you run ``unstack.sh``, in order to have a working DevStack installation 
-you have to run ``stack.sh`` after it. 
+So if you run ``unstack.sh``, in order to have a working DevStack installation
+you have to run ``stack.sh`` after it.
 That has a drawback that all your cloud configuration
 (e.g. everything stored in DB tables of OpenStack and content of stack-volume-backing-file) will be reset.
 
@@ -112,11 +112,11 @@ Thus, the work flow looks somewhat like this:
    to put your changes in effect.
 
 #. If in need to reboot the DevStack VM, shut it down the usual way,
-   and upon restart simply run ``rejoin_stack.sh`` again, 
+   and upon restart simply run ``rejoin_stack.sh`` again,
    all services will be started in screen again.
 
 #. Only if you need to change the OpenStack/DevStack configuration,
-   then run ``unstack.sh``, make changes in ``local.conf`` / wherever you have to 
+   then run ``unstack.sh``, make changes in ``local.conf`` / wherever you have to
    and then run ``stack.sh``.
 
 
@@ -127,9 +127,18 @@ After reboot of the DevStack VM the following will be lost:
 
 -  stack volumes (this includes created storage volumes etc.)
 -  iptables/NAT setting
--  bridges configurations  
+-  bridges configurations
 
 Here how to restore these settings or make them permanent:
+
+Update
+  Right now it appears to be so involved to cleanly restore all the settings
+  lost after reboot that a much safer and easier way is to make peace with
+  everything in your OpenStack being lost (all the settings and things
+  you've created inside) and just run ``stack.sh`` again (optionally with
+  ``OFFLINE = True`` in your ``local.conf`` to keep the code exactly as
+  before reboot).
+
 
 Stack volumes
 -------------
@@ -189,15 +198,9 @@ of ``stack.sh``:
         sudo ip addr flush dev br-ex
         sudo ip addr add 172.24.4.1/24 dev br-ex
         sudo ip link set br-ex up
-        sudo route add -net 10.0.0.0/24 gw 172.24.4.1  
+        sudo route add -net 10.0.0.0/24 gw 172.24.4.1
 
 
-All-in-one restore script
--------------------------
-Technically, you could avoid changing system settings permanently and 
-combine all of the above into one script that makes all the changes
-and launches ``rejoin_stack.sh`` in the end.
-See `this script <http://github.com/pshchelo/stackdev/blob/master/scripts/resume-stack.sh>`_ as an example.
 
 Sharing files between your physical machine and DevStack host
 =============================================================
@@ -247,7 +250,7 @@ rule to ``iptables``:
 Nested KVM
 ==========
 
-If you run DevStack as a KVM guest, ensure that your host system has nested KVM enabled - 
+If you run DevStack as a KVM guest, ensure that your host system has nested KVM enabled -
 that will greatly speed up those VMs you run inside your DevStack guest
 (of course your CPU has to support virtualization extensions and have them enabled in BIOS).
 
@@ -266,7 +269,7 @@ If it's ``N`` then try to load the module with
     modprobe kvm_intel nested=1
 
 
-If it worked (you get ``Y`` after checking again) to make it permanent 
+If it worked (you get ``Y`` after checking again) to make it permanent
 you have to add the following line to some ``.conf`` file in ``/etc/modprobe.d/``:
 
 ::
