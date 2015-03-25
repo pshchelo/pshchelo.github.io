@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Solving the Rubik’s Cube - Bits and Pieces</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Bits and Pieces" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Solving the Rubik’s Cube"/>
+            <meta property="og:url" content="http://pshchelo.github.io/rubik-solve.html"/>
+            <meta property="og:description" content="Algorithm for solving Rubik’s Cube."/>
+            <meta property="article:published_time" content="2014-04-03" />
+                <meta property="article:section" content="play" />
+                <meta property="article:tag" content="puzzles" />
+                <meta property="article:tag" content="rubick" />
+                <meta property="article:author" content="Pavlo Shchelokovskyy" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://pshchelo.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://pshchelo.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://pshchelo.github.io/theme/css/pygments/native.css" rel="stylesheet">
+        <link href="http://pshchelo.github.io/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://pshchelo.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Bits and Pieces ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://pshchelo.github.io/" class="navbar-brand">
+Bits and Pieces            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://pshchelo.github.io/pages/about.html">
+                             About
+                          </a></li>
+                        <li class="active">
+                            <a href="http://pshchelo.github.io/category/play.html">Play</a>
+                        </li>
+                        <li >
+                            <a href="http://pshchelo.github.io/category/work.html">Work</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://pshchelo.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://pshchelo.github.io/rubik-solve.html"
+                       rel="bookmark"
+                       title="Permalink to Solving the Rubik’s Cube">
+                        Solving the Rubik&#8217;s&nbsp;Cube
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-04-03T00:00:00+03:00"> Thu 03 April 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://pshchelo.github.io/tag/puzzles.html">puzzles</a>
+        /
+	<a href="http://pshchelo.github.io/tag/rubick.html">rubick</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>See <a class="reference external" href="http://pshchelo.github.io/rubik-notation.html">notation</a>.</p>
+<div class="section" id="cross-of-the-first-layer">
+<h2>Cross of the first&nbsp;layer</h2>
+<p>Moves cube <span class="caps">FD</span> -&gt; <span class="caps">FU</span></p>
+<dl class="docutils">
+<dt>F-&gt;F,&nbsp;D-&gt;U</dt>
+<dd>F<sup>2</sup></dd>
+<dt>F-&gt;U,&nbsp;D-&gt;F</dt>
+<dd>D R F&#8217; R&#8217;
+or
+F&#8217; M&#8217;<sub>D</sub> F M<sub>D</sub></dd>
+</dl>
+</div>
+<div class="section" id="corners-of-the-first-layer">
+<h2>Corners of the first&nbsp;layer</h2>
+<p>Moves cube <span class="caps">FDL</span> -&gt; <span class="caps">FUL</span></p>
+<dl class="docutils">
+<dt>F-&gt;F, D-&gt;L,&nbsp;L-&gt;U</dt>
+<dd>L D&nbsp;L&#8217;</dd>
+<dt>F-&gt;U, D-&gt;F,&nbsp;L-&gt;L</dt>
+<dd>F&#8217; U&#8217;&nbsp;F</dd>
+<dt>F-&gt;L, D-&gt;U,&nbsp;L-&gt;F</dt>
+<dd>( F&#8217; R&#8217; ) D<sup>2</sup> ( R F&nbsp;)</dd>
+</dl>
+</div>
+<div class="section" id="second-layer">
+<h2>Second&nbsp;layer</h2>
+<p>Moves cube <span class="caps">FD</span></p>
+<dl class="docutils">
+<dt>F-&gt;F,&nbsp;D-&gt;L</dt>
+<dd>( D L D&#8217; L&#8217; ) ( D&#8217; F&#8217; D F&nbsp;)</dd>
+<dt>F-&gt;F,&nbsp;D-&gt;R</dt>
+<dd>( D&#8217; R&#8217; D R ) ( D F D&#8217; F&#8217;&nbsp;)</dd>
+</dl>
+</div>
+<div class="section" id="placing-side-cubes-of-third-layer">
+<h2>Placing side cubes of third&nbsp;layer</h2>
+<dl class="docutils">
+<dt>Moves cube <span class="caps">FU</span> -&gt; <span class="caps">LU</span></dt>
+<dd>(U F R ) U (R&#8217; U&#8217; F&#8217;&nbsp;)</dd>
+</dl>
+</div>
+<div class="section" id="cross-of-the-third-layer">
+<h2>Cross of the third&nbsp;layer</h2>
+<p>Rotating cube <span class="caps">UR</span></p>
+<dl class="docutils">
+<dt>Rotate <span class="caps">UR</span> and <span class="caps">UB</span></dt>
+<dd>( R M<sub>D</sub> )<sup>4</sup> U ( R M<sub>D</sub> )<sup>4</sup></dd>
+<dt>Rotate <span class="caps">UR</span> and <span class="caps">UF</span></dt>
+<dd>( R M<sub>D</sub> )<sup>4</sup> U&#8217; ( R M<sub>D</sub> )<sup>4</sup></dd>
+<dt>Rotate <span class="caps">UR</span> and <span class="caps">UL</span></dt>
+<dd>( R M<sub>D</sub> )<sup>4</sup> U<sup>2</sup> ( R M<sub>D</sub> )<sup>4</sup></dd>
+</dl>
+</div>
+<div class="section" id="placing-corner-cubes-of-third-layer">
+<h2>Placing corner cubes of third&nbsp;layer</h2>
+<p>Moves cubes <span class="caps">FLU</span>, <span class="caps">FLR</span>, <span class="caps">RUB</span>, cube <span class="caps">ULB</span> is not&nbsp;moving</p>
+<dl class="docutils">
+<dt>Shift by one position&nbsp;clockwise</dt>
+<dd>( R&#8217; F&#8217; L&#8217; F ) (R F&#8217; L F&nbsp;)</dd>
+<dt>Shift by one position&nbsp;counter-clockwise</dt>
+<dd>( F&#8217; L&#8217; F R&#8217; ) ( F&#8217; L F R&nbsp;)</dd>
+</dl>
+</div>
+<div class="section" id="final-placement">
+<h2>Final&nbsp;placement</h2>
+<p>Rotate the cube <span class="caps">FUR</span></p>
+<p>[ ( R F&#8217; R&#8217; F )<sup>2</sup> ]<sup>n</sup> {U | U&#8217; | U<sup>2</sup> } [ ( R F&#8217; R&#8217; F )<sup>2</sup> ]<sup>n</sup></p>
+<ul class="simple">
+<li><tt class="docutils literal">n</tt> - rotates <span class="caps">FUR</span> by <tt class="docutils literal">n/3</tt> clockwise</li>
+<li>U - rotates <span class="caps">FUR</span> and <span class="caps">RUB</span></li>
+<li>U&#8217; - rotates <span class="caps">FUR</span> and <span class="caps">FUL</span></li>
+<li>U<sup>2</sup> - rotates <span class="caps">FUR</span> and <span class="caps">LUB</span></li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="https://github.com/pshchelo"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                    <li class="list-group-item"><a href="https://bitbucket.org/pshchelo"><i
+                            class="fa fa-bitbucket-square fa-lg"></i> BitBucket
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/+PavloShchelokovskyy/about"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                    <li class="list-group-item"><a href="https://twitter.com/pshchelo"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                    <li class="list-group-item"><a href="http://ua.linkedin.com/pub/pavlo-shchelokovskyy/38/676/124/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://pshchelo.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://pshchelo.github.io/tag/puzzles.html">
+                                puzzles
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://pshchelo.github.io/tag/rubik.html">
+                                rubik
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/rubick.html">
+                                rubick
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/devstack.html">
+                                devstack
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/openstack.html">
+                                openstack
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/ubuntu.html">
+                                ubuntu
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/dualboot.html">
+                                dualboot
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/ukraine.html">
+                                ukraine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/keyboard.html">
+                                keyboard
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/hp.html">
+                                hp
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://pshchelo.github.io/tag/uefi.html">
+                                uefi
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.openstack.org/" target="_blank">
+                OpenStack
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Pavlo Shchelokovskyy
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://pshchelo.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://pshchelo.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://pshchelo.github.io/theme/js/respond.min.js"></script>
+
+</body>
+</html>

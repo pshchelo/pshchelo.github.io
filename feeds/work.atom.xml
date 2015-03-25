@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2014-12-20T00:00:00+02:00</updated><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
+Occasionally though I have to input text (e.g. in search field) in German,
+French or Ukrainian.
+For Western languages Ubuntu comes with &amp;quot;English (international with AltGr dead keys)&amp;quot;
+available as a choice of input layout.
+It works out nicely as my default English layout,
+and those extra accented letters are easy within reach
+(plus some extra handy symbols are made available).
+On the Cyrillic languages side things are a bit more complicated.
+I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&lt;/p&gt;
+&lt;p&gt;It turns out there is one layout included in Ubuntu, one just has to manually turn it&amp;nbsp;on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;open file &lt;tt class="docutils literal"&gt;/usr/share/X11/xkb/rules/evdev.extras.xml&lt;/tt&gt;, find the layout named &lt;tt class="docutils literal"&gt;ruu&lt;/tt&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;variant&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ruu&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;shortDescription&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/shortDescription&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (with Ukrainian-Belorussian layout)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;languageList&amp;gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;rus&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+                  &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;ukr&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+                  &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;bel&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&amp;lt;/languageList&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/configItem&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/variant&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;copy the whole enclosing &lt;tt class="docutils literal"&gt;&amp;lt;variant&amp;gt;&lt;/tt&gt; tag as shown&amp;nbsp;above&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;open file &lt;tt class="docutils literal"&gt;/usr/share/X11/xkb/rules/evdev.xml&lt;/tt&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;find Russian&amp;nbsp;section&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;layout&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;shortDescription&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/shortDescription&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;languageList&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;rus&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/languageList&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/configItem&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;variantList&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;variant&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;phonetic&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (phonetic)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;paste there copied &lt;tt class="docutils literal"&gt;ruu&lt;/tt&gt; variant alongside other available&amp;nbsp;variants&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;layout&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;shortDescription&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/shortDescription&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;languageList&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;rus&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/languageList&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/configItem&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;variantList&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;variant&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ruu&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;shortDescription&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/shortDescription&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (with Ukrainian-Belorussian layout)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;languageList&amp;gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;rus&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+                      &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;ukr&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&lt;/span&gt;
+                      &lt;span class="nt"&gt;&amp;lt;iso639Id&amp;gt;&lt;/span&gt;bel&lt;span class="nt"&gt;&amp;lt;/iso639Id&amp;gt;&amp;lt;/languageList&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;/configItem&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/variant&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;variant&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;phonetic&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (phonetic)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;restart X&amp;nbsp;server&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now you can choose a &amp;quot;Russian (with Ukrainian-Belorussian layout)&amp;quot; from available layouts.
+It is mostly a standard Russian layout (the biggest difference being position of &amp;quot;ё&amp;quot; character),
+plus you can input Ukrainian- or Belorussian-specific characters via AltGr
+(usually right Alt), plus some more extra symbols are available via AltGr,
+like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
+Check out the &amp;quot;Keyboard Layout Chart&amp;quot; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
+</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:devstack-with-neutron.html</id><summary type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
+on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
+the solutions for recent DevStack (early Juno as of this
+writing), but some things might still be incorrect or already fixed -
+&lt;span class="caps"&gt;YMMV&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;All notes are concerning Ubuntu/Debian on an Intel &lt;span class="caps"&gt;CPU&lt;/span&gt;, so for other systems
+some changes might be&amp;nbsp;necessary.&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;Update&lt;/dt&gt;
+&lt;dd&gt;Tried DevStack on fresh Ubuntu 14.04 &lt;span class="caps"&gt;LTS&lt;/span&gt; (Trusty Thar), updated&amp;nbsp;tips.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#install-devstack" id="id1"&gt;Install&amp;nbsp;DevStack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#allow-vm-internet-connectivity" id="id2"&gt;Allow &lt;span class="caps"&gt;VM&lt;/span&gt; Internet&amp;nbsp;connectivity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#note-on-unstack-sh-and-rebooting" id="id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and&amp;nbsp;rebooting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#restore-settings-after-reboot" id="id4"&gt;Restore settings after reboot&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#stack-volumes" id="id5"&gt;Stack&amp;nbsp;volumes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#nat-settings" id="id6"&gt;&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;settings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#bridges" id="id7"&gt;Bridges&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#sharing-files-between-your-physical-machine-and-devstack-host" id="id8"&gt;Sharing files between your physical machine and DevStack&amp;nbsp;host&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#problems-with-receiving-ips-for-vms" id="id9"&gt;Problems with receiving IPs for&amp;nbsp;VMs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#nested-kvm" id="id10"&gt;Nested &lt;span class="caps"&gt;KVM&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-devstack"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Install&amp;nbsp;DevStack&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Prepare a &lt;span class="caps"&gt;VM&lt;/span&gt; for DevStack&amp;nbsp;deployment&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;in this &lt;span class="caps"&gt;VM&lt;/span&gt; install &lt;tt class="docutils literal"&gt;git&lt;/tt&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install git
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;clone DevStack&amp;nbsp;repo&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git clone https://github.com/openstack-dev/devstack.git
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;create &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; file in the &lt;tt class="docutils literal"&gt;devstack&lt;/tt&gt; folder to enable
+Neutron and set some passwords (choose your own if you&amp;nbsp;wish)&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[[local|localrc]]
+DATABASE_PASSWORD=password
+RABBIT_PASSWORD=password
+SERVICE_TOKEN=password
+SERVICE_PASSWORD=password
+ADMIN_PASSWORD=password
+disable_service n-net
+enable_service q-svc q-agt q-dhcp q-l3 q-meta neutron
+&lt;/pre&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;I have a &lt;a class="reference external" href="https://github.com/pshchelo/stackdev"&gt;repo&lt;/a&gt; with my
+DevStack customizations, you might want to check it&amp;nbsp;out.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;install&amp;nbsp;DevStack&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+./stack.sh
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now you should have a working DevStack installation. You can login into
+Horizon, or join the running stack with &lt;tt class="docutils literal"&gt;./rejoin_stack.sh&lt;/tt&gt; command
+and check console outputs of all the running services for debug and error info.
+There are some networks and routers created by default, so you can
+start VMs and attach floating IPs to&amp;nbsp;them.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="allow-vm-internet-connectivity"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id2"&gt;Allow &lt;span class="caps"&gt;VM&lt;/span&gt; Internet&amp;nbsp;connectivity&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You might stumble on networking issues concerning outside access,
+like pinging or accessing Internet resources outside of your DevStack.
+First you need to change the Security Group settings -
+the &amp;quot;default&amp;quot; group created by DevStack seems to allow everything
+but in fact I&amp;#8217;ve always had problems with it, so just create your own
+security group and assign your VMs to it.
+Then you need to configure &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt; to pass through the&amp;nbsp;traffic:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+&lt;/pre&gt;
+&lt;p&gt;(after this &lt;a class="reference external" href="https://answers.launchpad.net/neutron/+question/208377"&gt;launchpad question&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="note-on-unstack-sh-and-rebooting"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and&amp;nbsp;rebooting&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As I&amp;#8217;ve found the hard way, if you ever need to reboot your DevStack &lt;span class="caps"&gt;VM&lt;/span&gt;,
+&lt;strong&gt;do not&lt;/strong&gt; run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; before that.
+Simply detach from screen and/or reboot as usual.
+The unstacking script not only stops the services run in screen,
+it also alters some configuration options of your system
+that were introduced by running &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; and setting up the DevStack.
+Mostly it concerns network bridges from what I have seen.
+So if you run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt;, in order to have a working DevStack installation
+you have to run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; after it.
+That has a drawback that all your cloud configuration
+(e.g. everything stored in &lt;span class="caps"&gt;DB&lt;/span&gt; tables of OpenStack and content of stack-volume-backing-file) will be&amp;nbsp;reset.&lt;/p&gt;
+&lt;p&gt;Thus, the work flow looks somewhat like&amp;nbsp;this:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Start/configure DevStack with &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;Join the stack with &lt;tt class="docutils literal"&gt;rejoin_stack.sh&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;Make changes, restarting services affected on per-service basis via screen
+to put your changes in&amp;nbsp;effect.&lt;/li&gt;
+&lt;li&gt;If in need to reboot the DevStack &lt;span class="caps"&gt;VM&lt;/span&gt;, shut it down the usual way,
+and upon restart simply run &lt;tt class="docutils literal"&gt;rejoin_stack.sh&lt;/tt&gt; again,
+all services will be started in screen&amp;nbsp;again.&lt;/li&gt;
+&lt;li&gt;Only if you need to change the OpenStack/DevStack configuration,
+then run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt;, make changes in &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; / wherever you have to
+and then run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="restore-settings-after-reboot"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id4"&gt;Restore settings after&amp;nbsp;reboot&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;After reboot of the DevStack &lt;span class="caps"&gt;VM&lt;/span&gt; the following will be&amp;nbsp;lost:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;stack volumes (this includes created storage volumes&amp;nbsp;etc.)&lt;/li&gt;
+&lt;li&gt;iptables/&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;setting&lt;/li&gt;
+&lt;li&gt;bridges&amp;nbsp;configurations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here how to restore these settings or make them&amp;nbsp;permanent:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;Update&lt;/dt&gt;
+&lt;dd&gt;Right now it appears to be so involved to cleanly restore all the settings
+lost after reboot that a much safer and easier way is to make peace with
+everything in your OpenStack being lost (all the settings and things
+you&amp;#8217;ve created inside) and just run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; again (optionally with
+&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OFFLINE&lt;/span&gt; = True&lt;/tt&gt; in your &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; to keep the code exactly as
+before&amp;nbsp;reboot).&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="section" id="stack-volumes"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id5"&gt;Stack&amp;nbsp;volumes&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; - with &lt;tt class="docutils literal"&gt;Swift&lt;/tt&gt; enabled actual loopback device may be other
+than &lt;tt class="docutils literal"&gt;/dev/loop0&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;Check that volumes are created after fresh running of &lt;tt class="docutils literal"&gt;./stack.sh&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo losetup -a
+sudo pvs
+sudo vgs
+&lt;/pre&gt;
+&lt;p&gt;You should see volume group &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;stack-volumes&lt;/span&gt;&lt;/tt&gt; existing and attached to
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/opt/stack/data/stack-volumes-backing-file&lt;/span&gt;&lt;/tt&gt; via &lt;tt class="docutils literal"&gt;/dev/loop0&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;After reboot the attachment of the backing file to loopback device will
+be lost. To make it permanent add the following line to your
+&lt;tt class="docutils literal"&gt;/etc/rc.local&lt;/tt&gt; file, before &lt;tt class="docutils literal"&gt;exit 0&lt;/tt&gt; line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+losetup /dev/loop0 /opt/stack/data/stack-volumes-backing-file
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="nat-settings"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id6"&gt;&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;settings&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;After &lt;a class="reference external" href="https://lists.launchpad.net/openstack/msg17016.html"&gt;this mail-list&amp;nbsp;post&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;permanently enable &lt;span class="caps"&gt;IP&lt;/span&gt;-forwarding&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;permanently set &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt; settings: add to &lt;tt class="docutils literal"&gt;/etc/interfaces&lt;/tt&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+post up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bridges"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id7"&gt;Bridges&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;After &lt;a class="reference external" href="https://gist.github.com/charlesflynn/5576114"&gt;this ghist&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bridge &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;br-ex&lt;/span&gt;&lt;/tt&gt; has no &lt;span class="caps"&gt;IP&lt;/span&gt; after reboot.
+Use the following commands to set bridges according to default settings
+of &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre class="literal-block"&gt;
+sudo ip addr flush dev br-ex
+sudo ip addr add 172.24.4.1/24 dev br-ex
+sudo ip link set br-ex up
+sudo route add -net 10.0.0.0/24 gw 172.24.4.1
+&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sharing-files-between-your-physical-machine-and-devstack-host"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id8"&gt;Sharing files between your physical machine and DevStack&amp;nbsp;host&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As I use &lt;tt class="docutils literal"&gt;vim&lt;/tt&gt; as my Python &lt;span class="caps"&gt;IDE&lt;/span&gt; I personally prefer to work directly
+in the console of the guest DevStack instance, but if you prefer &lt;span class="caps"&gt;GUI&lt;/span&gt; &lt;span class="caps"&gt;IDE&lt;/span&gt;
+(like PyCharm) you might want to have access to the code on the DevStack
+guest right from your host. One rather straightforward possibility is
+&lt;tt class="docutils literal"&gt;sshfs&lt;/tt&gt;, but as it is usually pretty slow, you might want to try &lt;span class="caps"&gt;NFS&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The following is adopted from &lt;a class="reference external" href="http://radix.twistedmatrix.com/2013/06/complete-guide-to-setting-up-openstack.html"&gt;this post by&amp;nbsp;radix&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;First, install the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nfs-kernel-server&lt;/span&gt;&lt;/tt&gt; package on the host system and
+then edit &lt;tt class="docutils literal"&gt;/etc/exports&lt;/tt&gt; to add the following&amp;nbsp;line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+full_path_to_project_on_host    *(rw,async,root_squash,no_subtree_check)
+&lt;/pre&gt;
+&lt;p&gt;Then in the DevStack guest install &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nfs-common&lt;/span&gt;&lt;/tt&gt; and add the following
+line to &lt;tt class="docutils literal"&gt;/etc/fstab&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+address_of_host:full_path_to_project_on_host    full_path_to_project_on_guest    nfs
+&lt;/pre&gt;
+&lt;p&gt;Don&amp;#8217;t forget to &lt;tt class="docutils literal"&gt;mkdir full_path_to_project_on_guest&lt;/tt&gt; in the guest.
+You can then reboot the DevStack guest or just mount
+&lt;tt class="docutils literal"&gt;full_path_to_project_on_guest&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problems-with-receiving-ips-for-vms"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id9"&gt;Problems with receiving IPs for&amp;nbsp;VMs&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Some versions of VirtIO network interface seem not to fill in checksums correctly in &lt;span class="caps"&gt;UDP&lt;/span&gt;
+packets (something called checksum offloading), which interferes with
+receiving &lt;span class="caps"&gt;DHCP&lt;/span&gt; lease from neutron/nova-network when everything is
+running on a single host (e.g. DevStack). To fix this add the following
+rule to &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo iptables -A POSTROUTING -t mangle -p udp --dport bootpc -j CHECKSUM --checksum-fill
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="nested-kvm"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id10"&gt;Nested &lt;span class="caps"&gt;KVM&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you run DevStack as a &lt;span class="caps"&gt;KVM&lt;/span&gt; guest, ensure that your host system has nested &lt;span class="caps"&gt;KVM&lt;/span&gt; enabled -
+that will greatly speed up those VMs you run inside your DevStack guest
+(of course your &lt;span class="caps"&gt;CPU&lt;/span&gt; has to support virtualization extensions and have them enabled in &lt;span class="caps"&gt;BIOS&lt;/span&gt;).&lt;/p&gt;
+&lt;p&gt;Check that nested &lt;span class="caps"&gt;KVM&lt;/span&gt; is&amp;nbsp;enabled:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+cat /sys/module/kvm_intel/parameters/nested
+&lt;/pre&gt;
+&lt;p&gt;If it&amp;#8217;s &lt;tt class="docutils literal"&gt;N&lt;/tt&gt; then try to load the module&amp;nbsp;with&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+modprobe kvm_intel nested=1
+&lt;/pre&gt;
+&lt;p&gt;If it worked (you get &lt;tt class="docutils literal"&gt;Y&lt;/tt&gt; after checking again) to make it permanent
+you have to add the following line to some &lt;tt class="docutils literal"&gt;.conf&lt;/tt&gt; file in &lt;tt class="docutils literal"&gt;/etc/modprobe.d/&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+options kvm-intel nested=1
+&lt;/pre&gt;
+&lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:uefi-boot-hp.html</id><summary type="html">&lt;div class="section" id="problem"&gt;
+&lt;h2&gt;Problem&lt;/h2&gt;
+&lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
+can be configured in &lt;span class="caps"&gt;BIOS&lt;/span&gt; per device (&lt;span class="caps"&gt;HDD&lt;/span&gt;/&lt;span class="caps"&gt;ODD&lt;/span&gt;/&lt;span class="caps"&gt;PXI&lt;/span&gt;/&lt;span class="caps"&gt;USB&lt;/span&gt; etc) but there is
+no way to specify boot order of systems present on &lt;span class="caps"&gt;HDD&lt;/span&gt;. &lt;span class="caps"&gt;UEFI&lt;/span&gt; boot loader
+finds both Windows (present as &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OS&lt;/span&gt; Manager&lt;/tt&gt;) and Ubuntu (as
+&lt;tt class="docutils literal"&gt;ubuntu&lt;/tt&gt;), but always uses &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OS&lt;/span&gt; Manager&lt;/tt&gt; first. As I intend to use
+Ubuntu most of the time, I need a way to make booting Ubuntu the default&amp;nbsp;option.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="research"&gt;
+&lt;h2&gt;Research&lt;/h2&gt;
+&lt;p&gt;According to &lt;em&gt;teh Internets&lt;/em&gt; such problems seem to occur reasonably
+often, when vendors &amp;quot;under-implement&amp;quot; &lt;span class="caps"&gt;UEFI&lt;/span&gt; on their products. One
+commonly proposed solution is using recent versions of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;boot-repair&lt;/span&gt;&lt;/tt&gt;
+Ubuntu package (a really nice piece of engineering, saved my ass couple
+of times in the past). What it does is it substitutes (with backup of
+course) the windows &lt;em&gt;efi&lt;/em&gt; file with accordingly renamed Ubuntu &lt;em&gt;efi&lt;/em&gt;
+file, thus loading &lt;span class="caps"&gt;GRUB&lt;/span&gt; automatically, and from there user can choose
+what system to boot. But I find such solution a bit too risky, so I want
+something more&amp;nbsp;native.&lt;/p&gt;
+&lt;p&gt;Another program that is related is &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install efibootmgr
+&lt;/pre&gt;
+&lt;p&gt;It has the option to modify boot order of &lt;em&gt;efi&lt;/em&gt; files with
+&lt;tt class="docutils literal"&gt;efibootmgr &lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt;, but at least on my particular &lt;span class="caps"&gt;HP&lt;/span&gt; notebook it has no
+effect, and system boots to Windows by default despite any changes in
+the boot order introduced by &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;. Strangely though, the
+option to force the boot order only on next reboot (&lt;tt class="docutils literal"&gt;efibootmgr &lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt;)
+is working alright. So, here comes the solution I figured out with the
+help of &lt;a class="reference external" href="http://ubuntuforums.org/showthread.php?t=2173267"&gt;this Ubuntu Forums&amp;nbsp;thread&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="solution"&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
+&lt;p&gt;My current &lt;span class="caps"&gt;EFI&lt;/span&gt; setup looks like&amp;nbsp;following&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+shell$: sudo efibootmgr
+BootCurrent: 0001
+Timeout: 0 seconds
+BootOrder: 0001,0002
+Boot0001* ubuntu
+Boot0002* Windows Boot Manager
+&lt;/pre&gt;
+&lt;p&gt;So I &amp;#8216;ve placed the following line in &lt;tt class="docutils literal"&gt;/etc/rc.local&lt;/tt&gt; (before the
+final &lt;tt class="docutils literal"&gt;exit 0&lt;/tt&gt; line):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+/bin/efibootmgr -n 0001
+&lt;/pre&gt;
+&lt;p&gt;This forces next default boot to be Ubuntu on every boot of Ubuntu. The
+dark side - after booting to Windows, this setting naturally disappears,
+so the next booted by default system after Windows boot is Windows
+again. But actually this is &lt;strong&gt;exactly what I want&lt;/strong&gt; - it sort of
+replicates &lt;tt class="docutils literal"&gt;GRUB_SAVE_DEFAULT&lt;/tt&gt; feature which I was always using
+before, so that every next boot by default is the same as previous boot.
+Installing zero delay on &lt;span class="caps"&gt;UEFI&lt;/span&gt; bootloader (there is still couple of
+seconds to press F9 and go into &lt;span class="caps"&gt;UEFI&lt;/span&gt; boot menu manually), and very short
+delay on &lt;span class="caps"&gt;GRUB&lt;/span&gt; (2 sec just for an emergency need to boot not into
+standard Ubuntu) gives me a system that&amp;#8217;s fast enough to boot in
+unattended&amp;nbsp;mode.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="update"&gt;
+&lt;h2&gt;Update&lt;/h2&gt;
+&lt;p&gt;After living with this configuration for several months I realized two&amp;nbsp;things:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;I do not use Windows more than once a&amp;nbsp;month;&lt;/li&gt;
+&lt;li&gt;Using hibernate via TuxOnIce has some&amp;nbsp;problems.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The last one is due to rc.local not being processed on resume from hibernate,
+and unfortunately I failed to configure TuxOnIce to execute the &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;
+properly on&amp;nbsp;resume.&lt;/p&gt;
+&lt;p&gt;I again turned to &lt;span class="caps"&gt;BIOS&lt;/span&gt; settings and this time noticed that I can
+in fact configure &amp;quot;Custom&amp;quot; boot section and make it the first one to boot.
+So now I have Ubuntu booting by default, and from Grub I can start Windows
+if I need, and also I can safely use SAVE_DEFAULT option of Grub.
+For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
+there is still possibility to override first boot option during &lt;span class="caps"&gt;POST&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>

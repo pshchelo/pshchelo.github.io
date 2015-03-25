@@ -1,4 +1,0 @@
-pelican>=3.3.0
-ghp-import
-#typogrify
-#Fabric
