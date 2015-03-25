@@ -1,5 +1,5 @@
-PY=python
-PELICAN=pelican
+PY?=python
+PELICAN?=pelican
 PELICANOPTS=
 
 BASEDIR=$(CURDIR)
@@ -8,7 +8,7 @@ OUTPUTDIR=$(BASEDIR)/output
 CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
-REMOTE='git@bitbucket.org:pshchelo/pshchelo.bitbucket.org'
+GITHUB_PAGES_BRANCH=master
 DROPBOX_DIR=~/Dropbox/Public/
 
 DEBUG ?= 0
@@ -23,12 +23,12 @@ help:
 	@echo '   make html                        (re)generate the web site          '
 	@echo '   make clean                       remove the generated files         '
 	@echo '   make regenerate                  regenerate files upon modification '
-	@echo '   make prepublish                  generate using production settings '
+	@echo '   make publish                     generate using production settings '
 	@echo '   make serve [PORT=8000]           serve site at http://localhost:8000'
 	@echo '   make devserver [PORT=8000]       start/restart develop_server.sh    '
 	@echo '   make stopserver                  stop local server                  '
 	@echo '   make dropbox                     upload the web site via Dropbox    '
-	@echo '   make publish                     upload the web site to bitbucket user page'
+	@echo '   make github                      upload the web site via gh-pages   '
 	@echo '                                                                       '
 	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html'
 	@echo '                                                                       '
@@ -57,17 +57,17 @@ else
 endif
 
 stopserver:
-	$(BASEDIR)/develop_server.sh stop
+	kill -9 `cat pelican.pid`
+	kill -9 `cat srv.pid`
 	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
-prepublish:
+publish:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
 
-dropbox: prepublish
+dropbox: publish
 	cp -r $(OUTPUTDIR)/* $(DROPBOX_DIR)
 
-publish: prepublish
-	ghp-import $(OUTPUTDIR)
-	git push --force $(REMOTE) gh-pages:master
+github: publish
+	ghp-import -p -m "Generating GitHub pages" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
 
-.PHONY: html help clean regenerate serve devserver publish dropbox prepublish
+.PHONY: html help clean regenerate serve devserver publish dropbox github

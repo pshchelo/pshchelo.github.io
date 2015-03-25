@@ -6,6 +6,8 @@ AUTHOR = u'Pavlo Shchelokovskyy'
 SITENAME = u'Bits and Pieces'
 SITEURL = ''
 
+PATH = 'content'
+
 TIMEZONE = 'Europe/Kiev'
 
 DEFAULT_LANG = u'en'
@@ -14,6 +16,8 @@ DEFAULT_LANG = u'en'
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
+AUTHOR_FEED_ATOM = None
+AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS =  (('Python.org', 'http://python.org/'),
@@ -34,4 +38,4 @@ DEFAULT_PAGINATION = 10
 RELATIVE_URLS = True
 
 THEME = 'pelican-bootstrap3'
-#TYPOGRIFY = True
+TYPOGRIFY = True
