@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2014-12-20T00:00:00+02:00</updated><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
-For Western languages Ubuntu comes with &amp;quot;English (international with AltGr dead keys)&amp;quot;
+For Western languages Ubuntu comes with &amp;#8220;English (international with AltGr dead keys)&amp;#8221;
 available as a choice of input layout.
 It works out nicely as my default English layout,
 and those extra accented letters are easy within reach
@@ -77,12 +77,12 @@ I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&
 &lt;li&gt;&lt;p class="first"&gt;restart X&amp;nbsp;server&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Now you can choose a &amp;quot;Russian (with Ukrainian-Belorussian layout)&amp;quot; from available layouts.
-It is mostly a standard Russian layout (the biggest difference being position of &amp;quot;ё&amp;quot; character),
+&lt;p&gt;Now you can choose a &amp;#8220;Russian (with Ukrainian-Belorussian layout)&amp;#8221; from available layouts.
+It is mostly a standard Russian layout (the biggest difference being position of &amp;#8220;ё&amp;#8221; character),
 plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
-Check out the &amp;quot;Keyboard Layout Chart&amp;quot; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
+Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
 </summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:devstack-with-neutron.html</id><summary type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
 the solutions for recent DevStack (early Juno as of this
@@ -160,7 +160,7 @@ start VMs and attach floating IPs to&amp;nbsp;them.&lt;/p&gt;
 &lt;p&gt;You might stumble on networking issues concerning outside access,
 like pinging or accessing Internet resources outside of your DevStack.
 First you need to change the Security Group settings -
-the &amp;quot;default&amp;quot; group created by DevStack seems to allow everything
+the &amp;#8220;default&amp;#8221; group created by DevStack seems to allow everything
 but in fact I&amp;#8217;ve always had problems with it, so just create your own
 security group and assign your VMs to it.
 Then you need to configure &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt; to pass through the&amp;nbsp;traffic:&lt;/p&gt;
@@ -330,7 +330,7 @@ Ubuntu most of the time, I need a way to make booting Ubuntu the default&amp;nbs
 &lt;div class="section" id="research"&gt;
 &lt;h2&gt;Research&lt;/h2&gt;
 &lt;p&gt;According to &lt;em&gt;teh Internets&lt;/em&gt; such problems seem to occur reasonably
-often, when vendors &amp;quot;under-implement&amp;quot; &lt;span class="caps"&gt;UEFI&lt;/span&gt; on their products. One
+often, when vendors &amp;#8220;under-implement&amp;#8221; &lt;span class="caps"&gt;UEFI&lt;/span&gt; on their products. One
 commonly proposed solution is using recent versions of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;boot-repair&lt;/span&gt;&lt;/tt&gt;
 Ubuntu package (a really nice piece of engineering, saved my ass couple
 of times in the past). What it does is it substitutes (with backup of
@@ -389,7 +389,7 @@ unattended&amp;nbsp;mode.&lt;/p&gt;
 and unfortunately I failed to configure TuxOnIce to execute the &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;
 properly on&amp;nbsp;resume.&lt;/p&gt;
 &lt;p&gt;I again turned to &lt;span class="caps"&gt;BIOS&lt;/span&gt; settings and this time noticed that I can
-in fact configure &amp;quot;Custom&amp;quot; boot section and make it the first one to boot.
+in fact configure &amp;#8220;Custom&amp;#8221; boot section and make it the first one to boot.
 So now I have Ubuntu booting by default, and from Grub I can start Windows
 if I need, and also I can safely use SAVE_DEFAULT option of Grub.
 For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
