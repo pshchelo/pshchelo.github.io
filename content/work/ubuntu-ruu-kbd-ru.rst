@@ -72,7 +72,7 @@
         <languageList>
           <iso639Id>rus</iso639Id>
         </languageList>
-      </configItem
+      </configItem>
       <variantList>
         <variant>
           <configItem>
