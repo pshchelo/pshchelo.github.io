@@ -57,8 +57,8 @@ else
 endif
 
 stopserver:
-	kill -9 `cat pelican.pid`
-	kill -9 `cat srv.pid`
+	kill -9 `cat pelican.pid` && rm pelican.pid
+	kill -9 `cat srv.pid` && rm srv.pid
 	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
 publish:
