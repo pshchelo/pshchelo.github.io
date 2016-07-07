@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/play.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2014-04-03T00:00:00+03:00</updated><entry><title>Solving the Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-solve.html" rel="alternate"></link><updated>2014-04-03T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-03:rubik-solve.html</id><summary type="html">&lt;p&gt;See &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/play.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2014-04-03T00:00:00+03:00</updated><entry><title>Solving the Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-solve.html" rel="alternate"></link><published>2014-04-03T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-03:rubik-solve.html</id><summary type="html">&lt;p&gt;See &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="cross-of-the-first-layer"&gt;
 &lt;h2&gt;Cross of the first&amp;nbsp;layer&lt;/h2&gt;
 &lt;p&gt;Moves cube &lt;span class="caps"&gt;FD&lt;/span&gt; -&amp;gt; &lt;span class="caps"&gt;FU&lt;/span&gt;&lt;/p&gt;
@@ -74,7 +74,7 @@ F&amp;#8217; M&amp;#8217;&lt;sub&gt;D&lt;/sub&gt; F M&lt;sub&gt;D&lt;/sub&gt;&lt
 &lt;li&gt;U&lt;sup&gt;2&lt;/sup&gt; - rotates &lt;span class="caps"&gt;FUR&lt;/span&gt; and &lt;span class="caps"&gt;LUB&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="puzzles"></category><category term="rubick"></category></entry><entry><title>Figures from the solved Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-figures.html" rel="alternate"></link><updated>2014-04-02T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-02:rubik-figures.html</id><summary type="html">&lt;p&gt;See the &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
+</summary><category term="puzzles"></category><category term="rubick"></category></entry><entry><title>Figures from the solved Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-figures.html" rel="alternate"></link><published>2014-04-02T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-02:rubik-figures.html</id><summary type="html">&lt;p&gt;See the &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Donkey&amp;#8217;s Bridge (chess cube of the 2nd&amp;nbsp;order)&lt;/dt&gt;
 &lt;dd&gt;M&lt;sub&gt;R&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; M&lt;sub&gt;D&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; M&lt;sub&gt;F&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/dd&gt;
@@ -110,7 +110,7 @@ M&amp;#8217;&lt;sub&gt;D&lt;/sub&gt; M&amp;#8217;&lt;sub&gt;R&lt;/sub&gt; M&lt;s
 &lt;dt&gt;Globe - no tile has a common border with a tile of the same&amp;nbsp;color&lt;/dt&gt;
 &lt;dd&gt;[&lt;span class="caps"&gt;FBLR&lt;/span&gt;]&lt;sup&gt;2&lt;/sup&gt;&lt;span class="caps"&gt;LR&lt;/span&gt;&lt;/dd&gt;
 &lt;/dl&gt;
-</summary><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-notation.html" rel="alternate"></link><updated>2014-04-01T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-01:rubik-notation.html</id><summary type="html">&lt;div class="section" id="about"&gt;
+</summary><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-notation.html" rel="alternate"></link><published>2014-04-01T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-01:rubik-notation.html</id><summary type="html">&lt;div class="section" id="about"&gt;
 &lt;h2&gt;About&lt;/h2&gt;
 &lt;p&gt;Quite probably the best known puzzle in the world - cube consisting
 of 3x3x3 matrix of colored cubes, that can be rotated per&amp;nbsp;layer.&lt;/p&gt;
