@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Азы Git и Gerrit workflow в проектах OpenStack - Bits and Pieces</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="http://pshchelo.github.io/git-gerrit-basics-ru.html">
+
+        <meta name="author" content="Pavlo Shchelokovskyy" />
+        <meta name="keywords" content="git,gerrit,openstack" />
+        <meta name="description" content="Quick-n-Dirty opinionated introduction for beginners, in Russian." />
+
+        <meta property="og:site_name" content="Bits and Pieces" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Азы Git и Gerrit workflow в проектах OpenStack"/>
+        <meta property="og:url" content="http://pshchelo.github.io/git-gerrit-basics-ru.html"/>
+        <meta property="og:description" content="Quick-n-Dirty opinionated introduction for beginners, in Russian."/>
+        <meta property="article:published_time" content="2016-09-20" />
+            <meta property="article:section" content="work" />
+            <meta property="article:tag" content="git" />
+            <meta property="article:tag" content="gerrit" />
+            <meta property="article:tag" content="openstack" />
+            <meta property="article:author" content="Pavlo Shchelokovskyy" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://pshchelo.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://pshchelo.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://pshchelo.github.io/theme/css/pygments/native.css" rel="stylesheet">
+        <link href="http://pshchelo.github.io/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://pshchelo.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Bits and Pieces ATOM Feed"/>
+
+
+
+        <link href="http://pshchelo.github.io/feeds/work.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Bits and Pieces work ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://pshchelo.github.io/" class="navbar-brand">
+Bits and Pieces            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://pshchelo.github.io/pages/about.html">
+                             About
+                          </a></li>
+                        <li >
+                            <a href="http://pshchelo.github.io/category/play.html">Play</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://pshchelo.github.io/category/work.html">Work</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://pshchelo.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://pshchelo.github.io/git-gerrit-basics-ru.html"
+                       rel="bookmark"
+                       title="Permalink to Азы Git и Gerrit workflow в проектах OpenStack">
+                        Азы Git и Gerrit workflow в проектах&nbsp;OpenStack
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-09-20T00:00:00+03:00"> Tue 20 September 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://pshchelo.github.io/tag/git.html">git</a>
+        /
+	<a href="http://pshchelo.github.io/tag/gerrit.html">gerrit</a>
+        /
+	<a href="http://pshchelo.github.io/tag/openstack.html">openstack</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <!--  -->
+<blockquote>
+&#8220;git gets easier once you get the basic idea
+that branches are homeomorphic endofunctors
+mapping submanifolds of a Hilbert space&#8221;
+<a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968">chi wai lau (&#64;tabqwerty)</a></blockquote>
+<p><strong>Осторожно</strong> - много англицизмов и моего личного&nbsp;мнения.</p>
+<div class="section" id="id1">
+<h2>Самое&nbsp;Главное</h2>
+<p><strong>Не лениться и вдумчиво читать то, что git или git-review
+выводит в командную&nbsp;строку.</strong></p>
+<p>Там очень часто весьма внятно описано что пошло или может пойти не так,
+и какие есть варианты действий, с примерами&nbsp;команд</p>
+</div>
+<div class="section" id="git">
+<h2>Git</h2>
+<p>Чумовая книжечка -
+<a class="reference external" href="http://jwiegley.github.io/git-from-the-bottom-up/">Git from the Bottom Up</a>
+by John Wiegley (<span class="caps">CC</span> <span class="caps">BY</span>-<span class="caps">ND</span> 4.0).
+Картинки скопированы оттуда, и общая канва повествования немного&nbsp;тоже.</p>
+<div class="section" id="id2">
+<h3>Основные&nbsp;конструкции</h3>
+<img alt="кирпичики Гита" src="http://pshchelo.github.io/images/git-gerrit-basics/commits.png" />
+<ul class="simple">
+<li><strong>Blob</strong> - объект хранящий “файл”.
+То, ради чего все затевалось.
+Определяется своим хэшем, который определяется только размером файла
+и его&nbsp;содержанием.</li>
+<li><strong>Tree</strong> - содержит ссылки на блобы и другие tree а также метадату для них.
+Тоже имеет хэш, определяемый хэшами содержимого и&nbsp;метадатой.</li>
+<li><strong>Commit</strong> - содержит одно дерево, и ссылки на родительские коммиты,
+формируя историю.
+Тоже имеет хэш, определяемый всем этим - содержанием дерева,
+коммит мессаджем и хэшами родительских&nbsp;коммитов.</li>
+</ul>
+<p>Все остальное опирается на эти три базовых&nbsp;идеи.</p>
+</div>
+<div class="section" id="id3">
+<h3>Индекс</h3>
+<p>В отличие от (большинства?) других систем контроля версий в Git реализована
+двухступенчатая процедура внесения изменений - через <em>Index</em>
+(он же <em>Staging Area</em>).</p>
+<img alt="основы основ" src="http://pshchelo.github.io/images/git-gerrit-basics/lifecycle.png" />
+<ul class="simple">
+<li><strong>Working area</strong> - реальные файлы на файловой&nbsp;системе</li>
+<li><strong>Index</strong> - &nbsp;изменения которые будут занесены в репозиторий как следующий&nbsp;коммит</li>
+<li><strong>Repository</strong> - хранилище&nbsp;коммитов</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Бранчи и&nbsp;Теги</h3>
+<p>Бранчи и теги - не более чем символические ссылки на commit id
+имеющие человеко-читаемые&nbsp;имена.</p>
+<p><tt class="docutils literal"><span class="caps">HEAD</span></tt> - специальная ссылка на текущее (последнее чекаутное)
+состояние Working&nbsp;Tree.</p>
+<p><tt class="docutils literal">&lt;ref&gt;^</tt> - родитель коммита&nbsp;&lt;ref&gt;</p>
+<p><tt class="docutils literal"><span class="pre">&lt;ref&gt;^^</span></tt> - второй родитель (есть однозначный типа <span class="caps">MRO</span>,
+но точно не помню какой).
+В принцие может быть больше двух родителей (^^^&#8230;)&nbsp;aka octopus merge,
+но в жизни пока не встречал/не приходилось&nbsp;делать.</p>
+<p><tt class="docutils literal"><span class="pre">&lt;ref&gt;~N</span></tt> - Nый родитель вдаль по&nbsp;истории</p>
+<p>Основное отличие тегов в том что для них нельзя просто переопределить
+ссылку на коммит - надо только удалить старый тег и создать такой же новый.
+Но <em>IMnsHO</em> тому кто двигает теги надо отрубать&nbsp;руки.</p>
+</div>
+<div class="section" id="remotes">
+<h3>Remotes</h3>
+<p>Ремоуты - это специальный вид бранчей, которые указывают на коммиты
+на удаленном &nbsp;репозитории (точнее в его локальной&nbsp;копии).</p>
+<p>Можно - и часто нужно! - иметь много remotes в своей локальной&nbsp;репе.</p>
+<div class="highlight"><pre><span></span>git remote -v
+git remote add &lt;remote-name&gt; &lt;url&gt;
+</pre></div>
+</div>
+<div class="section" id="very-basic-git-workflow">
+<h3>Very Basic git&nbsp;workflow</h3>
+<div class="highlight"><pre><span></span>git fetch &lt;remote-name&gt;
+<span class="c1"># создаем новый репозиторий</span>
+mkdir &lt;repo&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$_</span> <span class="o">&amp;&amp;</span> git init
+<span class="c1"># или стягиваем готовый</span>
+git clone &lt;remote-url&gt; &lt;path&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$_</span>
+<span class="c1"># hack on code</span>
+git add <span class="o">[</span>--patch<span class="o">]</span> <span class="c1"># заносим изменения в индекс</span>
+git commit -m “My commit” <span class="c1"># сохраняем индекс как новый коммит</span>
+<span class="c1"># git push [remote] # выкладываем изменения в удаленный репозиторий</span>
+</pre></div>
+<p>Интерактивный <tt class="docutils literal">git add <span class="pre">--patch</span></tt> позволяет заносить в индекс отдельные
+куски изменений (<em>hunks</em>), а не весь файл&nbsp;целиком.</p>
+</div>
+<div class="section" id="merg">
+<h3>Mergе и&nbsp;конфликты</h3>
+<p>Создание коммита с несколькими&nbsp;родителями.</p>
+<p>Часта ситуация когда некоторые файлы отличаются в обоих родителях,
+и алгоритмы Git (на самом деле весьма продвинутые) не могут однозначно
+определить, как должна выглядеть их “сумма”.
+Появляются merge conflicts которые надо&nbsp;чинить.</p>
+<p>Ищем в файлах&nbsp;строчки</p>
+<div class="highlight"><pre><span></span>&lt;&lt;&lt;[some-ref]
+# код того куда мержим
+====
+# код того что примерживаем
+&gt;&gt;&gt;[other-ref]
+</pre></div>
+<p>И выбираем какая версия больше нравится. А может и переписываем кусок&nbsp;совсем.</p>
+<dl class="docutils">
+<dt>git&nbsp;mergetool</dt>
+<dd>удобная штука, которая из коробки умеет работать со многими
+редакторами/сравнителями (vimdiff, meld, diffuse, WinMerge, kdiff3 etc).
+Настраивается через <tt class="docutils literal"><span class="pre">git-config</span></tt>.</dd>
+</dl>
+<p>Обычно в редакторе будут файлы заканчивающиеся&nbsp;на:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="caps">BASE</span></tt> - версия файла из ближайшего общего&nbsp;предка</li>
+<li><tt class="docutils literal"><span class="caps">LOCAL</span></tt> - то куда&nbsp;мержится</li>
+<li><tt class="docutils literal"><span class="caps">REMOTE</span></tt> - то что&nbsp;мержится</li>
+</ul>
+</div>
+<div class="section" id="cherry-pick">
+<h3>Cherry-pick</h3>
+<p>Делает копию одного коммита поверх другого. Возможны&nbsp;конфликты.</p>
+</div>
+<div class="section" id="rebase">
+<h3>Rebase</h3>
+<p>Пересаживает ветку на нового родителя. Изменяет&nbsp;историю!</p>
+<div class="highlight"><pre><span></span>git rebase <span class="o">[</span>-i<span class="o">]</span> &lt;target-ref&gt;
+</pre></div>
+<p>Интерактивный ребейз - очень мощная штука.
+Позволяет выбрать какие коммиты и в каком порядке пересаживать,
+слепливать несколько коммитов в один, изменять их содержимое и&nbsp;мессаджи.</p>
+<p>Конфликты возможны на каждом пересаживаемом&nbsp;патче.</p>
+<p>В случае мерж конфликтов при ребейзе <tt class="docutils literal"><span class="caps">LOCAL</span></tt> относится к тому на что
+ребейзится, а <tt class="docutils literal"><span class="caps">REMOTE</span></tt> - то что&nbsp;ребейзится.</p>
+</div>
+<div class="section" id="tools">
+<h3>Tools</h3>
+<div class="section" id="id5">
+<h4>Для любителей кнопочек и&nbsp;менюшечек</h4>
+<ul class="simple">
+<li>gitk/git-gui - на лицо ужасный (Tcl/Tk),
+добрый внутри “дефолтный” <span class="caps">GUI</span> для гита<ul>
+<li>gitk - браузер&nbsp;истории</li>
+<li>git-gui - коммиты и&nbsp;проч.</li>
+</ul>
+</li>
+<li>gitg - весьма пристойный аскетичный Гуй на&nbsp;Gtk</li>
+<li>git-cola - тоже неплохо,
+прикольная визуализация <span class="caps">DAG</span> (directed acyclic graph) дерева&nbsp;коммитов</li>
+<li>SourceTree - для Win/Mac,
+не открытый но бесплатный, от Atlassian, на Яблоке&nbsp;красивый</li>
+<li>Ваш <span class="caps">IDE</span> - наверное то же что-то есть (PyCharm,&nbsp;Eclipse+PyDev…)</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h4>Для ковбоев&nbsp;консоли</h4>
+<ul class="simple">
+<li>Git&nbsp;:)</li>
+<li>tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь&nbsp;постоянно.</li>
+<li>Vim плагины (у меня на нем профдеформация)<ul>
+<li>Vim-fugitive - весьма мощная штука, но пока я не очень пользуюсь,
+только для сложных интерактивных add. Надо переползать&nbsp;плотнее…</li>
+<li>Vim-gitgutter - помечает добавленые/удаленные/измененные строчки,
+и может стейжить ханки.
+Так же интегрируется в vim-airline и показывает общее количество
+незакоммиченых изменений в открытом&nbsp;файле.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="fun">
+<h4>Fun</h4>
+<ul class="simple">
+<li>gource - визуализация развития гит репозитория в динамике. Просто красиво&nbsp;:)
+* <tt class="docutils literal">sudo apt install gource &amp;&amp; cd &lt;repo&gt; &amp;&amp; gource</tt></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="gerrit-workflow-openstack">
+<h2>Gerrit Workflow в&nbsp;OpenStack</h2>
+<p>Gerrit - система код-ревью основанная на&nbsp;Гите.</p>
+<p>В cвое время отфоркался от Rietveld написанного Гуидо ван Россумом,
+создателем&nbsp;Python.</p>
+<p>Основной принцип - содержит ченжи, внутри каждого патч-сеты.
+Каждый патч-сет - это отдельный бранч.
+Это позволяет вовсю пользоваться rebase и commit &#8212;amend,
+перезаписывая локальную историю и выкладывая ее на remote,
+<em>что в общем случае очень сильно не рекомендуется</em>.</p>
+<p><a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow">http://docs.openstack.org/infra/manual/developers.html#development-workflow</a></p>
+<p><a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages">https://wiki.openstack.org/wiki/GitCommitMessages</a></p>
+<p>В принципе c Герритом можно работать через Git напрямую,
+но с <tt class="docutils literal"><span class="pre">git-review</span></tt> значительно&nbsp;удобнее.</p>
+<div class="highlight"><pre><span></span>sudo -H pip install -U git-review
+</pre></div>
+<p>Стоит почитать&nbsp;man <tt class="docutils literal"><span class="pre">git-review</span></tt>.</p>
+<div class="section" id="id7">
+<h3>Конфигурация</h3>
+<p>Настраивается через <tt class="docutils literal"><span class="pre">git-config</span></tt>:</p>
+<div class="highlight"><pre><span></span>$ cat ~/.gitconfig
+…
+<span class="o">[</span>gitreview<span class="o">]</span>
+    <span class="nv">username</span> <span class="o">=</span> &lt;my-gerrit-user-name&gt;
+    <span class="nv">rebase</span> <span class="o">=</span> <span class="nb">false</span>
+</pre></div>
+</div>
+<div class="section" id="basic-workflow">
+<h3>Basic&nbsp;workflow</h3>
+<div class="section" id="change-id">
+<h4>Change-Id</h4>
+<p>git-review добавляет пост-коммит хук,
+который добавляет в коммит-мессадж&nbsp;строчку:</p>
+<pre class="literal-block">
+Change-Id: INNNNNN…
+</pre>
+<dl class="docutils">
+<dt>Change-Id</dt>
+<dd>независимый, Gerrit-specific хэш, по которому Геррит определяет
+в какой change ему добавить новую версию&nbsp;коммита.</dd>
+<dt>Очень&nbsp;важно</dt>
+<dd>не изменять строчку c Change-Id при обновлении патчей.
+Новый Change-Id =&gt; новый change на&nbsp;Геррите.</dd>
+</dl>
+</div>
+<div class="section" id="id8">
+<h4>Работа над новым, независимым изменением (баг,&nbsp;фича)</h4>
+<div class="highlight"><pre><span></span><span class="c1"># git clone … &amp;&amp; cd &lt;repo&gt;</span>
+git review -s <span class="c1"># создает новый remote по имени gerrit</span>
+git checkout master
+<span class="c1"># git pull origin master</span>
+git checkout -b &lt;new-feature-branch&gt;
+<span class="c1"># hack on it</span>
+git add .
+git commit
+<span class="c1"># проверяем что же мы закоммитили</span>
+git log -1 <span class="o">&amp;&amp;</span> git diff HEAD^..HEAD
+<span class="c1"># прогоняем юнит и прочие тесты</span>
+<span class="c1"># tox [-e…]</span>
+git review
+</pre></div>
+</div>
+<div class="section" id="id9">
+<h4>Правим свой старый&nbsp;патч</h4>
+<div class="highlight"><pre><span></span><span class="c1"># если ветки нет - скачиваем ее с Gerrit:</span>
+git review -d NNNNNN <span class="c1"># review.openstack.org/#/c/NNNNNN</span>
+<span class="c1"># создалась новая ветка review/&lt;user_name&gt;/&lt;topic&gt;</span>
+<span class="c1"># если ветка уже есть - переключаемся на нее:</span>
+git checkout &lt;feature-branch&gt;
+<span class="c1"># если мерж конфликт</span>
+git checkout master
+git pull origin master
+git fetch gerrit
+git checkout &lt;feature-branch&gt;
+git rebase -i master
+<span class="c1"># и резолвить конфликты</span>
+<span class="c1"># hack on it, address reviewers comments</span>
+git add .
+<span class="c1"># не создаем новый коммит!</span>
+<span class="c1"># а добавляет изменения из индекса в последний коммит</span>
+<span class="c1"># (и естесственно при этом меняет его commid-id)</span>
+git commit --amend
+git review
+</pre></div>
+<p>Всегда коммитим обновления через аменд, перезаписывая последний&nbsp;коммит.</p>
+</div>
+</div>
+<div class="section" id="rebase-or-not-rebase">
+<h3>Rebase or not&nbsp;Rebase?</h3>
+<p>По дефолту, при выкладывании через git-review, его <tt class="docutils literal"><span class="pre">pre-push</span> hook</tt>
+попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
+(по дефолту&nbsp;master).</p>
+<p>Иногда это хорошо (вы забыли обновить мастер, и теперь есть мерж-конфликты -
+упадет сразу, не&nbsp;выложив).</p>
+<p>Это поведение отменяется ключом <tt class="docutils literal"><span class="pre">-R</span></tt>.</p>
+<p>Но чаще всего лучше делать осознанный ребейз руками - ревьюерам вашего кода
+проще сравнивать разные версии патч-сетов когда между ними не было&nbsp;ребейза.</p>
+<p>Отдельная история - ваш change зависит от чужого, еще не вмерженого и
+находящегося на review.
+В таком случае не ребейзить чужие патчи - общее правило хорошего&nbsp;тона.</p>
+<p>Поэтому мой личный&nbsp;алгоритм:</p>
+<ul class="simple">
+<li>Отключить авторебейз по&nbsp;дефолту</li>
+<li>Новый change - всегда от&nbsp;мастера.</li>
+<li>Обновляю <em>свой, независимый</em> старый change - ребейз только если:<ul>
+<li>еще не было ни одного ревью,&nbsp;или</li>
+<li>если merge conflict (тут уж без&nbsp;вариантов)</li>
+</ul>
+</li>
+<li>В остальных случаях - без&nbsp;ребейза.</li>
+</ul>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/pshchelo"><i class="fa fa-github-square fa-lg"></i> GitHub</a></li>
+                <li class="list-group-item"><a href="https://bitbucket.org/pshchelo"><i class="fa fa-bitbucket-square fa-lg"></i> BitBucket</a></li>
+                <li class="list-group-item"><a href="https://plus.google.com/+PavloShchelokovskyy/about"><i class="fa fa-google-plus-square fa-lg"></i> Google+</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/pshchelo"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="http://ua.linkedin.com/pub/pavlo-shchelokovskyy/38/676/124/"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.openstack.org/" target="_blank">
+                OpenStack
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 Pavlo Shchelokovskyy
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://pshchelo.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://pshchelo.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://pshchelo.github.io/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>

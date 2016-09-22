@@ -1,5 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2014-12-20T00:00:00+02:00</updated><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-09-20T00:00:00+03:00</updated><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
+&lt;blockquote&gt;
+&amp;#8220;git gets easier once you get the basic idea
+that branches are homeomorphic endofunctors
+mapping submanifolds of a Hilbert space&amp;#8221;
+&lt;a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968"&gt;chi wai lau (&amp;#64;tabqwerty)&lt;/a&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного&amp;nbsp;мнения.&lt;/p&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h2&gt;Самое&amp;nbsp;Главное&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Не лениться и вдумчиво читать то, что git или git-review
+выводит в командную&amp;nbsp;строку.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Там очень часто весьма внятно описано что пошло или может пойти не так,
+и какие есть варианты действий, с примерами&amp;nbsp;команд&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="git"&gt;
+&lt;h2&gt;Git&lt;/h2&gt;
+&lt;p&gt;Чумовая книжечка -
+&lt;a class="reference external" href="http://jwiegley.github.io/git-from-the-bottom-up/"&gt;Git from the Bottom Up&lt;/a&gt;
+by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&gt;BY&lt;/span&gt;-&lt;span class="caps"&gt;ND&lt;/span&gt; 4.0).
+Картинки скопированы оттуда, и общая канва повествования немного&amp;nbsp;тоже.&lt;/p&gt;
+&lt;div class="section" id="id2"&gt;
+&lt;h3&gt;Основные&amp;nbsp;конструкции&lt;/h3&gt;
+&lt;img alt="кирпичики Гита" src="http://pshchelo.github.io/images/git-gerrit-basics/commits.png" /&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Blob&lt;/strong&gt; - объект хранящий “файл”.
+То, ради чего все затевалось.
+Определяется своим хэшем, который определяется только размером файла
+и его&amp;nbsp;содержанием.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tree&lt;/strong&gt; - содержит ссылки на блобы и другие tree а также метадату для них.
+Тоже имеет хэш, определяемый хэшами содержимого и&amp;nbsp;метадатой.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Commit&lt;/strong&gt; - содержит одно дерево, и ссылки на родительские коммиты,
+формируя историю.
+Тоже имеет хэш, определяемый всем этим - содержанием дерева,
+коммит мессаджем и хэшами родительских&amp;nbsp;коммитов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Все остальное опирается на эти три базовых&amp;nbsp;идеи.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h3&gt;Индекс&lt;/h3&gt;
+&lt;p&gt;В отличие от (большинства?) других систем контроля версий в Git реализована
+двухступенчатая процедура внесения изменений - через &lt;em&gt;Index&lt;/em&gt;
+(он же &lt;em&gt;Staging Area&lt;/em&gt;).&lt;/p&gt;
+&lt;img alt="основы основ" src="http://pshchelo.github.io/images/git-gerrit-basics/lifecycle.png" /&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Working area&lt;/strong&gt; - реальные файлы на файловой&amp;nbsp;системе&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Index&lt;/strong&gt; - &amp;nbsp;изменения которые будут занесены в репозиторий как следующий&amp;nbsp;коммит&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repository&lt;/strong&gt; - хранилище&amp;nbsp;коммитов&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id4"&gt;
+&lt;h3&gt;Бранчи и&amp;nbsp;Теги&lt;/h3&gt;
+&lt;p&gt;Бранчи и теги - не более чем символические ссылки на commit id
+имеющие человеко-читаемые&amp;nbsp;имена.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;HEAD&lt;/span&gt;&lt;/tt&gt; - специальная ссылка на текущее (последнее чекаутное)
+состояние Working&amp;nbsp;Tree.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&amp;lt;ref&amp;gt;^&lt;/tt&gt; - родитель коммита&amp;nbsp;&amp;lt;ref&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;^^&lt;/span&gt;&lt;/tt&gt; - второй родитель (есть однозначный типа &lt;span class="caps"&gt;MRO&lt;/span&gt;,
+но точно не помню какой).
+В принцие может быть больше двух родителей (^^^&amp;#8230;)&amp;nbsp;aka octopus merge,
+но в жизни пока не встречал/не приходилось&amp;nbsp;делать.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;~N&lt;/span&gt;&lt;/tt&gt; - Nый родитель вдаль по&amp;nbsp;истории&lt;/p&gt;
+&lt;p&gt;Основное отличие тегов в том что для них нельзя просто переопределить
+ссылку на коммит - надо только удалить старый тег и создать такой же новый.
+Но &lt;em&gt;IMnsHO&lt;/em&gt; тому кто двигает теги надо отрубать&amp;nbsp;руки.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="remotes"&gt;
+&lt;h3&gt;Remotes&lt;/h3&gt;
+&lt;p&gt;Ремоуты - это специальный вид бранчей, которые указывают на коммиты
+на удаленном &amp;nbsp;репозитории (точнее в его локальной&amp;nbsp;копии).&lt;/p&gt;
+&lt;p&gt;Можно - и часто нужно! - иметь много remotes в своей локальной&amp;nbsp;репе.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git remote -v
+git remote add &amp;lt;remote-name&amp;gt; &amp;lt;url&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="very-basic-git-workflow"&gt;
+&lt;h3&gt;Very Basic git&amp;nbsp;workflow&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git fetch &amp;lt;remote-name&amp;gt;
+&lt;span class="c1"&gt;# создаем новый репозиторий&lt;/span&gt;
+mkdir &amp;lt;repo&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git init
+&lt;span class="c1"&gt;# или стягиваем готовый&lt;/span&gt;
+git clone &amp;lt;remote-url&amp;gt; &amp;lt;path&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt;
+&lt;span class="c1"&gt;# hack on code&lt;/span&gt;
+git add &lt;span class="o"&gt;[&lt;/span&gt;--patch&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# заносим изменения в индекс&lt;/span&gt;
+git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем индекс как новый коммит&lt;/span&gt;
+&lt;span class="c1"&gt;# git push [remote] # выкладываем изменения в удаленный репозиторий&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Интерактивный &lt;tt class="docutils literal"&gt;git add &lt;span class="pre"&gt;--patch&lt;/span&gt;&lt;/tt&gt; позволяет заносить в индекс отдельные
+куски изменений (&lt;em&gt;hunks&lt;/em&gt;), а не весь файл&amp;nbsp;целиком.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="merg"&gt;
+&lt;h3&gt;Mergе и&amp;nbsp;конфликты&lt;/h3&gt;
+&lt;p&gt;Создание коммита с несколькими&amp;nbsp;родителями.&lt;/p&gt;
+&lt;p&gt;Часта ситуация когда некоторые файлы отличаются в обоих родителях,
+и алгоритмы Git (на самом деле весьма продвинутые) не могут однозначно
+определить, как должна выглядеть их “сумма”.
+Появляются merge conflicts которые надо&amp;nbsp;чинить.&lt;/p&gt;
+&lt;p&gt;Ищем в файлах&amp;nbsp;строчки&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;&amp;lt;&amp;lt;[some-ref]
+# код того куда мержим
+====
+# код того что примерживаем
+&amp;gt;&amp;gt;&amp;gt;[other-ref]
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;И выбираем какая версия больше нравится. А может и переписываем кусок&amp;nbsp;совсем.&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;git&amp;nbsp;mergetool&lt;/dt&gt;
+&lt;dd&gt;удобная штука, которая из коробки умеет работать со многими
+редакторами/сравнителями (vimdiff, meld, diffuse, WinMerge, kdiff3 etc).
+Настраивается через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-config&lt;/span&gt;&lt;/tt&gt;.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Обычно в редакторе будут файлы заканчивающиеся&amp;nbsp;на:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;BASE&lt;/span&gt;&lt;/tt&gt; - версия файла из ближайшего общего&amp;nbsp;предка&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;LOCAL&lt;/span&gt;&lt;/tt&gt; - то куда&amp;nbsp;мержится&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что&amp;nbsp;мержится&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="cherry-pick"&gt;
+&lt;h3&gt;Cherry-pick&lt;/h3&gt;
+&lt;p&gt;Делает копию одного коммита поверх другого. Возможны&amp;nbsp;конфликты.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rebase"&gt;
+&lt;h3&gt;Rebase&lt;/h3&gt;
+&lt;p&gt;Пересаживает ветку на нового родителя. Изменяет&amp;nbsp;историю!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git rebase &lt;span class="o"&gt;[&lt;/span&gt;-i&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;target-ref&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Интерактивный ребейз - очень мощная штука.
+Позволяет выбрать какие коммиты и в каком порядке пересаживать,
+слепливать несколько коммитов в один, изменять их содержимое и&amp;nbsp;мессаджи.&lt;/p&gt;
+&lt;p&gt;Конфликты возможны на каждом пересаживаемом&amp;nbsp;патче.&lt;/p&gt;
+&lt;p&gt;В случае мерж конфликтов при ребейзе &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;LOCAL&lt;/span&gt;&lt;/tt&gt; относится к тому на что
+ребейзится, а &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что&amp;nbsp;ребейзится.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="tools"&gt;
+&lt;h3&gt;Tools&lt;/h3&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h4&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/h4&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;gitk/git-gui - на лицо ужасный (Tcl/Tk),
+добрый внутри “дефолтный” &lt;span class="caps"&gt;GUI&lt;/span&gt; для гита&lt;ul&gt;
+&lt;li&gt;gitk - браузер&amp;nbsp;истории&lt;/li&gt;
+&lt;li&gt;git-gui - коммиты и&amp;nbsp;проч.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;gitg - весьма пристойный аскетичный Гуй на&amp;nbsp;Gtk&lt;/li&gt;
+&lt;li&gt;git-cola - тоже неплохо,
+прикольная визуализация &lt;span class="caps"&gt;DAG&lt;/span&gt; (directed acyclic graph) дерева&amp;nbsp;коммитов&lt;/li&gt;
+&lt;li&gt;SourceTree - для Win/Mac,
+не открытый но бесплатный, от Atlassian, на Яблоке&amp;nbsp;красивый&lt;/li&gt;
+&lt;li&gt;Ваш &lt;span class="caps"&gt;IDE&lt;/span&gt; - наверное то же что-то есть (PyCharm,&amp;nbsp;Eclipse+PyDev…)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id6"&gt;
+&lt;h4&gt;Для ковбоев&amp;nbsp;консоли&lt;/h4&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Git&amp;nbsp;:)&lt;/li&gt;
+&lt;li&gt;tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь&amp;nbsp;постоянно.&lt;/li&gt;
+&lt;li&gt;Vim плагины (у меня на нем профдеформация)&lt;ul&gt;
+&lt;li&gt;Vim-fugitive - весьма мощная штука, но пока я не очень пользуюсь,
+только для сложных интерактивных add. Надо переползать&amp;nbsp;плотнее…&lt;/li&gt;
+&lt;li&gt;Vim-gitgutter - помечает добавленые/удаленные/измененные строчки,
+и может стейжить ханки.
+Так же интегрируется в vim-airline и показывает общее количество
+незакоммиченых изменений в открытом&amp;nbsp;файле.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fun"&gt;
+&lt;h4&gt;Fun&lt;/h4&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;gource - визуализация развития гит репозитория в динамике. Просто красиво&amp;nbsp;:)
+* &lt;tt class="docutils literal"&gt;sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp;amp; gource&lt;/tt&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="gerrit-workflow-openstack"&gt;
+&lt;h2&gt;Gerrit Workflow в&amp;nbsp;OpenStack&lt;/h2&gt;
+&lt;p&gt;Gerrit - система код-ревью основанная на&amp;nbsp;Гите.&lt;/p&gt;
+&lt;p&gt;В cвое время отфоркался от Rietveld написанного Гуидо ван Россумом,
+создателем&amp;nbsp;Python.&lt;/p&gt;
+&lt;p&gt;Основной принцип - содержит ченжи, внутри каждого патч-сеты.
+Каждый патч-сет - это отдельный бранч.
+Это позволяет вовсю пользоваться rebase и commit &amp;#8212;amend,
+перезаписывая локальную историю и выкладывая ее на remote,
+&lt;em&gt;что в общем случае очень сильно не рекомендуется&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;В принципе c Герритом можно работать через Git напрямую,
+но с &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; значительно&amp;nbsp;удобнее.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo -H pip install -U git-review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Стоит почитать&amp;nbsp;man &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="section" id="id7"&gt;
+&lt;h3&gt;Конфигурация&lt;/h3&gt;
+&lt;p&gt;Настраивается через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-config&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.gitconfig
+…
+&lt;span class="o"&gt;[&lt;/span&gt;gitreview&lt;span class="o"&gt;]&lt;/span&gt;
+    &lt;span class="nv"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &amp;lt;my-gerrit-user-name&amp;gt;
+    &lt;span class="nv"&gt;rebase&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="basic-workflow"&gt;
+&lt;h3&gt;Basic&amp;nbsp;workflow&lt;/h3&gt;
+&lt;div class="section" id="change-id"&gt;
+&lt;h4&gt;Change-Id&lt;/h4&gt;
+&lt;p&gt;git-review добавляет пост-коммит хук,
+который добавляет в коммит-мессадж&amp;nbsp;строчку:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Change-Id: INNNNNN…
+&lt;/pre&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;Change-Id&lt;/dt&gt;
+&lt;dd&gt;независимый, Gerrit-specific хэш, по которому Геррит определяет
+в какой change ему добавить новую версию&amp;nbsp;коммита.&lt;/dd&gt;
+&lt;dt&gt;Очень&amp;nbsp;важно&lt;/dt&gt;
+&lt;dd&gt;не изменять строчку c Change-Id при обновлении патчей.
+Новый Change-Id =&amp;gt; новый change на&amp;nbsp;Геррите.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id8"&gt;
+&lt;h4&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# git clone … &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt;&lt;/span&gt;
+git review -s &lt;span class="c1"&gt;# создает новый remote по имени gerrit&lt;/span&gt;
+git checkout master
+&lt;span class="c1"&gt;# git pull origin master&lt;/span&gt;
+git checkout -b &amp;lt;new-feature-branch&amp;gt;
+&lt;span class="c1"&gt;# hack on it&lt;/span&gt;
+git add .
+git commit
+&lt;span class="c1"&gt;# проверяем что же мы закоммитили&lt;/span&gt;
+git log -1 &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git diff HEAD^..HEAD
+&lt;span class="c1"&gt;# прогоняем юнит и прочие тесты&lt;/span&gt;
+&lt;span class="c1"&gt;# tox [-e…]&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id9"&gt;
+&lt;h4&gt;Правим свой старый&amp;nbsp;патч&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# если ветки нет - скачиваем ее с Gerrit:&lt;/span&gt;
+git review -d NNNNNN &lt;span class="c1"&gt;# review.openstack.org/#/c/NNNNNN&lt;/span&gt;
+&lt;span class="c1"&gt;# создалась новая ветка review/&amp;lt;user_name&amp;gt;/&amp;lt;topic&amp;gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# если ветка уже есть - переключаемся на нее:&lt;/span&gt;
+git checkout &amp;lt;feature-branch&amp;gt;
+&lt;span class="c1"&gt;# если мерж конфликт&lt;/span&gt;
+git checkout master
+git pull origin master
+git fetch gerrit
+git checkout &amp;lt;feature-branch&amp;gt;
+git rebase -i master
+&lt;span class="c1"&gt;# и резолвить конфликты&lt;/span&gt;
+&lt;span class="c1"&gt;# hack on it, address reviewers comments&lt;/span&gt;
+git add .
+&lt;span class="c1"&gt;# не создаем новый коммит!&lt;/span&gt;
+&lt;span class="c1"&gt;# а добавляет изменения из индекса в последний коммит&lt;/span&gt;
+&lt;span class="c1"&gt;# (и естесственно при этом меняет его commid-id)&lt;/span&gt;
+git commit --amend
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Всегда коммитим обновления через аменд, перезаписывая последний&amp;nbsp;коммит.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rebase-or-not-rebase"&gt;
+&lt;h3&gt;Rebase or not&amp;nbsp;Rebase?&lt;/h3&gt;
+&lt;p&gt;По дефолту, при выкладывании через git-review, его &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pre-push&lt;/span&gt; hook&lt;/tt&gt;
+попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
+(по дефолту&amp;nbsp;master).&lt;/p&gt;
+&lt;p&gt;Иногда это хорошо (вы забыли обновить мастер, и теперь есть мерж-конфликты -
+упадет сразу, не&amp;nbsp;выложив).&lt;/p&gt;
+&lt;p&gt;Это поведение отменяется ключом &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-R&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Но чаще всего лучше делать осознанный ребейз руками - ревьюерам вашего кода
+проще сравнивать разные версии патч-сетов когда между ними не было&amp;nbsp;ребейза.&lt;/p&gt;
+&lt;p&gt;Отдельная история - ваш change зависит от чужого, еще не вмерженого и
+находящегося на review.
+В таком случае не ребейзить чужие патчи - общее правило хорошего&amp;nbsp;тона.&lt;/p&gt;
+&lt;p&gt;Поэтому мой личный&amp;nbsp;алгоритм:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Отключить авторебейз по&amp;nbsp;дефолту&lt;/li&gt;
+&lt;li&gt;Новый change - всегда от&amp;nbsp;мастера.&lt;/li&gt;
+&lt;li&gt;Обновляю &lt;em&gt;свой, независимый&lt;/em&gt; старый change - ребейз только если:&lt;ul&gt;
+&lt;li&gt;еще не было ни одного ревью,&amp;nbsp;или&lt;/li&gt;
+&lt;li&gt;если merge conflict (тут уж без&amp;nbsp;вариантов)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;В остальных случаях - без&amp;nbsp;ребейза.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
 For Western languages Ubuntu comes with &amp;#8220;English (international with AltGr dead keys)&amp;#8221;
