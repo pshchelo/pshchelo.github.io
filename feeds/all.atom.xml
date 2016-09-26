@@ -8,8 +8,8 @@ mapping submanifolds of a Hilbert space&amp;#8221;
 &lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного&amp;nbsp;мнения.&lt;/p&gt;
 &lt;div class="section" id="id1"&gt;
 &lt;h2&gt;Самое&amp;nbsp;Главное&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Не лениться и вдумчиво читать то, что git или git-review
-выводит в командную&amp;nbsp;строку.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Не лениться и вдумчиво читать то, что&lt;/strong&gt; &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; &lt;strong&gt;или&lt;/strong&gt; &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;
+&lt;strong&gt;выводит в командную&amp;nbsp;строку.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Там очень часто весьма внятно описано что пошло или может пойти не так,
 и какие есть варианты действий, с примерами&amp;nbsp;команд&lt;/p&gt;
 &lt;/div&gt;
@@ -71,12 +71,12 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 &lt;p&gt;Можно - и часто нужно! - иметь много remotes в своей локальной&amp;nbsp;репе.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git remote -v
 git remote add &amp;lt;remote-name&amp;gt; &amp;lt;url&amp;gt;
+git fetch &amp;lt;remote-name&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="very-basic-git-workflow"&gt;
 &lt;h3&gt;Very Basic git&amp;nbsp;workflow&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git fetch &amp;lt;remote-name&amp;gt;
-&lt;span class="c1"&gt;# создаем новый репозиторий&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# создаем новый репозиторий&lt;/span&gt;
 mkdir &amp;lt;repo&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git init
 &lt;span class="c1"&gt;# или стягиваем готовый&lt;/span&gt;
 git clone &amp;lt;remote-url&amp;gt; &amp;lt;path&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt;
@@ -106,7 +106,7 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;git&amp;nbsp;mergetool&lt;/dt&gt;
 &lt;dd&gt;удобная штука, которая из коробки умеет работать со многими
-редакторами/сравнителями (vimdiff, meld, diffuse, WinMerge, kdiff3 etc).
+редакторами/сравнителями (vimdiff, meld, diffuse, WinMerge, kdiff3 и т.п.).
 Настраивается через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-config&lt;/span&gt;&lt;/tt&gt;.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;Обычно в редакторе будут файлы заканчивающиеся&amp;nbsp;на:&lt;/p&gt;
@@ -118,11 +118,13 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;/div&gt;
 &lt;div class="section" id="cherry-pick"&gt;
 &lt;h3&gt;Cherry-pick&lt;/h3&gt;
-&lt;p&gt;Делает копию одного коммита поверх другого. Возможны&amp;nbsp;конфликты.&lt;/p&gt;
+&lt;p&gt;Берет дифф данного коммита и пытается сделать коммит с таким же диффом
+поверх другого (по сути делает копию коммита, но с другим родителем).
+Возможны&amp;nbsp;конфликты.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="rebase"&gt;
 &lt;h3&gt;Rebase&lt;/h3&gt;
-&lt;p&gt;Пересаживает ветку на нового родителя. Изменяет&amp;nbsp;историю!&lt;/p&gt;
+&lt;p&gt;Пересаживает коммит/ветку на нового родителя. Изменяет&amp;nbsp;историю!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git rebase &lt;span class="o"&gt;[&lt;/span&gt;-i&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;target-ref&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Интерактивный ребейз - очень мощная штука.
@@ -130,11 +132,53 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 слепливать несколько коммитов в один, изменять их содержимое и&amp;nbsp;мессаджи.&lt;/p&gt;
 &lt;p&gt;Конфликты возможны на каждом пересаживаемом&amp;nbsp;патче.&lt;/p&gt;
 &lt;p&gt;В случае мерж конфликтов при ребейзе &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;LOCAL&lt;/span&gt;&lt;/tt&gt; относится к тому на что
-ребейзится, а &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что&amp;nbsp;ребейзится.&lt;/p&gt;
+ребейзится, а &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что ребейзится.
+Это иногда не интуитивно - например, у вас был старый master,
+от которого отбранчевана feature-branch.
+Вы обновили мастер и пытаетесь ребейзнуть свой feature-branch на него.
+С первого взгляда интуитивно кажется что &lt;span class="caps"&gt;LOCAL&lt;/span&gt; - это ваш код
+(вот, же он, локальный, еще может даже никуда не выложеный),
+а &lt;span class="caps"&gt;REMOTE&lt;/span&gt; - это тот код из master, что вы только что выкачали
+(из удаленного же хранилища, да?&amp;#8230;).
+Надо просто&amp;nbsp;запомнить.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h3&gt;Правки и изменения&amp;nbsp;истории&lt;/h3&gt;
+&lt;p&gt;В &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; есть несколько команд, которые изменяют историю коммитов,
+как минимум с точки зрения внешнего мира (список не&amp;nbsp;полный):&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--amend&lt;/span&gt;&lt;/tt&gt; - дополняет последний коммит изменениями
+находящимися в индексе. Поскольку id коммита определяется его содержимым,
+изменяет id&amp;nbsp;коммита&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git rebase&lt;/tt&gt; - так как id коммита определяется также и id его родителей,
+ребейз меняет id &lt;em&gt;всех&lt;/em&gt; коммитов попавших под&amp;nbsp;ребейз.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Что тут надо&amp;nbsp;учитывать:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Выложить такие изменения в уже существющую удаленную ветку на remote вы уже
+просто так не сможете - история разъехалась&lt;ul&gt;
+&lt;li&gt;Заставить выложить можно через &lt;tt class="docutils literal"&gt;git push &lt;span class="pre"&gt;--force&lt;/span&gt;&lt;/tt&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Но теперь при этом в вашей удаленной ветке тоже изменилась история.
+И теперь у любого, кто уже успел скачать через &lt;tt class="docutils literal"&gt;pull/fetch&lt;/tt&gt; себе вашу
+удаленную ветку при попытке обновления возникнут проблемы -
+их &amp;#8220;локальная&amp;#8221; история разошлась с &amp;#8220;апстримной&amp;#8221;, а это значит мерж-конфликты
+и прочая головная боль на пустом месте (они-то свой код не трогали..).
+Не надо так с людьми&amp;nbsp;обходиться.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Поэтому общее правило для такого рода изменений -
+они только для локальных коммитов.
+Как только коммит в составе ветки выложен на удаленный репозиторий,
+откуда эту ветку мог скачать кто-то ещё - переписывайте историю этой ветки
+только будучи готовыми к лучам любви от этих&amp;nbsp;людей.&lt;/p&gt;
+&lt;p&gt;Но что примечательно - есть основаные на &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; системы, очень активно
+использующие &lt;tt class="docutils literal"&gt;amend&lt;/tt&gt; и &lt;tt class="docutils literal"&gt;rebase&lt;/tt&gt; в своей работе
+(см &lt;a class="reference internal" href="#gerrit-workflow-openstack"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="tools"&gt;
 &lt;h3&gt;Tools&lt;/h3&gt;
-&lt;div class="section" id="id5"&gt;
+&lt;div class="section" id="id6"&gt;
 &lt;h4&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/h4&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;gitk/git-gui - на лицо ужасный (Tcl/Tk),
@@ -151,7 +195,7 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;li&gt;Ваш &lt;span class="caps"&gt;IDE&lt;/span&gt; - наверное то же что-то есть (PyCharm,&amp;nbsp;Eclipse+PyDev…)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id6"&gt;
+&lt;div class="section" id="id7"&gt;
 &lt;h4&gt;Для ковбоев&amp;nbsp;консоли&lt;/h4&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Git&amp;nbsp;:)&lt;/li&gt;
@@ -169,9 +213,12 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;/div&gt;
 &lt;div class="section" id="fun"&gt;
 &lt;h4&gt;Fun&lt;/h4&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;gource - визуализация развития гит репозитория в динамике. Просто красиво&amp;nbsp;:)
-* &lt;tt class="docutils literal"&gt;sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp;amp; gource&lt;/tt&gt;&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;gource - визуализация развития гит репозитория в динамике. Просто&amp;nbsp;красиво&amp;nbsp;:)&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp;amp; gource
+&lt;/pre&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -185,16 +232,32 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 Каждый патч-сет - это отдельный бранч.
 Это позволяет вовсю пользоваться rebase и commit &amp;#8212;amend,
 перезаписывая локальную историю и выкладывая ее на remote,
-&lt;em&gt;что в общем случае очень сильно не рекомендуется&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/p&gt;
+&lt;em&gt;что в общем случае очень сильно не рекомендуется&lt;/em&gt;
+(см &lt;a class="reference internal" href="#id5"&gt;Правки и изменения истории&lt;/a&gt;).&lt;/p&gt;
+&lt;div class="section" id="openstack-english"&gt;
+&lt;h3&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;dl class="first docutils"&gt;
+&lt;dt&gt;Общее описание Development&amp;nbsp;Workflow&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first last"&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;dl class="first docutils"&gt;
+&lt;dt&gt;Как писать годный&amp;nbsp;коммит-мессадж&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first last"&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="git-review"&gt;
+&lt;h3&gt;git-review&lt;/h3&gt;
 &lt;p&gt;В принципе c Герритом можно работать через Git напрямую,
 но с &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; значительно&amp;nbsp;удобнее.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo -H pip install -U git-review
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Стоит почитать&amp;nbsp;man &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
-&lt;div class="section" id="id7"&gt;
-&lt;h3&gt;Конфигурация&lt;/h3&gt;
+&lt;p&gt;Стоит почитать&amp;nbsp;&lt;tt class="docutils literal"&gt;man &lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;Настраивается через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-config&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.gitconfig
 …
@@ -207,8 +270,8 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;h3&gt;Basic&amp;nbsp;workflow&lt;/h3&gt;
 &lt;div class="section" id="change-id"&gt;
 &lt;h4&gt;Change-Id&lt;/h4&gt;
-&lt;p&gt;git-review добавляет пост-коммит хук,
-который добавляет в коммит-мессадж&amp;nbsp;строчку:&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; добавляет пост-коммит хук,
+который добавляет в коммит-мессадж строчку (если её ещё там не&amp;nbsp;было):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 Change-Id: INNNNNN…
 &lt;/pre&gt;
@@ -255,7 +318,7 @@ git rebase -i master
 &lt;span class="c1"&gt;# hack on it, address reviewers comments&lt;/span&gt;
 git add .
 &lt;span class="c1"&gt;# не создаем новый коммит!&lt;/span&gt;
-&lt;span class="c1"&gt;# а добавляет изменения из индекса в последний коммит&lt;/span&gt;
+&lt;span class="c1"&gt;# а добавляем изменения из индекса в последний коммит&lt;/span&gt;
 &lt;span class="c1"&gt;# (и естесственно при этом меняет его commid-id)&lt;/span&gt;
 git commit --amend
 git review
@@ -265,7 +328,7 @@ git review
 &lt;/div&gt;
 &lt;div class="section" id="rebase-or-not-rebase"&gt;
 &lt;h3&gt;Rebase or not&amp;nbsp;Rebase?&lt;/h3&gt;
-&lt;p&gt;По дефолту, при выкладывании через git-review, его &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pre-push&lt;/span&gt; hook&lt;/tt&gt;
+&lt;p&gt;По дефолту, при выкладывании через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;, его &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pre-push&lt;/span&gt; hook&lt;/tt&gt;
 попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
 (по дефолту&amp;nbsp;master).&lt;/p&gt;
 &lt;p&gt;Иногда это хорошо (вы забыли обновить мастер, и теперь есть мерж-конфликты -
