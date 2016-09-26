@@ -25,8 +25,8 @@ help:
 	@echo '   make regenerate                  regenerate files upon modification '
 	@echo '   make publish                     generate using production settings '
 	@echo '   make serve [PORT=8000]           serve site at http://localhost:8000'
-	@echo '   make devserver [PORT=8000]       start/restart develop_server.sh    '
-	@echo '   make stopserver                  stop local server                  '
+	@echo '   make devserver [PORT=8000]       (re)start development server       '
+	@echo '   make stopserver                  stop development server            '
 	@echo '   make dropbox                     upload the web site via Dropbox    '
 	@echo '   make github                      upload the web site via gh-pages   '
 	@echo '                                                                       '
@@ -51,17 +51,15 @@ endif
 
 devserver:
 ifdef PORT
-	$(BASEDIR)/develop_server.sh restart $(PORT)
+	$(BASEDIR)/tools/develop_server.sh restart $(PORT)
 else
-	$(BASEDIR)/develop_server.sh restart
+	$(BASEDIR)/tools/develop_server.sh restart
 endif
 
 stopserver:
-	kill -9 `cat pelican.pid` && rm pelican.pid
-	kill -9 `cat srv.pid` && rm srv.pid
-	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
+	$(BASEDIR)/tools/develop_server.sh stop
 
-publish:
+publish: clean
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
 
 dropbox: publish
