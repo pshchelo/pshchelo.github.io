@@ -17,8 +17,9 @@
     mapping submanifolds of a Hilbert space"
     `chi wai lau (@tabqwerty) <https://twitter.com/tabqwerty/status/45611899953491968>`_
 
-
 **Осторожно** - много англицизмов и моего личного мнения.
+
+.. contents:: О чем тут вообще
 
 Самое Главное
 =============
