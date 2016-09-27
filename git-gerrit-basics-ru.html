@@ -123,21 +123,57 @@ that branches are homeomorphic endofunctors
 mapping submanifolds of a Hilbert space&#8221;
 <a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968">chi wai lau (&#64;tabqwerty)</a></blockquote>
 <p><strong>Осторожно</strong> - много англицизмов и моего личного&nbsp;мнения.</p>
-<div class="section" id="id1">
-<h2>Самое&nbsp;Главное</h2>
+<div class="contents topic" id="id1">
+<p class="topic-title first">О чем тут&nbsp;вообще</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id2" id="id11">Самое&nbsp;Главное</a></li>
+<li><a class="reference internal" href="#git" id="id12">Git</a><ul>
+<li><a class="reference internal" href="#id3" id="id13">Основные&nbsp;конструкции</a></li>
+<li><a class="reference internal" href="#id4" id="id14">Индекс</a></li>
+<li><a class="reference internal" href="#id5" id="id15">Бранчи и&nbsp;Теги</a></li>
+<li><a class="reference internal" href="#remotes" id="id16">Remotes</a></li>
+<li><a class="reference internal" href="#very-basic-git-workflow" id="id17">Very Basic git&nbsp;workflow</a></li>
+<li><a class="reference internal" href="#merg" id="id18">Mergе и&nbsp;конфликты</a></li>
+<li><a class="reference internal" href="#cherry-pick" id="id19">Cherry-pick</a></li>
+<li><a class="reference internal" href="#rebase" id="id20">Rebase</a></li>
+<li><a class="reference internal" href="#id6" id="id21">Правки и изменения&nbsp;истории</a></li>
+<li><a class="reference internal" href="#tools" id="id22">Tools</a><ul>
+<li><a class="reference internal" href="#id7" id="id23">Для любителей кнопочек и&nbsp;менюшечек</a></li>
+<li><a class="reference internal" href="#id8" id="id24">Для ковбоев&nbsp;консоли</a></li>
+<li><a class="reference internal" href="#fun" id="id25">Fun</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gerrit-workflow-openstack" id="id26">Gerrit Workflow в OpenStack</a><ul>
+<li><a class="reference internal" href="#openstack-english" id="id27">Специфика сообщества OpenStack&nbsp;(english)</a></li>
+<li><a class="reference internal" href="#git-review" id="id28">git-review</a></li>
+<li><a class="reference internal" href="#basic-workflow" id="id29">Basic workflow</a><ul>
+<li><a class="reference internal" href="#change-id" id="id30">Change-Id</a></li>
+<li><a class="reference internal" href="#id9" id="id31">Работа над новым, независимым изменением (баг,&nbsp;фича)</a></li>
+<li><a class="reference internal" href="#id10" id="id32">Правим свой старый&nbsp;патч</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rebase-or-not-rebase" id="id33">Rebase or not&nbsp;Rebase?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id11">Самое&nbsp;Главное</a></h2>
 <p><strong>Не лениться и вдумчиво читать то, что</strong> <tt class="docutils literal">git</tt> <strong>или</strong> <tt class="docutils literal"><span class="pre">git-review</span></tt>
 <strong>выводит в командную&nbsp;строку.</strong></p>
 <p>Там очень часто весьма внятно описано что пошло или может пойти не так,
 и какие есть варианты действий, с примерами&nbsp;команд</p>
 </div>
 <div class="section" id="git">
-<h2>Git</h2>
+<h2><a class="toc-backref" href="#id12">Git</a></h2>
 <p>Чумовая книжечка -
 <a class="reference external" href="http://jwiegley.github.io/git-from-the-bottom-up/">Git from the Bottom Up</a>
 by John Wiegley (<span class="caps">CC</span> <span class="caps">BY</span>-<span class="caps">ND</span> 4.0).
 Картинки скопированы оттуда, и общая канва повествования немного&nbsp;тоже.</p>
-<div class="section" id="id2">
-<h3>Основные&nbsp;конструкции</h3>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id13">Основные&nbsp;конструкции</a></h3>
 <img alt="кирпичики Гита" src="http://pshchelo.github.io/images/git-gerrit-basics/commits.png" />
 <ul class="simple">
 <li><strong>Blob</strong> - объект хранящий “файл”.
@@ -153,8 +189,8 @@ by John Wiegley (<span class="caps">CC</span> <span class="caps">BY</span>-<span
 </ul>
 <p>Все остальное опирается на эти три базовых&nbsp;идеи.</p>
 </div>
-<div class="section" id="id3">
-<h3>Индекс</h3>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id14">Индекс</a></h3>
 <p>В отличие от (большинства?) других систем контроля версий в Git реализована
 двухступенчатая процедура внесения изменений - через <em>Index</em>
 (он же <em>Staging Area</em>).</p>
@@ -165,8 +201,8 @@ by John Wiegley (<span class="caps">CC</span> <span class="caps">BY</span>-<span
 <li><strong>Repository</strong> - хранилище&nbsp;коммитов</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>Бранчи и&nbsp;Теги</h3>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id15">Бранчи и&nbsp;Теги</a></h3>
 <p>Бранчи и теги - не более чем символические ссылки на commit id
 имеющие человеко-читаемые&nbsp;имена.</p>
 <p><tt class="docutils literal"><span class="caps">HEAD</span></tt> - специальная ссылка на текущее (последнее чекаутное)
@@ -182,7 +218,7 @@ by John Wiegley (<span class="caps">CC</span> <span class="caps">BY</span>-<span
 Но <em>IMnsHO</em> тому кто двигает теги надо отрубать&nbsp;руки.</p>
 </div>
 <div class="section" id="remotes">
-<h3>Remotes</h3>
+<h3><a class="toc-backref" href="#id16">Remotes</a></h3>
 <p>Ремоуты - это специальный вид бранчей, которые указывают на коммиты
 на удаленном &nbsp;репозитории (точнее в его локальной&nbsp;копии).</p>
 <p>Можно - и часто нужно! - иметь много remotes в своей локальной&nbsp;репе.</p>
@@ -192,7 +228,7 @@ git fetch &lt;remote-name&gt;
 </pre></div>
 </div>
 <div class="section" id="very-basic-git-workflow">
-<h3>Very Basic git&nbsp;workflow</h3>
+<h3><a class="toc-backref" href="#id17">Very Basic git&nbsp;workflow</a></h3>
 <div class="highlight"><pre><span></span><span class="c1"># создаем новый репозиторий</span>
 mkdir &lt;repo&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$_</span> <span class="o">&amp;&amp;</span> git init
 <span class="c1"># или стягиваем готовый</span>
@@ -206,7 +242,7 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 куски изменений (<em>hunks</em>), а не весь файл&nbsp;целиком.</p>
 </div>
 <div class="section" id="merg">
-<h3>Mergе и&nbsp;конфликты</h3>
+<h3><a class="toc-backref" href="#id18">Mergе и&nbsp;конфликты</a></h3>
 <p>Создание коммита с несколькими&nbsp;родителями.</p>
 <p>Часта ситуация когда некоторые файлы отличаются в обоих родителях,
 и алгоритмы Git (на самом деле весьма продвинутые) не могут однозначно
@@ -234,13 +270,13 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 </ul>
 </div>
 <div class="section" id="cherry-pick">
-<h3>Cherry-pick</h3>
+<h3><a class="toc-backref" href="#id19">Cherry-pick</a></h3>
 <p>Берет дифф данного коммита и пытается сделать коммит с таким же диффом
 поверх другого (по сути делает копию коммита, но с другим родителем).
 Возможны&nbsp;конфликты.</p>
 </div>
 <div class="section" id="rebase">
-<h3>Rebase</h3>
+<h3><a class="toc-backref" href="#id20">Rebase</a></h3>
 <p>Пересаживает коммит/ветку на нового родителя. Изменяет&nbsp;историю!</p>
 <div class="highlight"><pre><span></span>git rebase <span class="o">[</span>-i<span class="o">]</span> &lt;target-ref&gt;
 </pre></div>
@@ -259,8 +295,8 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 (из удаленного же хранилища, да?&#8230;).
 Надо просто&nbsp;запомнить.</p>
 </div>
-<div class="section" id="id5">
-<h3>Правки и изменения&nbsp;истории</h3>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id21">Правки и изменения&nbsp;истории</a></h3>
 <p>В <tt class="docutils literal">git</tt> есть несколько команд, которые изменяют историю коммитов,
 как минимум с точки зрения внешнего мира (список не&nbsp;полный):</p>
 <ul class="simple">
@@ -294,9 +330,9 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 (см <a class="reference internal" href="#gerrit-workflow-openstack">Gerrit Workflow в OpenStack</a>).</p>
 </div>
 <div class="section" id="tools">
-<h3>Tools</h3>
-<div class="section" id="id6">
-<h4>Для любителей кнопочек и&nbsp;менюшечек</h4>
+<h3><a class="toc-backref" href="#id22">Tools</a></h3>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id23">Для любителей кнопочек и&nbsp;менюшечек</a></h4>
 <ul class="simple">
 <li>gitk/git-gui - на лицо ужасный (Tcl/Tk),
 добрый внутри “дефолтный” <span class="caps">GUI</span> для гита<ul>
@@ -312,8 +348,8 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 <li>Ваш <span class="caps">IDE</span> - наверное то же что-то есть (PyCharm,&nbsp;Eclipse+PyDev…)</li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h4>Для ковбоев&nbsp;консоли</h4>
+<div class="section" id="id8">
+<h4><a class="toc-backref" href="#id24">Для ковбоев&nbsp;консоли</a></h4>
 <ul class="simple">
 <li>Git&nbsp;:)</li>
 <li>tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь&nbsp;постоянно.</li>
@@ -329,7 +365,7 @@ git commit -m “My commit” <span class="c1"># сохраняем индекс
 </ul>
 </div>
 <div class="section" id="fun">
-<h4>Fun</h4>
+<h4><a class="toc-backref" href="#id25">Fun</a></h4>
 <ul>
 <li><p class="first">gource - визуализация развития гит репозитория в динамике. Просто&nbsp;красиво&nbsp;:)</p>
 <pre class="literal-block">
@@ -341,7 +377,7 @@ sudo apt install gource &amp;&amp; cd &lt;repo&gt; &amp;&amp; gource
 </div>
 </div>
 <div class="section" id="gerrit-workflow-openstack">
-<h2>Gerrit Workflow в&nbsp;OpenStack</h2>
+<h2><a class="toc-backref" href="#id26">Gerrit Workflow в&nbsp;OpenStack</a></h2>
 <p>Gerrit - система код-ревью основанная на&nbsp;Гите.</p>
 <p>В cвое время отфоркался от Rietveld написанного Гуидо ван Россумом,
 создателем&nbsp;Python.</p>
@@ -350,9 +386,9 @@ sudo apt install gource &amp;&amp; cd &lt;repo&gt; &amp;&amp; gource
 Это позволяет вовсю пользоваться rebase и commit &#8212;amend,
 перезаписывая локальную историю и выкладывая ее на remote,
 <em>что в общем случае очень сильно не рекомендуется</em>
-(см <a class="reference internal" href="#id5">Правки и изменения истории</a>).</p>
+(см <a class="reference internal" href="#id6">Правки и изменения истории</a>).</p>
 <div class="section" id="openstack-english">
-<h3>Специфика сообщества OpenStack&nbsp;(english)</h3>
+<h3><a class="toc-backref" href="#id27">Специфика сообщества OpenStack&nbsp;(english)</a></h3>
 <ul>
 <li><dl class="first docutils">
 <dt>Общее описание Development&nbsp;Workflow</dt>
@@ -369,7 +405,7 @@ sudo apt install gource &amp;&amp; cd &lt;repo&gt; &amp;&amp; gource
 </ul>
 </div>
 <div class="section" id="git-review">
-<h3>git-review</h3>
+<h3><a class="toc-backref" href="#id28">git-review</a></h3>
 <p>В принципе c Герритом можно работать через Git напрямую,
 но с <tt class="docutils literal"><span class="pre">git-review</span></tt> значительно&nbsp;удобнее.</p>
 <div class="highlight"><pre><span></span>sudo -H pip install -U git-review
@@ -384,9 +420,9 @@ sudo apt install gource &amp;&amp; cd &lt;repo&gt; &amp;&amp; gource
 </pre></div>
 </div>
 <div class="section" id="basic-workflow">
-<h3>Basic&nbsp;workflow</h3>
+<h3><a class="toc-backref" href="#id29">Basic&nbsp;workflow</a></h3>
 <div class="section" id="change-id">
-<h4>Change-Id</h4>
+<h4><a class="toc-backref" href="#id30">Change-Id</a></h4>
 <p><tt class="docutils literal"><span class="pre">git-review</span></tt> добавляет пост-коммит хук,
 который добавляет в коммит-мессадж строчку (если её ещё там не&nbsp;было):</p>
 <pre class="literal-block">
@@ -401,8 +437,8 @@ Change-Id: INNNNNN…
 Новый Change-Id =&gt; новый change на&nbsp;Геррите.</dd>
 </dl>
 </div>
-<div class="section" id="id8">
-<h4>Работа над новым, независимым изменением (баг,&nbsp;фича)</h4>
+<div class="section" id="id9">
+<h4><a class="toc-backref" href="#id31">Работа над новым, независимым изменением (баг,&nbsp;фича)</a></h4>
 <div class="highlight"><pre><span></span><span class="c1"># git clone … &amp;&amp; cd &lt;repo&gt;</span>
 git review -s <span class="c1"># создает новый remote по имени gerrit</span>
 git checkout master
@@ -418,8 +454,8 @@ git log -1 <span class="o">&amp;&amp;</span> git diff HEAD^..HEAD
 git review
 </pre></div>
 </div>
-<div class="section" id="id9">
-<h4>Правим свой старый&nbsp;патч</h4>
+<div class="section" id="id10">
+<h4><a class="toc-backref" href="#id32">Правим свой старый&nbsp;патч</a></h4>
 <div class="highlight"><pre><span></span><span class="c1"># если ветки нет - скачиваем ее с Gerrit:</span>
 git review -d NNNNNN <span class="c1"># review.openstack.org/#/c/NNNNNN</span>
 <span class="c1"># создалась новая ветка review/&lt;user_name&gt;/&lt;topic&gt;</span>
@@ -444,7 +480,7 @@ git review
 </div>
 </div>
 <div class="section" id="rebase-or-not-rebase">
-<h3>Rebase or not&nbsp;Rebase?</h3>
+<h3><a class="toc-backref" href="#id33">Rebase or not&nbsp;Rebase?</a></h3>
 <p>По дефолту, при выкладывании через <tt class="docutils literal"><span class="pre">git-review</span></tt>, его <tt class="docutils literal"><span class="pre">pre-push</span> hook</tt>
 попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
 (по дефолту&nbsp;master).</p>

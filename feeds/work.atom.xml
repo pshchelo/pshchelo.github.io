@@ -6,21 +6,57 @@ that branches are homeomorphic endofunctors
 mapping submanifolds of a Hilbert space&amp;#8221;
 &lt;a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968"&gt;chi wai lau (&amp;#64;tabqwerty)&lt;/a&gt;&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного&amp;nbsp;мнения.&lt;/p&gt;
-&lt;div class="section" id="id1"&gt;
-&lt;h2&gt;Самое&amp;nbsp;Главное&lt;/h2&gt;
+&lt;div class="contents topic" id="id1"&gt;
+&lt;p class="topic-title first"&gt;О чем тут&amp;nbsp;вообще&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id2" id="id11"&gt;Самое&amp;nbsp;Главное&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#git" id="id12"&gt;Git&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id3" id="id13"&gt;Основные&amp;nbsp;конструкции&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id4" id="id14"&gt;Индекс&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id5" id="id15"&gt;Бранчи и&amp;nbsp;Теги&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#remotes" id="id16"&gt;Remotes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#very-basic-git-workflow" id="id17"&gt;Very Basic git&amp;nbsp;workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#merg" id="id18"&gt;Mergе и&amp;nbsp;конфликты&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#cherry-pick" id="id19"&gt;Cherry-pick&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#rebase" id="id20"&gt;Rebase&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id6" id="id21"&gt;Правки и изменения&amp;nbsp;истории&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#tools" id="id22"&gt;Tools&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id7" id="id23"&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id8" id="id24"&gt;Для ковбоев&amp;nbsp;консоли&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#fun" id="id25"&gt;Fun&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#gerrit-workflow-openstack" id="id26"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#openstack-english" id="id27"&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#git-review" id="id28"&gt;git-review&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#basic-workflow" id="id29"&gt;Basic workflow&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#change-id" id="id30"&gt;Change-Id&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id9" id="id31"&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id10" id="id32"&gt;Правим свой старый&amp;nbsp;патч&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#rebase-or-not-rebase" id="id33"&gt;Rebase or not&amp;nbsp;Rebase?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id2"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id11"&gt;Самое&amp;nbsp;Главное&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Не лениться и вдумчиво читать то, что&lt;/strong&gt; &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; &lt;strong&gt;или&lt;/strong&gt; &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;
 &lt;strong&gt;выводит в командную&amp;nbsp;строку.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Там очень часто весьма внятно описано что пошло или может пойти не так,
 и какие есть варианты действий, с примерами&amp;nbsp;команд&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="git"&gt;
-&lt;h2&gt;Git&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id12"&gt;Git&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Чумовая книжечка -
 &lt;a class="reference external" href="http://jwiegley.github.io/git-from-the-bottom-up/"&gt;Git from the Bottom Up&lt;/a&gt;
 by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&gt;BY&lt;/span&gt;-&lt;span class="caps"&gt;ND&lt;/span&gt; 4.0).
 Картинки скопированы оттуда, и общая канва повествования немного&amp;nbsp;тоже.&lt;/p&gt;
-&lt;div class="section" id="id2"&gt;
-&lt;h3&gt;Основные&amp;nbsp;конструкции&lt;/h3&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id13"&gt;Основные&amp;nbsp;конструкции&lt;/a&gt;&lt;/h3&gt;
 &lt;img alt="кирпичики Гита" src="http://pshchelo.github.io/images/git-gerrit-basics/commits.png" /&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;strong&gt;Blob&lt;/strong&gt; - объект хранящий “файл”.
@@ -36,8 +72,8 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 &lt;/ul&gt;
 &lt;p&gt;Все остальное опирается на эти три базовых&amp;nbsp;идеи.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id3"&gt;
-&lt;h3&gt;Индекс&lt;/h3&gt;
+&lt;div class="section" id="id4"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id14"&gt;Индекс&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;В отличие от (большинства?) других систем контроля версий в Git реализована
 двухступенчатая процедура внесения изменений - через &lt;em&gt;Index&lt;/em&gt;
 (он же &lt;em&gt;Staging Area&lt;/em&gt;).&lt;/p&gt;
@@ -48,8 +84,8 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 &lt;li&gt;&lt;strong&gt;Repository&lt;/strong&gt; - хранилище&amp;nbsp;коммитов&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id4"&gt;
-&lt;h3&gt;Бранчи и&amp;nbsp;Теги&lt;/h3&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id15"&gt;Бранчи и&amp;nbsp;Теги&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Бранчи и теги - не более чем символические ссылки на commit id
 имеющие человеко-читаемые&amp;nbsp;имена.&lt;/p&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;HEAD&lt;/span&gt;&lt;/tt&gt; - специальная ссылка на текущее (последнее чекаутное)
@@ -65,7 +101,7 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 Но &lt;em&gt;IMnsHO&lt;/em&gt; тому кто двигает теги надо отрубать&amp;nbsp;руки.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="remotes"&gt;
-&lt;h3&gt;Remotes&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id16"&gt;Remotes&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Ремоуты - это специальный вид бранчей, которые указывают на коммиты
 на удаленном &amp;nbsp;репозитории (точнее в его локальной&amp;nbsp;копии).&lt;/p&gt;
 &lt;p&gt;Можно - и часто нужно! - иметь много remotes в своей локальной&amp;nbsp;репе.&lt;/p&gt;
@@ -75,7 +111,7 @@ git fetch &amp;lt;remote-name&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="very-basic-git-workflow"&gt;
-&lt;h3&gt;Very Basic git&amp;nbsp;workflow&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id17"&gt;Very Basic git&amp;nbsp;workflow&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# создаем новый репозиторий&lt;/span&gt;
 mkdir &amp;lt;repo&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git init
 &lt;span class="c1"&gt;# или стягиваем готовый&lt;/span&gt;
@@ -89,7 +125,7 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 куски изменений (&lt;em&gt;hunks&lt;/em&gt;), а не весь файл&amp;nbsp;целиком.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="merg"&gt;
-&lt;h3&gt;Mergе и&amp;nbsp;конфликты&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id18"&gt;Mergе и&amp;nbsp;конфликты&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Создание коммита с несколькими&amp;nbsp;родителями.&lt;/p&gt;
 &lt;p&gt;Часта ситуация когда некоторые файлы отличаются в обоих родителях,
 и алгоритмы Git (на самом деле весьма продвинутые) не могут однозначно
@@ -117,13 +153,13 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="cherry-pick"&gt;
-&lt;h3&gt;Cherry-pick&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id19"&gt;Cherry-pick&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Берет дифф данного коммита и пытается сделать коммит с таким же диффом
 поверх другого (по сути делает копию коммита, но с другим родителем).
 Возможны&amp;nbsp;конфликты.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="rebase"&gt;
-&lt;h3&gt;Rebase&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id20"&gt;Rebase&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Пересаживает коммит/ветку на нового родителя. Изменяет&amp;nbsp;историю!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git rebase &lt;span class="o"&gt;[&lt;/span&gt;-i&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;target-ref&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -142,8 +178,8 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 (из удаленного же хранилища, да?&amp;#8230;).
 Надо просто&amp;nbsp;запомнить.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id5"&gt;
-&lt;h3&gt;Правки и изменения&amp;nbsp;истории&lt;/h3&gt;
+&lt;div class="section" id="id6"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id21"&gt;Правки и изменения&amp;nbsp;истории&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;В &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; есть несколько команд, которые изменяют историю коммитов,
 как минимум с точки зрения внешнего мира (список не&amp;nbsp;полный):&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -177,9 +213,9 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 (см &lt;a class="reference internal" href="#gerrit-workflow-openstack"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="tools"&gt;
-&lt;h3&gt;Tools&lt;/h3&gt;
-&lt;div class="section" id="id6"&gt;
-&lt;h4&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/h4&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id22"&gt;Tools&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="section" id="id7"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id23"&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/a&gt;&lt;/h4&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;gitk/git-gui - на лицо ужасный (Tcl/Tk),
 добрый внутри “дефолтный” &lt;span class="caps"&gt;GUI&lt;/span&gt; для гита&lt;ul&gt;
@@ -195,8 +231,8 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;li&gt;Ваш &lt;span class="caps"&gt;IDE&lt;/span&gt; - наверное то же что-то есть (PyCharm,&amp;nbsp;Eclipse+PyDev…)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id7"&gt;
-&lt;h4&gt;Для ковбоев&amp;nbsp;консоли&lt;/h4&gt;
+&lt;div class="section" id="id8"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id24"&gt;Для ковбоев&amp;nbsp;консоли&lt;/a&gt;&lt;/h4&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Git&amp;nbsp;:)&lt;/li&gt;
 &lt;li&gt;tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь&amp;nbsp;постоянно.&lt;/li&gt;
@@ -212,7 +248,7 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="fun"&gt;
-&lt;h4&gt;Fun&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id25"&gt;Fun&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;gource - визуализация развития гит репозитория в динамике. Просто&amp;nbsp;красиво&amp;nbsp;:)&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -224,7 +260,7 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="gerrit-workflow-openstack"&gt;
-&lt;h2&gt;Gerrit Workflow в&amp;nbsp;OpenStack&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id26"&gt;Gerrit Workflow в&amp;nbsp;OpenStack&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Gerrit - система код-ревью основанная на&amp;nbsp;Гите.&lt;/p&gt;
 &lt;p&gt;В cвое время отфоркался от Rietveld написанного Гуидо ван Россумом,
 создателем&amp;nbsp;Python.&lt;/p&gt;
@@ -233,9 +269,9 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 Это позволяет вовсю пользоваться rebase и commit &amp;#8212;amend,
 перезаписывая локальную историю и выкладывая ее на remote,
 &lt;em&gt;что в общем случае очень сильно не рекомендуется&lt;/em&gt;
-(см &lt;a class="reference internal" href="#id5"&gt;Правки и изменения истории&lt;/a&gt;).&lt;/p&gt;
+(см &lt;a class="reference internal" href="#id6"&gt;Правки и изменения истории&lt;/a&gt;).&lt;/p&gt;
 &lt;div class="section" id="openstack-english"&gt;
-&lt;h3&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id27"&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;Общее описание Development&amp;nbsp;Workflow&lt;/dt&gt;
@@ -252,7 +288,7 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="git-review"&gt;
-&lt;h3&gt;git-review&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id28"&gt;git-review&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;В принципе c Герритом можно работать через Git напрямую,
 но с &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; значительно&amp;nbsp;удобнее.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo -H pip install -U git-review
@@ -267,9 +303,9 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="basic-workflow"&gt;
-&lt;h3&gt;Basic&amp;nbsp;workflow&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id29"&gt;Basic&amp;nbsp;workflow&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="section" id="change-id"&gt;
-&lt;h4&gt;Change-Id&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id30"&gt;Change-Id&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; добавляет пост-коммит хук,
 который добавляет в коммит-мессадж строчку (если её ещё там не&amp;nbsp;было):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -284,8 +320,8 @@ Change-Id: INNNNNN…
 Новый Change-Id =&amp;gt; новый change на&amp;nbsp;Геррите.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id8"&gt;
-&lt;h4&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/h4&gt;
+&lt;div class="section" id="id9"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id31"&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/a&gt;&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# git clone … &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt;&lt;/span&gt;
 git review -s &lt;span class="c1"&gt;# создает новый remote по имени gerrit&lt;/span&gt;
 git checkout master
@@ -301,8 +337,8 @@ git log -1 &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git diff HEAD^.
 git review
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="section" id="id9"&gt;
-&lt;h4&gt;Правим свой старый&amp;nbsp;патч&lt;/h4&gt;
+&lt;div class="section" id="id10"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id32"&gt;Правим свой старый&amp;nbsp;патч&lt;/a&gt;&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# если ветки нет - скачиваем ее с Gerrit:&lt;/span&gt;
 git review -d NNNNNN &lt;span class="c1"&gt;# review.openstack.org/#/c/NNNNNN&lt;/span&gt;
 &lt;span class="c1"&gt;# создалась новая ветка review/&amp;lt;user_name&amp;gt;/&amp;lt;topic&amp;gt;&lt;/span&gt;
@@ -327,7 +363,7 @@ git review
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="rebase-or-not-rebase"&gt;
-&lt;h3&gt;Rebase or not&amp;nbsp;Rebase?&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id33"&gt;Rebase or not&amp;nbsp;Rebase?&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;По дефолту, при выкладывании через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;, его &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pre-push&lt;/span&gt; hook&lt;/tt&gt;
 попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
 (по дефолту&amp;nbsp;master).&lt;/p&gt;
