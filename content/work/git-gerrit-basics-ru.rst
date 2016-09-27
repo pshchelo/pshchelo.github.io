@@ -2,10 +2,12 @@
 Азы Git и Gerrit workflow в проектах OpenStack
 ##############################################
 
+.. |date| date::
 
 :slug: git-gerrit-basics
 :lang: ru
 :date: 2016-09-20
+:modified: |date|
 :tags: git,gerrit,openstack
 :category: work
 :summary: Quick-n-Dirty opinionated introduction for beginners, in Russian.
