@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-09-27T00:00:00+03:00</updated><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-27T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-12-12T00:00:00+02:00</updated><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
 that branches are homeomorphic endofunctors
@@ -388,7 +388,7 @@ git review
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
+</summary><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
 For Western languages Ubuntu comes with &amp;#8220;English (international with AltGr dead keys)&amp;#8221;
@@ -472,7 +472,7 @@ plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
 Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
-</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>Единая русско-украинская раскладка в Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd-ru.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd-ru.html</id><summary type="html">&lt;p&gt;Так получилось, что моим основным языком ввода является английский,
+</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>Единая русско-украинская раскладка в Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd-ru.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd-ru.html</id><summary type="html">&lt;p&gt;Так получилось, что моим основным языком ввода является английский,
 вторым по частоте использования русский.
 Тем не менее, иногда мне надо вводить текст на немецком, франзузском и украинском языках.
 Для западноевропейских языков в Ubuntu есть удобная раскладка
@@ -556,7 +556,7 @@ Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see
 и кроме них несколько других плюшек вроде валютного значка
 украинской гривны (₴) или всяких математических знаков (например ±).
 Чтобы увидеть все доступные символы, проверьте &amp;#8220;Keyboard Layout Chart&amp;#8221; для этой&amp;nbsp;раскладки.&lt;/p&gt;
-</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:devstack-with-neutron.html</id><summary type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
+</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:devstack-with-neutron.html</id><summary type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
 the solutions for recent DevStack (early Juno as of this
 writing), but some things might still be incorrect or already fixed -
@@ -791,7 +791,7 @@ options kvm-intel nested=1
 &lt;/pre&gt;
 &lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:uefi-boot-hp.html</id><summary type="html">&lt;div class="section" id="problem"&gt;
+</summary><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:uefi-boot-hp.html</id><summary type="html">&lt;div class="section" id="problem"&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
 &lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
 can be configured in &lt;span class="caps"&gt;BIOS&lt;/span&gt; per device (&lt;span class="caps"&gt;HDD&lt;/span&gt;/&lt;span class="caps"&gt;ODD&lt;/span&gt;/&lt;span class="caps"&gt;PXI&lt;/span&gt;/&lt;span class="caps"&gt;USB&lt;/span&gt; etc) but there is
@@ -868,7 +868,7 @@ if I need, and also I can safely use SAVE_DEFAULT option of Grub.
 For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
 there is still possibility to override first boot option during &lt;span class="caps"&gt;POST&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry><entry><title>Solving the Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-solve.html" rel="alternate"></link><published>2014-04-03T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-03:rubik-solve.html</id><summary type="html">&lt;p&gt;See &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
+</summary><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry><entry><title>Solving the Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-solve.html" rel="alternate"></link><published>2014-04-03T00:00:00+03:00</published><updated>2014-04-03T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-03:rubik-solve.html</id><summary type="html">&lt;p&gt;See &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="cross-of-the-first-layer"&gt;
 &lt;h2&gt;Cross of the first&amp;nbsp;layer&lt;/h2&gt;
 &lt;p&gt;Moves cube &lt;span class="caps"&gt;FD&lt;/span&gt; -&amp;gt; &lt;span class="caps"&gt;FU&lt;/span&gt;&lt;/p&gt;
@@ -943,7 +943,7 @@ F&amp;#8217; M&amp;#8217;&lt;sub&gt;D&lt;/sub&gt; F M&lt;sub&gt;D&lt;/sub&gt;&lt
 &lt;li&gt;U&lt;sup&gt;2&lt;/sup&gt; - rotates &lt;span class="caps"&gt;FUR&lt;/span&gt; and &lt;span class="caps"&gt;LUB&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="puzzles"></category><category term="rubick"></category></entry><entry><title>Figures from the solved Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-figures.html" rel="alternate"></link><published>2014-04-02T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-02:rubik-figures.html</id><summary type="html">&lt;p&gt;See the &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
+</summary><category term="puzzles"></category><category term="rubick"></category></entry><entry><title>Figures from the solved Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-figures.html" rel="alternate"></link><published>2014-04-02T00:00:00+03:00</published><updated>2014-04-02T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-02:rubik-figures.html</id><summary type="html">&lt;p&gt;See the &lt;a class="reference external" href="http://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Donkey&amp;#8217;s Bridge (chess cube of the 2nd&amp;nbsp;order)&lt;/dt&gt;
 &lt;dd&gt;M&lt;sub&gt;R&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; M&lt;sub&gt;D&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; M&lt;sub&gt;F&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/dd&gt;
@@ -979,7 +979,7 @@ M&amp;#8217;&lt;sub&gt;D&lt;/sub&gt; M&amp;#8217;&lt;sub&gt;R&lt;/sub&gt; M&lt;s
 &lt;dt&gt;Globe - no tile has a common border with a tile of the same&amp;nbsp;color&lt;/dt&gt;
 &lt;dd&gt;[&lt;span class="caps"&gt;FBLR&lt;/span&gt;]&lt;sup&gt;2&lt;/sup&gt;&lt;span class="caps"&gt;LR&lt;/span&gt;&lt;/dd&gt;
 &lt;/dl&gt;
-</summary><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-notation.html" rel="alternate"></link><published>2014-04-01T00:00:00+03:00</published><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-01:rubik-notation.html</id><summary type="html">&lt;div class="section" id="about"&gt;
+</summary><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Rubik’s Cube</title><link href="http://pshchelo.github.io/rubik-notation.html" rel="alternate"></link><published>2014-04-01T00:00:00+03:00</published><updated>2014-04-01T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-01:rubik-notation.html</id><summary type="html">&lt;div class="section" id="about"&gt;
 &lt;h2&gt;About&lt;/h2&gt;
 &lt;p&gt;Quite probably the best known puzzle in the world - cube consisting
 of 3x3x3 matrix of colored cubes, that can be rotated per&amp;nbsp;layer.&lt;/p&gt;
