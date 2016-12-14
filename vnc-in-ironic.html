@@ -9,7 +9,7 @@
 
 
 
-<link rel="canonical" href="http://pshchelo.github.io/drafts/vnc-in-ironic.html">
+<link rel="canonical" href="http://pshchelo.github.io/vnc-in-ironic.html">
 
         <meta name="author" content="Pavlo Shchelokovskyy" />
         <meta name="keywords" content="ironic,vnc,drac" />
@@ -18,7 +18,7 @@
         <meta property="og:site_name" content="Bits and Pieces" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Graphical VNC console in ironic - early prototype"/>
-        <meta property="og:url" content="http://pshchelo.github.io/drafts/vnc-in-ironic.html"/>
+        <meta property="og:url" content="http://pshchelo.github.io/vnc-in-ironic.html"/>
         <meta property="og:description" content="enabling VNC access to nova instances deployed to ironic baremetal nodes"/>
         <meta property="article:published_time" content="2016-12-12" />
             <meta property="article:section" content="work" />
@@ -87,7 +87,7 @@ Bits and Pieces            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://pshchelo.github.io/drafts/vnc-in-ironic.html"
+                    <a href="http://pshchelo.github.io/vnc-in-ironic.html"
                        rel="bookmark"
                        title="Permalink to Graphical VNC console in ironic - early prototype">
                         Graphical <span class="caps">VNC</span> console in ironic - early&nbsp;prototype
@@ -195,11 +195,12 @@ so it is not really multi-user setup.
 On the other hand this still might suffice for undercloud-like use cases
 such as&nbsp;TrippleO.</p>
 </li>
-<li><p class="first">Note that in the current prototype, all nodes with nova-&lt;?&gt; service running
-must effectively have access to the <span class="caps">BMC</span> network as the built-in
+<li><p class="first">Note that in the current prototype,
+all nodes running nova-novncproxy service (or the single one specified as
+<tt class="docutils literal">vncserver_proxyclient_address</tt> in config for nova-compute with ironic
+virt-driver) must effectively have access to the <span class="caps">BMC</span> network as the built-in
 iDRAC <span class="caps">VNC</span> server is serving from its own <span class="caps">BMC</span> <span class="caps">IP</span> address.
-For production-grade deployments such setup might not be considered
-secure enough and intermediate <span class="caps">VNC</span> proxy services might still be&nbsp;required.</p>
+Care has to be taken to setup such proxying securely in a clustered nova&nbsp;deployment.</p>
 </li>
 </ul>
 <p>Nevertheless, this seems like an interesting and promising development on

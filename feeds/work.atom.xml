@@ -1,5 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-12-12T00:00:00+02:00</updated><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-12-14T00:00:00+02:00</updated><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:vnc-in-ironic.html</id><summary type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
+deployed on ironic baremetal nodes have certain limitations compared to
+standard virtual machines created by nova.
+In particular it is not currently possible to access the graphical console
+of such instance for example via horizon&amp;nbsp;Dashboard.&lt;/p&gt;
+&lt;p&gt;This is about to change with ironic community starting to work &lt;a class="footnote-reference" href="#id6" id="id1"&gt;[1]&lt;/a&gt;
+on introducing a framework for graphical console access for baremetal nodes.
+As the each hardware vendor implements a different way to provide graphical
+console access, the framework is planned to be quite generic,
+leaving details of actual graphical console configuration and enablement
+to a proposed GraphicalConsole interface of an ironic&amp;nbsp;driver.&lt;/p&gt;
+&lt;p&gt;One interesting hardware to consider in this regard is Dell servers supporting
+iDRACv7 or newer &lt;a class="footnote-reference" href="#id7" id="id2"&gt;[2]&lt;/a&gt;.
+The iDRAC firmware on such servers supports native access to the server’s
+graphical console over OpenVNC-compatible protocol directly,
+without a need of proprietary &lt;span class="caps"&gt;VNC&lt;/span&gt; proxies or clients.
+An administrator who has appropriate access to the iDRAC configuration can
+enable this built-in &lt;span class="caps"&gt;VNC&lt;/span&gt; server and set the password, connection timeout and
+&lt;span class="caps"&gt;SSL&lt;/span&gt; encryption&amp;nbsp;options.&lt;/p&gt;
+&lt;p&gt;In order to test the &lt;span class="caps"&gt;VNC&lt;/span&gt; capabilities of such hardware I have implemented
+a prototype &lt;a class="footnote-reference" href="#id8" id="id3"&gt;[3]&lt;/a&gt; of a graphical console interface for the &lt;span class="caps"&gt;DRAC&lt;/span&gt; driver.
+It uses &lt;span class="caps"&gt;WS&lt;/span&gt;-&lt;span class="caps"&gt;MAN&lt;/span&gt; &lt;span class="caps"&gt;HTTP&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt; (as the rest of &lt;span class="caps"&gt;DRAC&lt;/span&gt;-specific driver interfaces)
+to toggle the &lt;span class="caps"&gt;VNC&lt;/span&gt; server feature on and off and set its properties.
+I have also created a prototype &lt;a class="footnote-reference" href="#id9" id="id4"&gt;[4]&lt;/a&gt; of &lt;tt class="docutils literal"&gt;get_vnc_console&lt;/tt&gt; method for ironic
+virt-driver in nova.
+As a result, I was able to get access to the graphical console in
+horizon Dashboard for the nova instance deployed on top of Dell R630 server
+managed by&amp;nbsp;ironic.&lt;/p&gt;
+&lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="http://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" /&gt;
+&lt;p&gt;Of course no prototype is complete and without any bugs/problems discovered
+during testing.
+Here is what I’ve been hitting my head and hacking around while making
+this to&amp;nbsp;work:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;This prototype is done prior to the generic graphical console framework
+implementation done in ironic.
+Thus the prototype implementation is for now overriding the existing serial
+console interface in a specifically created for this purpose ironic driver.
+That means currently it is not possible to have both serial console
+and graphical&amp;nbsp;console.&lt;/p&gt;
+&lt;p&gt;Conveniently though, the proposed base GraphicalConsole interface will have
+the same &lt;span class="caps"&gt;API&lt;/span&gt; as the current Console (SerialConsole in the future) interface.
+This means that once the generic framework for graphical console interfaces
+is implemented in ironic, this prototype can be plugged as graphical
+console interface basically&amp;nbsp;as-is.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The interface implementation is using low-level &lt;span class="caps"&gt;WS&lt;/span&gt;-&lt;span class="caps"&gt;MAN&lt;/span&gt; Python client calls
+for now since support for managing iDracCardService is yet lacking
+from python-dracclient.
+The work to enable this functionality is already ongoing in the community&amp;nbsp;though.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The ironic virt-driver changes are rather specific for this particular case
+to let me quickly test this functionality.
+It will be changed after the generic graphical console is implemented in
+Ironic and required complementary functionality is available in&amp;nbsp;python-ironicclient.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
+not properly connect to it resulting in an apparently connected console
+with no graphical output &lt;a class="footnote-reference" href="#id10" id="id5"&gt;[5]&lt;/a&gt;.
+A single passed encoding parameter must be disabled in noVNC code.
+I had to resort to noVNC patched accordingly, but the implications of such
+patch on access to standard &lt;span class="caps"&gt;VM&lt;/span&gt; graphical console are yet to be&amp;nbsp;tested.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Password must be set on the &lt;span class="caps"&gt;VNC&lt;/span&gt; server as noVNC can not connect to it
+otherwise.
+It seems setting the password for the iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server to None/empty string
+still results in &lt;span class="caps"&gt;VNC&lt;/span&gt; server requesting a password on connection,
+but noVNC can not accept an empty password in its password prompt.
+I am not sure if this should be considered a bug in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server or
+in&amp;nbsp;noVNC.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I have not tested yet how iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server works with noVNC when &lt;span class="caps"&gt;SSL&lt;/span&gt; is
+enabled in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;Server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is limited to a single &lt;span class="caps"&gt;VNC&lt;/span&gt; session at a time,
+so it is not really multi-user setup.
+On the other hand this still might suffice for undercloud-like use cases
+such as&amp;nbsp;TrippleO.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Note that in the current prototype,
+all nodes running nova-novncproxy service (or the single one specified as
+&lt;tt class="docutils literal"&gt;vncserver_proxyclient_address&lt;/tt&gt; in config for nova-compute with ironic
+virt-driver) must effectively have access to the &lt;span class="caps"&gt;BMC&lt;/span&gt; network as the built-in
+iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is serving from its own &lt;span class="caps"&gt;BMC&lt;/span&gt; &lt;span class="caps"&gt;IP&lt;/span&gt; address.
+Care has to be taken to setup such proxying securely in a clustered nova&amp;nbsp;deployment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nevertheless, this seems like an interesting and promising development on
+the hardware market.
+I consider it as yet another small step on the way forward to close the gap
+between baremetal and virtual servers in OpenStack and enable a unified user
+experience for compute&amp;nbsp;service.&lt;/p&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="id6" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://review.openstack.org/#/c/306074/"&gt;https://review.openstack.org/#/c/306074/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id7" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf"&gt;http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id8" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://review.openstack.org/#/c/396661/"&gt;https://review.openstack.org/#/c/396661/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id9" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://review.openstack.org/#/c/398270/"&gt;https://review.openstack.org/#/c/398270/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://github.com/kanaka/noVNC/issues/712"&gt;https://github.com/kanaka/noVNC/issues/712&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-12-14T00:00:00+02:00</published><updated>2016-12-14T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
 that branches are homeomorphic endofunctors
