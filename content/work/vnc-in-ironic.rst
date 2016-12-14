@@ -7,7 +7,6 @@ Graphical VNC console in ironic - early prototype
 :category: work
 :slug: vnc-in-ironic
 :summary: enabling VNC access to nova instances deployed to ironic baremetal nodes
-:status: draft
 
 In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
@@ -98,11 +97,13 @@ this to work:
   On the other hand this still might suffice for undercloud-like use cases
   such as TrippleO.
 
-* Note that in the current prototype, all nodes with nova-<?> service running
-  must effectively have access to the BMC network as the built-in
+* Note that in the current prototype,
+  all nodes running nova-novncproxy service (or the single one specified as
+  ``vncserver_proxyclient_address`` in config for nova-compute with ironic
+  virt-driver) must effectively have access to the BMC network as the built-in
   iDRAC VNC server is serving from its own BMC IP address.
-  For production-grade deployments such setup might not be considered
-  secure enough and intermediate VNC proxy services might still be required.
+  Care has to be taken to setup such proxying securely in a clustered nova
+  deployment.
 
 Nevertheless, this seems like an interesting and promising development on
 the hardware market.
