@@ -61,9 +61,6 @@ Bits and Pieces            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                         <li><a href="http://pshchelo.github.io/pages/about-me.html">
-                             About&nbsp;Me
-                          </a></li>
                         <li >
                             <a href="http://pshchelo.github.io/category/play.html">Play</a>
                         </li>
@@ -123,9 +120,9 @@ In particular it is not currently possible to access the graphical console
 of such instance for example via horizon&nbsp;Dashboard.</p>
 <p>This is about to change with ironic community starting to work <a class="footnote-reference" href="#id6" id="id1">[1]</a>
 on introducing a framework for graphical console access for baremetal nodes.
-As the each hardware vendor implements a different way to provide graphical
+As each hardware vendor implements a different way to provide graphical
 console access, the framework is planned to be quite generic,
-leaving details of actual graphical console configuration and enablement
+leaving details of actual graphical console configuration and management
 to a proposed GraphicalConsole interface of an ironic&nbsp;driver.</p>
 <p>One interesting hardware to consider in this regard is Dell servers supporting
 iDRACv7 or newer <a class="footnote-reference" href="#id7" id="id2">[2]</a>.
@@ -145,10 +142,14 @@ As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
 managed by&nbsp;ironic.</p>
 <img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="http://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" />
+<div class="section" id="lessons-learned">
+<h2>Lessons&nbsp;learned</h2>
 <p>Of course no prototype is complete and without any bugs/problems discovered
 during testing.
 Here is what I’ve been hitting my head and hacking around while making
 this to&nbsp;work:</p>
+<div class="section" id="prototype-limitations">
+<h3>Prototype&nbsp;limitations</h3>
 <ul>
 <li><p class="first">This prototype is done prior to the generic graphical console framework
 implementation done in ironic.
@@ -172,44 +173,45 @@ to let me quickly test this functionality.
 It will be changed after the generic graphical console is implemented in
 Ironic and required complementary functionality is available in&nbsp;python-ironicclient.</p>
 </li>
-<li><p class="first">OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
+</ul>
+</div>
+<div class="section" id="idrac-vnc-limitations">
+<h3>iDrac <span class="caps">VNC</span>&nbsp;limitations</h3>
+<ul class="simple">
+<li>OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
 not properly connect to it resulting in an apparently connected console
 with no graphical output <a class="footnote-reference" href="#id10" id="id5">[5]</a>.
 A single passed encoding parameter must be disabled in noVNC code.
 I had to resort to noVNC patched accordingly, but the implications of such
-patch on access to standard <span class="caps">VM</span> graphical console are yet to be&nbsp;tested.</p>
-</li>
-<li><p class="first">Password must be set on the <span class="caps">VNC</span> server as noVNC can not connect to it
+patch on access to standard <span class="caps">VM</span> graphical console are yet to be&nbsp;tested.</li>
+<li>Password must be set on the <span class="caps">VNC</span> server as noVNC can not connect to it
 otherwise.
 It seems setting the password for the iDRAC <span class="caps">VNC</span> server to None/empty string
 still results in <span class="caps">VNC</span> server requesting a password on connection,
 but noVNC can not accept an empty password in its password prompt.
 I am not sure if this should be considered a bug in iDRAC <span class="caps">VNC</span> server or
-in&nbsp;noVNC.</p>
-</li>
-<li><p class="first">I have not tested yet how iDRAC <span class="caps">VNC</span> server works with noVNC when <span class="caps">SSL</span> is
-enabled in iDRAC <span class="caps">VNC</span>&nbsp;Server.</p>
-</li>
-<li><p class="first">The iDRAC <span class="caps">VNC</span> server is limited to a single <span class="caps">VNC</span> session at a time,
+in&nbsp;noVNC.</li>
+<li>I have not tested yet how iDRAC <span class="caps">VNC</span> server works with noVNC when <span class="caps">SSL</span> is
+enabled in iDRAC <span class="caps">VNC</span>&nbsp;Server.</li>
+<li>The iDRAC <span class="caps">VNC</span> server is limited to a single <span class="caps">VNC</span> session at a time,
 so it is not really multi-user setup.
 On the other hand this still might suffice for undercloud-like use cases
-such as&nbsp;TrippleO.</p>
-</li>
-<li><p class="first">Note that in the current prototype,
-all nodes running nova-novncproxy service (or the single one specified as
-<tt class="docutils literal">vncserver_proxyclient_address</tt> in config for nova-compute with ironic
-virt-driver) must effectively have access to the <span class="caps">BMC</span> network as the built-in
-iDRAC <span class="caps">VNC</span> server is serving from its own <span class="caps">BMC</span> <span class="caps">IP</span> address.
-Care has to be taken to setup such proxying securely in a clustered nova&nbsp;deployment.</p>
-</li>
+such as&nbsp;TrippleO.</li>
+<li>Note that in the current prototype, all nodes running nova-novncproxy
+service (or the single one specified as <tt class="docutils literal">vncserver_proxyclient_address</tt>
+in config for nova-compute with ironic virt-driver) must effectively have
+access to the <span class="caps">BMC</span> network as the built-in iDRAC <span class="caps">VNC</span> server is serving from
+its own <span class="caps">BMC</span> <span class="caps">IP</span> address.
+Care has to be taken to setup such proxying securely in a clustered nova&nbsp;deployment.</li>
 </ul>
 <p>Nevertheless, this seems like an interesting and promising development on
 the hardware market.
 I consider it as yet another small step on the way forward to close the gap
 between baremetal and virtual servers in OpenStack and enable a unified user
 experience for compute&nbsp;service.</p>
+</div>
 <div class="section" id="references">
-<h2>References</h2>
+<h3>References</h3>
 <table class="docutils footnote" frame="void" id="id6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -240,6 +242,7 @@ experience for compute&nbsp;service.</p>
 <tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://github.com/kanaka/noVNC/issues/712">https://github.com/kanaka/noVNC/issues/712</a></td></tr>
 </tbody>
 </table>
+</div>
 </div>
 
             </div>

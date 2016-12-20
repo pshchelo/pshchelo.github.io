@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-12-14T00:00:00+02:00</updated><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:vnc-in-ironic.html</id><summary type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2016-12-20T00:00:00+02:00</updated><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
 In particular it is not currently possible to access the graphical console
 of such instance for example via horizon&amp;nbsp;Dashboard.&lt;/p&gt;
 &lt;p&gt;This is about to change with ironic community starting to work &lt;a class="footnote-reference" href="#id6" id="id1"&gt;[1]&lt;/a&gt;
 on introducing a framework for graphical console access for baremetal nodes.
-As the each hardware vendor implements a different way to provide graphical
+As each hardware vendor implements a different way to provide graphical
 console access, the framework is planned to be quite generic,
-leaving details of actual graphical console configuration and enablement
+leaving details of actual graphical console configuration and management
 to a proposed GraphicalConsole interface of an ironic&amp;nbsp;driver.&lt;/p&gt;
 &lt;p&gt;One interesting hardware to consider in this regard is Dell servers supporting
 iDRACv7 or newer &lt;a class="footnote-reference" href="#id7" id="id2"&gt;[2]&lt;/a&gt;.
@@ -28,10 +29,14 @@ As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
 managed by&amp;nbsp;ironic.&lt;/p&gt;
 &lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="http://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" /&gt;
+&lt;div class="section" id="lessons-learned"&gt;
+&lt;h2&gt;Lessons&amp;nbsp;learned&lt;/h2&gt;
 &lt;p&gt;Of course no prototype is complete and without any bugs/problems discovered
 during testing.
 Here is what I’ve been hitting my head and hacking around while making
 this to&amp;nbsp;work:&lt;/p&gt;
+&lt;div class="section" id="prototype-limitations"&gt;
+&lt;h3&gt;Prototype&amp;nbsp;limitations&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;This prototype is done prior to the generic graphical console framework
 implementation done in ironic.
@@ -55,44 +60,45 @@ to let me quickly test this functionality.
 It will be changed after the generic graphical console is implemented in
 Ironic and required complementary functionality is available in&amp;nbsp;python-ironicclient.&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="idrac-vnc-limitations"&gt;
+&lt;h3&gt;iDrac &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;limitations&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
 not properly connect to it resulting in an apparently connected console
 with no graphical output &lt;a class="footnote-reference" href="#id10" id="id5"&gt;[5]&lt;/a&gt;.
 A single passed encoding parameter must be disabled in noVNC code.
 I had to resort to noVNC patched accordingly, but the implications of such
-patch on access to standard &lt;span class="caps"&gt;VM&lt;/span&gt; graphical console are yet to be&amp;nbsp;tested.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Password must be set on the &lt;span class="caps"&gt;VNC&lt;/span&gt; server as noVNC can not connect to it
+patch on access to standard &lt;span class="caps"&gt;VM&lt;/span&gt; graphical console are yet to be&amp;nbsp;tested.&lt;/li&gt;
+&lt;li&gt;Password must be set on the &lt;span class="caps"&gt;VNC&lt;/span&gt; server as noVNC can not connect to it
 otherwise.
 It seems setting the password for the iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server to None/empty string
 still results in &lt;span class="caps"&gt;VNC&lt;/span&gt; server requesting a password on connection,
 but noVNC can not accept an empty password in its password prompt.
 I am not sure if this should be considered a bug in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server or
-in&amp;nbsp;noVNC.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;I have not tested yet how iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server works with noVNC when &lt;span class="caps"&gt;SSL&lt;/span&gt; is
-enabled in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;Server.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;The iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is limited to a single &lt;span class="caps"&gt;VNC&lt;/span&gt; session at a time,
+in&amp;nbsp;noVNC.&lt;/li&gt;
+&lt;li&gt;I have not tested yet how iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server works with noVNC when &lt;span class="caps"&gt;SSL&lt;/span&gt; is
+enabled in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;Server.&lt;/li&gt;
+&lt;li&gt;The iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is limited to a single &lt;span class="caps"&gt;VNC&lt;/span&gt; session at a time,
 so it is not really multi-user setup.
 On the other hand this still might suffice for undercloud-like use cases
-such as&amp;nbsp;TrippleO.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Note that in the current prototype,
-all nodes running nova-novncproxy service (or the single one specified as
-&lt;tt class="docutils literal"&gt;vncserver_proxyclient_address&lt;/tt&gt; in config for nova-compute with ironic
-virt-driver) must effectively have access to the &lt;span class="caps"&gt;BMC&lt;/span&gt; network as the built-in
-iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is serving from its own &lt;span class="caps"&gt;BMC&lt;/span&gt; &lt;span class="caps"&gt;IP&lt;/span&gt; address.
-Care has to be taken to setup such proxying securely in a clustered nova&amp;nbsp;deployment.&lt;/p&gt;
-&lt;/li&gt;
+such as&amp;nbsp;TrippleO.&lt;/li&gt;
+&lt;li&gt;Note that in the current prototype, all nodes running nova-novncproxy
+service (or the single one specified as &lt;tt class="docutils literal"&gt;vncserver_proxyclient_address&lt;/tt&gt;
+in config for nova-compute with ironic virt-driver) must effectively have
+access to the &lt;span class="caps"&gt;BMC&lt;/span&gt; network as the built-in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is serving from
+its own &lt;span class="caps"&gt;BMC&lt;/span&gt; &lt;span class="caps"&gt;IP&lt;/span&gt; address.
+Care has to be taken to setup such proxying securely in a clustered nova&amp;nbsp;deployment.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Nevertheless, this seems like an interesting and promising development on
 the hardware market.
 I consider it as yet another small step on the way forward to close the gap
 between baremetal and virtual servers in OpenStack and enable a unified user
 experience for compute&amp;nbsp;service.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="references"&gt;
-&lt;h2&gt;References&lt;/h2&gt;
+&lt;h3&gt;References&lt;/h3&gt;
 &lt;table class="docutils footnote" frame="void" id="id6" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
@@ -124,7 +130,9 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</summary><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-12-14T00:00:00+02:00</published><updated>2016-12-14T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:git-gerrit-basics-ru.html</id><summary type="html">&lt;!--  --&gt;
+&lt;/div&gt;
+</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2016-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
 that branches are homeomorphic endofunctors
@@ -397,17 +405,15 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 (см &lt;a class="reference internal" href="#id6"&gt;Правки и изменения истории&lt;/a&gt;).&lt;/p&gt;
 &lt;div class="section" id="openstack-english"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id27"&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/a&gt;&lt;/h3&gt;
-&lt;ul&gt;
+&lt;ul class="simple"&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;Общее описание Development&amp;nbsp;Workflow&lt;/dt&gt;
-&lt;dd&gt;&lt;p class="first last"&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/p&gt;
-&lt;/dd&gt;
+&lt;dd&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;Как писать годный&amp;nbsp;коммит-мессадж&lt;/dt&gt;
-&lt;dd&gt;&lt;p class="first last"&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/p&gt;
-&lt;/dd&gt;
+&lt;dd&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -513,7 +519,8 @@ git review
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:ubuntu-ruu-kbd.html</id><summary type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
+</content><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
 For Western languages Ubuntu comes with &amp;#8220;English (international with AltGr dead keys)&amp;#8221;
@@ -597,7 +604,8 @@ plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
 Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
-</summary><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:devstack-with-neutron.html</id><summary type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
+</content><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
 the solutions for recent DevStack (early Juno as of this
 writing), but some things might still be incorrect or already fixed -
@@ -832,7 +840,8 @@ options kvm-intel nested=1
 &lt;/pre&gt;
 &lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:uefi-boot-hp.html</id><summary type="html">&lt;div class="section" id="problem"&gt;
+</content><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="problem"&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
 &lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
 can be configured in &lt;span class="caps"&gt;BIOS&lt;/span&gt; per device (&lt;span class="caps"&gt;HDD&lt;/span&gt;/&lt;span class="caps"&gt;ODD&lt;/span&gt;/&lt;span class="caps"&gt;PXI&lt;/span&gt;/&lt;span class="caps"&gt;USB&lt;/span&gt; etc) but there is
@@ -909,4 +918,4 @@ if I need, and also I can safely use SAVE_DEFAULT option of Grub.
 For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
 there is still possibility to override first boot option during &lt;span class="caps"&gt;POST&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>
+</content><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>
