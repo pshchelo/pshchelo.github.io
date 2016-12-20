@@ -16,9 +16,9 @@ of such instance for example via horizon Dashboard.
 
 This is about to change with ironic community starting to work [#]_
 on introducing a framework for graphical console access for baremetal nodes.
-As the each hardware vendor implements a different way to provide graphical
+As each hardware vendor implements a different way to provide graphical
 console access, the framework is planned to be quite generic,
-leaving details of actual graphical console configuration and enablement
+leaving details of actual graphical console configuration and management
 to a proposed GraphicalConsole interface of an ironic driver.
 
 One interesting hardware to consider in this regard is Dell servers supporting
@@ -44,10 +44,16 @@ managed by ironic.
    :align: center
    :alt: Screenshot of a VNC console of the baremetal node in horizon Dashboard
 
+Lessons learned
+===============
+
 Of course no prototype is complete and without any bugs/problems discovered
 during testing.
 Here is what I’ve been hitting my head and hacking around while making
 this to work:
+
+Prototype limitations
+---------------------
 
 * This prototype is done prior to the generic graphical console framework
   implementation done in ironic.
@@ -74,6 +80,9 @@ this to work:
   Ironic and required complementary functionality is available in
   python-ironicclient.
 
+iDrac VNC limitations
+---------------------
+
 * OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
   not properly connect to it resulting in an apparently connected console
   with no graphical output [#]_.
@@ -97,11 +106,11 @@ this to work:
   On the other hand this still might suffice for undercloud-like use cases
   such as TrippleO.
 
-* Note that in the current prototype,
-  all nodes running nova-novncproxy service (or the single one specified as
-  ``vncserver_proxyclient_address`` in config for nova-compute with ironic
-  virt-driver) must effectively have access to the BMC network as the built-in
-  iDRAC VNC server is serving from its own BMC IP address.
+* Note that in the current prototype, all nodes running nova-novncproxy
+  service (or the single one specified as ``vncserver_proxyclient_address``
+  in config for nova-compute with ironic virt-driver) must effectively have
+  access to the BMC network as the built-in iDRAC VNC server is serving from
+  its own BMC IP address.
   Care has to be taken to setup such proxying securely in a clustered nova
   deployment.
 
