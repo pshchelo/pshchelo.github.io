@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2017-03-07T00:00:00+02:00</updated><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2017-04-03T00:00:00+03:00</updated><entry><title>Moving on with OpenStack</title><link href="http://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2017-04-03T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
+but would like to keep your community profile in OpenStack or
+probably will continue working on OpenStack on your new&amp;nbsp;place?&lt;/p&gt;
+&lt;p&gt;Below are a couple of things that you may consider to do to keep your
+profile in OpenStack community accessible, and some other&amp;nbsp;tips.&lt;/p&gt;
+&lt;div class="section" id="accounts"&gt;
+&lt;h2&gt;Accounts&lt;/h2&gt;
+&lt;p&gt;Basically the main account to change is Ubuntu One -
+it ties to both Launchpad and&amp;nbsp;Openstack.org&lt;/p&gt;
+&lt;p&gt;After each change ensure you can login with new, personal&amp;nbsp;credentials.&lt;/p&gt;
+&lt;div class="section" id="ubuntuone"&gt;
+&lt;h3&gt;UbuntuOne&lt;/h3&gt;
+&lt;p&gt;Change you primary e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="launchpad"&gt;
+&lt;h3&gt;Launchpad&lt;/h3&gt;
+&lt;p&gt;Change you primary e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="openstack"&gt;
+&lt;h3&gt;OpenStack&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://www.openstack.org/profile/"&gt;https://www.openstack.org/profile/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Change your primary e-mail to a non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Change affiliation.
+Note, that if you will be officially working on OpenStack on your new job,
+your new company should have signed the corporate license agreement
+with OpenStack foundation.
+If you change your affiliation to &amp;#8216;Independent&amp;#8217;,
+you&amp;#8217;ll have to sign a new license agreement for independent&amp;nbsp;contributors.&lt;/p&gt;
+&lt;p&gt;If concerned about Stackalytics metrics, &lt;span class="caps"&gt;AFAIK&lt;/span&gt; for some time already it uses
+affiliation from o.o (and not the e-mail domain)
+to track contributions&amp;nbsp;per-company.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="gerrit"&gt;
+&lt;h3&gt;Gerrit&lt;/h3&gt;
+&lt;div class="section" id="upstream"&gt;
+&lt;h4&gt;Upstream&lt;/h4&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://review.openstack.org"&gt;https://review.openstack.org&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Add your non-corporate e-mail, make it a primary&amp;nbsp;one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-downstream-gerrits"&gt;
+&lt;h4&gt;Other downstream&amp;nbsp;Gerrits&lt;/h4&gt;
+&lt;p&gt;Depending on whether there are open repos at all, might consider trying to add
+your personal e-mail to the registered e-mail&amp;nbsp;addresses.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="github"&gt;
+&lt;h3&gt;GitHub&lt;/h3&gt;
+&lt;p&gt;Ensure your primary e-mail is a non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="git"&gt;
+&lt;h3&gt;Git&lt;/h3&gt;
+&lt;p&gt;Don&amp;#8217;t forget to change your user.email in the &lt;tt class="docutils literal"&gt;.gitconfig&lt;/tt&gt; accordingly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="irc-irccloud"&gt;
+&lt;h3&gt;&lt;span class="caps"&gt;IRC&lt;/span&gt;/IRCCloud&lt;/h3&gt;
+&lt;p&gt;If you were using that, change your e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="code"&gt;
+&lt;h3&gt;Code&lt;/h3&gt;
+&lt;p&gt;If you have any running envs (e.g.DevStack) with upstream code -
+push it to OpenStack&amp;#8217;s gerrit or to the forks on your personal
+GitHub/BitBucket&amp;nbsp;etc.&lt;/p&gt;
+&lt;p&gt;If you have any running envs with downstream code -
+push it to appropriate downstream&amp;nbsp;repo/Gerrit.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="others"&gt;
+&lt;h2&gt;Others&lt;/h2&gt;
+&lt;div class="section" id="mail"&gt;
+&lt;h3&gt;Mail&lt;/h3&gt;
+&lt;p&gt;Consider exporting mail filters, usually people end up with quite elaborate
+setups to sort the usual mail&amp;nbsp;flood.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="docs"&gt;
+&lt;h3&gt;Docs&lt;/h3&gt;
+&lt;p&gt;GDrive/Confluence/Dropbox etc - whatever corporate tool you were&amp;nbsp;using.&lt;/p&gt;
+&lt;p&gt;Export personal notes etc. &lt;em&gt;Beware of sensitive nature of some documents&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
@@ -131,7 +211,7 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2017-03-07T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2017-04-03T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
