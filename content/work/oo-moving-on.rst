@@ -12,7 +12,6 @@ Moving on with OpenStack
 :lang: en
 :authors: pas-ha
 :summary: stay in community while moving along
-:status: draft
 
 So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
