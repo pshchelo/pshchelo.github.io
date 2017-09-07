@@ -9,7 +9,7 @@
 
 
 
-<link rel="canonical" href="http://pshchelo.github.io/drafts/ansible-deploy-perf.html">
+<link rel="canonical" href="http://pshchelo.github.io/ansible-deploy-perf.html">
 
         <meta name="author" content="pas-ha" />
         <meta name="keywords" content="ironic,ansible,deploy,testing" />
@@ -18,7 +18,7 @@
         <meta property="og:site_name" content="Bits and Pieces" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Performance testing of Ansible-deploy driver for OpenStack Ironic"/>
-        <meta property="og:url" content="http://pshchelo.github.io/drafts/ansible-deploy-perf.html"/>
+        <meta property="og:url" content="http://pshchelo.github.io/ansible-deploy-perf.html"/>
         <meta property="og:description" content="Comparative performance testing of ansible-deploy and agent ironic drivers"/>
         <meta property="article:published_time" content="2017-09-01" />
             <meta property="article:section" content="openstack" />
@@ -62,6 +62,9 @@ Bits and Pieces            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="http://pshchelo.github.io/category/openstack.html">Openstack</a>
+                        </li>
                         <li >
                             <a href="http://pshchelo.github.io/category/play.html">Play</a>
                         </li>
@@ -85,7 +88,7 @@ Bits and Pieces            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://pshchelo.github.io/drafts/ansible-deploy-perf.html"
+                    <a href="http://pshchelo.github.io/ansible-deploy-perf.html"
                        rel="bookmark"
                        title="Permalink to Performance testing of Ansible-deploy driver for OpenStack Ironic">
                         Performance testing of Ansible-deploy driver for OpenStack&nbsp;Ironic
@@ -239,7 +242,7 @@ supported in Ocata&nbsp;release).</p>
 <h3>Nodes by&nbsp;state</h3>
 <p>This plot shows the number of nodes in either &#8220;deploying/wait-callback&#8221;
 or &#8220;active&#8221;&nbsp;state.</p>
-<img alt="Active vs being deployed nodes, total (batches of 50 and 100)" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" />
+<img alt="Active vs being deployed nodes" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" />
 </div>
 <div class="section" id="ironic-host-performance-stats">
 <h3>Ironic host performance&nbsp;stats</h3>
@@ -268,7 +271,7 @@ conductor instead of remotely on the node being deployed (<span class="caps">IPA
 <p>Nevertheless the overall time to provision all nodes and the average <span class="caps">CPU</span> load
 is nearly the same,
 and the toll multiple Ansible processes take on the conductor node
-is well withing of what a real server suitable for such scaled baremetal cloud
+is well within of what a real server suitable for such scaled baremetal cloud
 can&nbsp;handle.</p>
 </div>
 <div class="section" id="overall-test-both-50-and-100-batches">
@@ -287,9 +290,9 @@ can&nbsp;handle.</p>
 <dd><img alt="TCP counters, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters100.png" />
 </dd>
 </dl>
-<p>As expected, using <tt class="docutils literal">direct</tt> driver interface scales better when increasing
-the number of nodes and is almost like <tt class="docutils literal">O(1)</tt>,
-while the using <tt class="docutils literal">ansible</tt> deploy interface scales closer to <tt class="docutils literal">O(n)</tt>
+<p>As expected, using <tt class="docutils literal">direct</tt> driver interface scales better whith increasing
+the number of nodes and is close to <tt class="docutils literal">O(1)</tt>,
+while overhead of using <tt class="docutils literal">ansible</tt> deploy interface scales closer to <tt class="docutils literal">O(n)</tt>
 of number of nodes, especially for <span class="caps">RAM</span>&nbsp;consumption.</p>
 <p>We tend to attribute such scaling difference to the fact
 that current internal architecture of ironic does not allow us to use Ansible
@@ -307,7 +310,7 @@ ironic deployment that is going to allow usage the <tt class="docutils literal">
 <div class="section" id="conclusion">
 <h2>Conclusion</h2>
 <p>Overall we think that the <tt class="docutils literal">ansible</tt> deploy interface performs and scales
-within acceptable&nbsp;limits.</p>
+within acceptable limits on a quite standard server&nbsp;hardware.</p>
 </div>
 <div class="section" id="references">
 <h2>References</h2>

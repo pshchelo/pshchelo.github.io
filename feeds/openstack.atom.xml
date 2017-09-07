@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - openstack</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/openstack.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2017-09-07T00:00:00+03:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="http://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2017-09-07T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
+&lt;h2&gt;What and why are we&amp;nbsp;testing&lt;/h2&gt;
+&lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
+deploy driver interface for OpenStack ironic service.
+Contrary to the standard &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;iscsi&lt;/tt&gt; deploy interfaces that depend
+on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-python-agent&lt;/span&gt;&lt;/tt&gt; service (&lt;span class="caps"&gt;IPA&lt;/span&gt;) running in the deploy ramdisk,
+this new &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface is using Ansible to provision the node,
+with the steps to execute during provisioning or cleaning defined as Ansible
+playbooks/roles/tasks &lt;em&gt;etc&lt;/em&gt;.
+The main advantage of this approach is greater flexibility regarding
+fine-tuning of the provisioning process this deploy interface&amp;nbsp;allows.&lt;/p&gt;
+&lt;p&gt;This &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface and classic ironic drivers using it are
+already available as part of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-staging-driver&lt;/span&gt;&lt;/tt&gt; project &lt;a class="footnote-reference" href="#id9" id="id1"&gt;[1]&lt;/a&gt;,
+and we are in the process of proposing &lt;a class="footnote-reference" href="#id10" id="id2"&gt;[2]&lt;/a&gt; to include this interface
+to the ironic project&amp;nbsp;itself.&lt;/p&gt;
+&lt;p&gt;One of the topics raised during discussions is the performance
+of this new driver interface.
+Contrary to the &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; deploy interface that offloads most of the work
+to be executed by &lt;span class="caps"&gt;IPA&lt;/span&gt; that runs on the node being provisioned,
+this new interface involves executing code on the side of ironic-conductor
+service, thus we were asked to show that the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface
+can cope with deploying several nodes in parallel (50 at least) without severe
+performance degradation on the side of ironic-conductor&amp;nbsp;service/host.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testbed"&gt;
+&lt;h2&gt;Testbed&lt;/h2&gt;
+&lt;p&gt;Lab setup and tests were performed by my colleague Vasyl Saienko &lt;a class="footnote-reference" href="#id11" id="id3"&gt;[3]&lt;/a&gt;,
+with me mostly consulting on setting up and tuning the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy
+interface and Ansible&amp;nbsp;itself.&lt;/p&gt;
+&lt;p&gt;The lab consisted of 4 baremetal nodes with the following relevant&amp;nbsp;stats:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;1x ironic&amp;nbsp;host&lt;/dt&gt;
+&lt;dd&gt;&lt;strong&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/strong&gt;: Intel(R) Xeon(R) &lt;span class="caps"&gt;CPU&lt;/span&gt; E5-2620, 32 cores,
+&lt;strong&gt;&lt;span class="caps"&gt;RAM&lt;/span&gt;&lt;/strong&gt;: &lt;span class="caps"&gt;32GB&lt;/span&gt;&lt;/dd&gt;
+&lt;dt&gt;3x enrolled into&amp;nbsp;ironic&lt;/dt&gt;
+&lt;dd&gt;&lt;strong&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/strong&gt;: Intel(R) Xeon(R) &lt;span class="caps"&gt;CPU&lt;/span&gt; E5-2650, 32 cores
+&lt;strong&gt;&lt;span class="caps"&gt;RAM&lt;/span&gt;&lt;/strong&gt;: &lt;span class="caps"&gt;64GB&lt;/span&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;We have deployed a minimal single host ironic installation as of 7.0.2 version
+(Ocata release) on the ironic host node using Mirantis Cloud Platform 1.1 &lt;a class="footnote-reference" href="#id12" id="id4"&gt;[4]&lt;/a&gt;.
+The Ansible-deploy interface was taken from &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-staging-drivers&lt;/span&gt;&lt;/tt&gt; project
+as of stable/ocata branch.
+The deployment also included OpenStack Identity (keystone)
+and Networking (neutron) services, also of Ocata&amp;nbsp;release.&lt;/p&gt;
+&lt;p&gt;We used Ansible 2.3.2.0 &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;-installed from&amp;nbsp;PyPI.&lt;/p&gt;
+&lt;p&gt;We enrolled the 3 slave baremetal nodes in ironic,
+deployed them with Ubuntu Xenial image,
+created 100 VMs on each of them, and enrolled those to ironic using
+&lt;tt class="docutils literal"&gt;virtualbmc&lt;/tt&gt; utility to simulate &lt;span class="caps"&gt;IPMI&lt;/span&gt;-capable hardware nodes.
+This effectively gave us 300 ironic nodes to test deployment&amp;nbsp;on.&lt;/p&gt;
+&lt;p&gt;Overall order of the tests was the&amp;nbsp;following:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 50 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 50 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 100 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 100 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The deploy ramdisk used for both drivers was the &lt;tt class="docutils literal"&gt;tinyipa&lt;/tt&gt; image
+as of stable/ocata rebuilt for usage with &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface.
+We provisioned nodes with standard Ubuntu Xenial cloud&amp;nbsp;image.&lt;/p&gt;
+&lt;p&gt;Concurrent deployment was done via trivial bash script calling ironic client
+commands in a &lt;tt class="docutils literal"&gt;for&lt;/tt&gt; loop.
+For each iteration &amp;#8220;virtual&amp;#8221; nodes to be provisioned were chosen
+to be equally distributed between real baremetal nodes
+to decrease possible&amp;nbsp;congestion.&lt;/p&gt;
+&lt;p&gt;Monitoring was performed with Cacti, with results presented and discussed&amp;nbsp;below.&lt;/p&gt;
+&lt;div class="section" id="lab-tuning"&gt;
+&lt;h3&gt;Lab&amp;nbsp;tuning&lt;/h3&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The static image store was moved outside of ironic node&lt;ul&gt;
+&lt;li&gt;due to physical network layout of the lab,
+this separate storage had better connection speed with baremetal nodes,
+and thus was performing&amp;nbsp;better&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The timeout for downloading the image &lt;a class="footnote-reference" href="#id13" id="id5"&gt;[5]&lt;/a&gt; was increased.&lt;ul&gt;
+&lt;li&gt;Current hard-coded value is more suitable for small &lt;tt class="docutils literal"&gt;cirros&lt;/tt&gt; image
+used in OpenStack &lt;span class="caps"&gt;CI&lt;/span&gt;,
+and turned out to be not sufficient for downloading the image
+we were using given performance of our image&amp;nbsp;store&lt;/li&gt;
+&lt;li&gt;We plan to make such values actually configurable&amp;nbsp;later&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;We switched Ansible to use &lt;tt class="docutils literal"&gt;paramiko&lt;/tt&gt; transport instead of the default
+&lt;tt class="docutils literal"&gt;smart&lt;/tt&gt; &lt;a class="footnote-reference" href="#id14" id="id6"&gt;[6]&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;We experienced weird problems with &lt;span class="caps"&gt;SSH&lt;/span&gt; timeouts both on initial connection
+and when executing&amp;nbsp;tasks.&lt;/li&gt;
+&lt;li&gt;There are number of bugs reported against Ansible that might be relevant,
+&lt;em&gt;e.g.&lt;/em&gt; &lt;a class="footnote-reference" href="#id15" id="id7"&gt;[7]&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Using &lt;tt class="docutils literal"&gt;paramiko&lt;/tt&gt; for &lt;span class="caps"&gt;SSH&lt;/span&gt; may have introduced an extra performance cost
+compared to the native &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;binaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;We increased the &lt;tt class="docutils literal"&gt;internal_poll_interval&lt;/tt&gt; Ansible configuration setting
+&lt;a class="footnote-reference" href="#id16" id="id8"&gt;[8]&lt;/a&gt; to &lt;tt class="docutils literal"&gt;0.01&lt;/tt&gt; (from default &lt;tt class="docutils literal"&gt;0.001&lt;/tt&gt;).&lt;ul&gt;
+&lt;li&gt;Available since Ansible 2.2, this setting was specifically introduced for
+better &lt;span class="caps"&gt;CPU&lt;/span&gt;-wise performance of Ansible in use-cases that do not require
+responsiveness of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process console&amp;nbsp;output.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="results-and-discussion"&gt;
+&lt;h2&gt;Results and&amp;nbsp;discussion&lt;/h2&gt;
+&lt;div class="section" id="nodes-per-driver"&gt;
+&lt;h3&gt;Nodes per&amp;nbsp;driver&lt;/h3&gt;
+&lt;p&gt;This plot shows the number of nodes registered per each driver
+to set time frame reference for further&amp;nbsp;graphs.&lt;/p&gt;
+&lt;img alt="Nodes per driver" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" /&gt;
+&lt;p&gt;And we immediately see one of the troubles we stumbled upon - the dips in the
+second graph around 10:35 and 11:30.
+These graphs were plotted by Cacti periodically polling the ironic &lt;span class="caps"&gt;API&lt;/span&gt;
+for number of nodes - and at these points requests simply timed out.
+It happened for both drivers, so we tend to attribute this to the fact that
+ironic &lt;span class="caps"&gt;API&lt;/span&gt; was running as the &lt;strong&gt;eventlet sever&lt;/strong&gt; instead of &lt;span class="caps"&gt;WSGI&lt;/span&gt; behind a more
+robust webserver (Note that running ironic as &lt;span class="caps"&gt;WSGI&lt;/span&gt; app was not yet officially
+supported in Ocata&amp;nbsp;release).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="nodes-by-state"&gt;
+&lt;h3&gt;Nodes by&amp;nbsp;state&lt;/h3&gt;
+&lt;p&gt;This plot shows the number of nodes in either &amp;#8220;deploying/wait-callback&amp;#8221;
+or &amp;#8220;active&amp;#8221;&amp;nbsp;state.&lt;/p&gt;
+&lt;img alt="Active vs being deployed nodes" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ironic-host-performance-stats"&gt;
+&lt;h3&gt;Ironic host performance&amp;nbsp;stats&lt;/h3&gt;
+&lt;div class="section" id="batches-of-50"&gt;
+&lt;h4&gt;Batches of&amp;nbsp;50&lt;/h4&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="CPU usage, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="System load, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/load-average.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="Memory usage, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/memory-usage.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="TCP counters, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters.png" /&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;The sharp spikes in &lt;span class="caps"&gt;CPU&lt;/span&gt; utilization are well attributed to the &lt;span class="caps"&gt;TFTP&lt;/span&gt; server
+serving multiple concurrent&amp;nbsp;requests.&lt;/p&gt;
+&lt;p&gt;We also see that using &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface consumes more &lt;span class="caps"&gt;CPU&lt;/span&gt;
+(about 3% at peaks) and more &lt;span class="caps"&gt;RAM&lt;/span&gt; (about 3 &lt;span class="caps"&gt;GB&lt;/span&gt;) than agent-deploy.
+This is due to the task execution engine (Ansible) is being run locally on
+conductor instead of remotely on the node being deployed (&lt;span class="caps"&gt;IPA&lt;/span&gt;).&lt;/p&gt;
+&lt;p&gt;Nevertheless the overall time to provision all nodes and the average &lt;span class="caps"&gt;CPU&lt;/span&gt; load
+is nearly the same,
+and the toll multiple Ansible processes take on the conductor node
+is well within of what a real server suitable for such scaled baremetal cloud
+can&amp;nbsp;handle.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="overall-test-both-50-and-100-batches"&gt;
+&lt;h4&gt;Overall test (both 50 and 100&amp;nbsp;batches)&lt;/h4&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="CPU usage, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage100.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="System load, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/load-average100.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="Memory usage, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/memory-usage100.png" /&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
+&lt;dd&gt;&lt;img alt="TCP counters, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters100.png" /&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;As expected, using &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; driver interface scales better whith increasing
+the number of nodes and is close to &lt;tt class="docutils literal"&gt;O(1)&lt;/tt&gt;,
+while overhead of using &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface scales closer to &lt;tt class="docutils literal"&gt;O(n)&lt;/tt&gt;
+of number of nodes, especially for &lt;span class="caps"&gt;RAM&lt;/span&gt;&amp;nbsp;consumption.&lt;/p&gt;
+&lt;p&gt;We tend to attribute such scaling difference to the fact
+that current internal architecture of ironic does not allow us to use Ansible
+as it was designed,
+with one &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process executing the same playbook with
+identical input variables against several nodes.
+Instead, we launch separate &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process for each node
+even when nodes are being provisioning with the same image and other settings,
+which obviously has negative impact on resources&amp;nbsp;used.&lt;/p&gt;
+&lt;p&gt;This difference has to be taken into account when planning an (under)cloud
+ironic deployment that is going to allow usage the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy&amp;nbsp;interface.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Overall we think that the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface performs and scales
+within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="id9" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible"&gt;http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://review.openstack.org/#/c/241946/"&gt;https://review.openstack.org/#/c/241946/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id11" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://launchpad.net/~vsaienko"&gt;https://launchpad.net/~vsaienko&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id12" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://www.mirantis.com/software/mcp/"&gt;https://www.mirantis.com/software/mcp/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id13" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10"&gt;http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id14" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id6"&gt;[6]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#transport"&gt;http://docs.ansible.com/ansible/latest/intro_configuration.html#transport&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id15" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id7"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://github.com/ansible/ansible/issues/24035"&gt;https://github.com/ansible/ansible/issues/24035&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id16" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id8"&gt;[8]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval"&gt;http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</content><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category><category term="testing"></category></entry></feed>
