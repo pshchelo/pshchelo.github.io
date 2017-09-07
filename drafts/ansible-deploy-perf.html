@@ -223,10 +223,9 @@ responsiveness of <tt class="docutils literal"><span class="pre">ansible-playboo
 <h2>Results and&nbsp;discussion</h2>
 <div class="section" id="nodes-per-driver">
 <h3>Nodes per&nbsp;driver</h3>
-<p>These graphs simply show the number of nodes registered per each driver
+<p>This plot shows the number of nodes registered per each driver
 to set time frame reference for further&nbsp;graphs.</p>
-<img alt="Nodes per driver, batches of 50" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver.png" />
-<img alt="Nodes per driver, total (batches of 50 and 100)" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" />
+<img alt="Nodes per driver" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" />
 <p>And we immediately see one of the troubles we stumbled upon - the dips in the
 second graph around 10:35 and 11:30.
 These graphs were plotted by Cacti periodically polling the ironic <span class="caps">API</span>
@@ -236,9 +235,10 @@ ironic <span class="caps">API</span> was running as the <strong>eventlet sever</
 robust webserver (Note that running ironic as <span class="caps">WSGI</span> app was not yet officially
 supported in Ocata&nbsp;release).</p>
 </div>
-<div class="section" id="number-of-active-nodes">
-<h3>Number of active&nbsp;nodes</h3>
-<img alt="Active vs being deployed nodes, batches of 50" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes.png" />
+<div class="section" id="nodes-by-state">
+<h3>Nodes by&nbsp;state</h3>
+<p>This plot shows the number of nodes in either &#8220;deploying/wait-callback&#8221;
+or &#8220;active&#8221;&nbsp;state.</p>
 <img alt="Active vs being deployed nodes, total (batches of 50 and 100)" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" />
 </div>
 <div class="section" id="ironic-host-performance-stats">
