@@ -6,8 +6,8 @@ Performance testing of Ansible-deploy driver for OpenStack Ironic
 
 :date: 2017-09-01
 :modified: |date|
-:tags: ironic,ansible,deploy,testing
-:category: openstack
+:tags: openstack,ironic,ansible,deploy
+:category: work
 :slug: ansible-deploy-perf
 :lang: en
 :authors: pas-ha, vsaienk0
