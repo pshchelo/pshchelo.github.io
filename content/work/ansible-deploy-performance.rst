@@ -132,16 +132,12 @@ Results and discussion
 Nodes per driver
 ----------------
 
-These graphs simply show the number of nodes registered per each driver
+This plot shows the number of nodes registered per each driver
 to set time frame reference for further graphs.
-
-.. image:: {filename}/images/ansible-deploy-performance/node-by-driver.png
-   :align: center
-   :alt: Nodes per driver, batches of 50
 
 .. image:: {filename}/images/ansible-deploy-performance/node-by-driver100.png
    :align: center
-   :alt: Nodes per driver, total (batches of 50 and 100)
+   :alt: Nodes per driver
 
 And we immediately see one of the troubles we stumbled upon - the dips in the
 second graph around 10:35 and 11:30.
@@ -152,12 +148,11 @@ ironic API was running as the **eventlet sever** instead of WSGI behind a more
 robust webserver (Note that running ironic as WSGI app was not yet officially
 supported in Ocata release).
 
-Number of active nodes
-------------------------
+Nodes by state
+--------------
 
-.. image:: {filename}/images/ansible-deploy-performance/ironic-nodes.png
-   :align: center
-   :alt: Active vs being deployed nodes, batches of 50
+This plot shows the number of nodes in either "deploying/wait-callback"
+or "active" state.
 
 .. image:: {filename}/images/ansible-deploy-performance/ironic-nodes100.png
    :align: center
