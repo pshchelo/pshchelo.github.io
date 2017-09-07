@@ -12,7 +12,6 @@ Performance testing of Ansible-deploy driver for OpenStack Ironic
 :lang: en
 :authors: pas-ha, vsaienk0
 :summary: Comparative performance testing of ansible-deploy and agent ironic drivers
-:status: draft
 
 What and why are we testing
 ===========================
@@ -156,7 +155,7 @@ or "active" state.
 
 .. image:: {filename}/images/ansible-deploy-performance/ironic-nodes100.png
    :align: center
-   :alt: Active vs being deployed nodes, total (batches of 50 and 100)
+   :alt: Active vs being deployed nodes
 
 Ironic host performance stats
 -----------------------------
@@ -196,7 +195,7 @@ conductor instead of remotely on the node being deployed (IPA).
 Nevertheless the overall time to provision all nodes and the average CPU load
 is nearly the same,
 and the toll multiple Ansible processes take on the conductor node
-is well withing of what a real server suitable for such scaled baremetal cloud
+is well within of what a real server suitable for such scaled baremetal cloud
 can handle.
 
 Overall test (both 50 and 100 batches)
@@ -222,9 +221,9 @@ TCP counters
       :alt: TCP counters, total (batches of 50 and 100)
 
 
-As expected, using ``direct`` driver interface scales better when increasing
-the number of nodes and is almost like ``O(1)``,
-while the using ``ansible`` deploy interface scales closer to ``O(n)``
+As expected, using ``direct`` driver interface scales better whith increasing
+the number of nodes and is close to ``O(1)``,
+while overhead of using ``ansible`` deploy interface scales closer to ``O(n)``
 of number of nodes, especially for RAM consumption.
 
 We tend to attribute such scaling difference to the fact
@@ -244,7 +243,7 @@ Conclusion
 ==========
 
 Overall we think that the ``ansible`` deploy interface performs and scales
-within acceptable limits.
+within acceptable limits on a quite standard server hardware.
 
 References
 ==========
