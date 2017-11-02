@@ -33,6 +33,7 @@ SOCIAL = (
     ('Twitter', 'https://twitter.com/pshchelo'),
     ('LinkedIn', 'https://www.linkedin.com/in/pshchelo'),
 )
+DISQUS_SITENAME = 'pshchelo'
 
 THEME = 'pelican-bootstrap3'
 TYPOGRIFY = True
