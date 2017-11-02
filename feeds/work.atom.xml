@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="http://pshchelo.github.io/" rel="alternate"></link><link href="http://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>http://pshchelo.github.io/</id><updated>2017-09-07T00:00:00+03:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="http://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2017-09-07T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2017-11-02T00:00:00+02:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2017-11-02T00:00:00+02:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
 &lt;h2&gt;What and why are we&amp;nbsp;testing&lt;/h2&gt;
 &lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
@@ -109,7 +109,7 @@ responsiveness of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ans
 &lt;h3&gt;Nodes per&amp;nbsp;driver&lt;/h3&gt;
 &lt;p&gt;This plot shows the number of nodes registered per each driver
 to set time frame reference for further&amp;nbsp;graphs.&lt;/p&gt;
-&lt;img alt="Nodes per driver" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" /&gt;
+&lt;img alt="Nodes per driver" class="align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" /&gt;
 &lt;p&gt;And we immediately see one of the troubles we stumbled upon - the dips in the
 second graph around 10:35 and 11:30.
 These graphs were plotted by Cacti periodically polling the ironic &lt;span class="caps"&gt;API&lt;/span&gt;
@@ -123,7 +123,7 @@ supported in Ocata&amp;nbsp;release).&lt;/p&gt;
 &lt;h3&gt;Nodes by&amp;nbsp;state&lt;/h3&gt;
 &lt;p&gt;This plot shows the number of nodes in either &amp;#8220;deploying/wait-callback&amp;#8221;
 or &amp;#8220;active&amp;#8221;&amp;nbsp;state.&lt;/p&gt;
-&lt;img alt="Active vs being deployed nodes" class="align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" /&gt;
+&lt;img alt="Active vs being deployed nodes" class="align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" /&gt;
 &lt;/div&gt;
 &lt;div class="section" id="ironic-host-performance-stats"&gt;
 &lt;h3&gt;Ironic host performance&amp;nbsp;stats&lt;/h3&gt;
@@ -131,16 +131,16 @@ or &amp;#8220;active&amp;#8221;&amp;nbsp;state.&lt;/p&gt;
 &lt;h4&gt;Batches of&amp;nbsp;50&lt;/h4&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="CPU usage, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage.png" /&gt;
+&lt;dd&gt;&lt;img alt="CPU usage, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="System load, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/load-average.png" /&gt;
+&lt;dd&gt;&lt;img alt="System load, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/load-average.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="Memory usage, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/memory-usage.png" /&gt;
+&lt;dd&gt;&lt;img alt="Memory usage, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/memory-usage.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="TCP counters, batches of 50" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters.png" /&gt;
+&lt;dd&gt;&lt;img alt="TCP counters, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters.png" /&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;The sharp spikes in &lt;span class="caps"&gt;CPU&lt;/span&gt; utilization are well attributed to the &lt;span class="caps"&gt;TFTP&lt;/span&gt; server
@@ -159,16 +159,16 @@ can&amp;nbsp;handle.&lt;/p&gt;
 &lt;h4&gt;Overall test (both 50 and 100&amp;nbsp;batches)&lt;/h4&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="CPU usage, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage100.png" /&gt;
+&lt;dd&gt;&lt;img alt="CPU usage, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage100.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="System load, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/load-average100.png" /&gt;
+&lt;dd&gt;&lt;img alt="System load, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/load-average100.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="Memory usage, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/memory-usage100.png" /&gt;
+&lt;dd&gt;&lt;img alt="Memory usage, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/memory-usage100.png" /&gt;
 &lt;/dd&gt;
 &lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
-&lt;dd&gt;&lt;img alt="TCP counters, total (batches of 50 and 100)" class="first last align-center" src="http://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters100.png" /&gt;
+&lt;dd&gt;&lt;img alt="TCP counters, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters100.png" /&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;As expected, using &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; driver interface scales better whith increasing
@@ -244,7 +244,7 @@ within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="http://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2017-09-07T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
+</content><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2017-11-02T00:00:00+02:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
 probably will continue working on OpenStack on your new&amp;nbsp;place?&lt;/p&gt;
@@ -324,7 +324,7 @@ setups to sort the usual mail&amp;nbsp;flood.&lt;/p&gt;
 &lt;p&gt;Export personal notes etc. &lt;em&gt;Beware of sensitive nature of some documents&lt;/em&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="http://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
+</content><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="https://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
@@ -353,7 +353,7 @@ virt-driver in nova.
 As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
 managed by&amp;nbsp;ironic.&lt;/p&gt;
-&lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="http://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" /&gt;
+&lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="https://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" /&gt;
 &lt;div class="section" id="lessons-learned"&gt;
 &lt;h2&gt;Lessons&amp;nbsp;learned&lt;/h2&gt;
 &lt;p&gt;Of course no prototype is complete and without any bugs/problems discovered
@@ -456,7 +456,7 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="http://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2017-09-07T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2017-11-02T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
@@ -515,7 +515,7 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 Картинки скопированы оттуда, и общая канва повествования немного&amp;nbsp;тоже.&lt;/p&gt;
 &lt;div class="section" id="id3"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id13"&gt;Основные&amp;nbsp;конструкции&lt;/a&gt;&lt;/h3&gt;
-&lt;img alt="кирпичики Гита" src="http://pshchelo.github.io/images/git-gerrit-basics/commits.png" /&gt;
+&lt;img alt="кирпичики Гита" src="https://pshchelo.github.io/images/git-gerrit-basics/commits.png" /&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;strong&gt;Blob&lt;/strong&gt; - объект хранящий “файл”.
 То, ради чего все затевалось.
@@ -535,7 +535,7 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 &lt;p&gt;В отличие от (большинства?) других систем контроля версий в Git реализована
 двухступенчатая процедура внесения изменений - через &lt;em&gt;Index&lt;/em&gt;
 (он же &lt;em&gt;Staging Area&lt;/em&gt;).&lt;/p&gt;
-&lt;img alt="основы основ" src="http://pshchelo.github.io/images/git-gerrit-basics/lifecycle.png" /&gt;
+&lt;img alt="основы основ" src="https://pshchelo.github.io/images/git-gerrit-basics/lifecycle.png" /&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;strong&gt;Working area&lt;/strong&gt; - реальные файлы на файловой&amp;nbsp;системе&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Index&lt;/strong&gt; - &amp;nbsp;изменения которые будут занесены в репозиторий как следующий&amp;nbsp;коммит&lt;/li&gt;
@@ -844,7 +844,7 @@ git review
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="http://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
+</content><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
@@ -929,7 +929,7 @@ plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
 Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
-</content><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="http://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
+</content><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="https://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
 the solutions for recent DevStack (early Juno as of this
@@ -1165,7 +1165,7 @@ options kvm-intel nested=1
 &lt;/pre&gt;
 &lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="http://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
+</content><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="https://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="problem"&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
 &lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
