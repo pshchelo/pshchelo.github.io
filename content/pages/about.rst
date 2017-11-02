@@ -19,7 +19,7 @@ something useful too.
 Contact
 =======
 
-I am too lazy to bolt Discuss etc support, so if you feel like letting me
+I am too lazy to bolt Disqus etc support, so if you feel like letting me
 know I am wrong somewhere, create an issue at
 `this blog source repo <https://github.com/pshchelo/pshchelo.github.io/issues>`__.
 

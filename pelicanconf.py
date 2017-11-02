@@ -5,12 +5,11 @@ from __future__ import unicode_literals
 AUTHOR = u'Pavlo Shchelokovskyy'
 SITENAME = u'Bits and Pieces'
 SITEURL = ''
-
-PATH = 'content'
+RELATIVE_URLS = True
 
 TIMEZONE = 'Europe/Kiev'
 
-DEFAULT_LANG = u'en'
+DEFAULT_PAGINATION = 5
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -19,23 +18,21 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+GITHUB_URL = 'https://github.com/pshchelo'
 # Blogroll
-LINKS =  (('Python.org', 'http://python.org/'),
-          ('OpenStack', 'http://www.openstack.org/'),
-          )
+LINKS = (
+    ('Python.org', 'http://python.org/'),
+    ('OpenStack', 'http://www.openstack.org/'),
+)
 
 # Social widget
-SOCIAL = (('GitHub', 'https://github.com/pshchelo'),
-          ('BitBucket', 'https://bitbucket.org/pshchelo'),
-          ('Google+', 'https://plus.google.com/+PavloShchelokovskyy/about'),
-          ('Twitter', 'https://twitter.com/pshchelo'),
-          ('LinkedIn', 'http://ua.linkedin.com/pub/pavlo-shchelokovskyy/38/676/124/'),
-          )
-
-DEFAULT_PAGINATION = 10
-
-# Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
+SOCIAL = (
+    ('GitHub', 'https://github.com/pshchelo'),
+    ('BitBucket', 'https://bitbucket.org/pshchelo'),
+    ('Google+', 'https://plus.google.com/+PavloShchelokovskyy/about'),
+    ('Twitter', 'https://twitter.com/pshchelo'),
+    ('LinkedIn', 'https://www.linkedin.com/in/pshchelo'),
+)
 
 THEME = 'pelican-bootstrap3'
 TYPOGRIFY = True
