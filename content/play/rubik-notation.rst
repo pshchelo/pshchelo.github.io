@@ -17,15 +17,15 @@ Notation used
 Choose the front face - the one facing you. Then the letters denote:
 
 
-.. image:: {filename}/images/rubik-files/rubik-rotations.svg
+.. image:: {static}/images/rubik-files/rubik-rotations.svg
    :height: 300px
    :align: center
-   :alt: Slice rotations 
- 
-.. image:: {filename}/images/rubik-files/rubik-3d.svg   
+   :alt: Slice rotations
+
+.. image:: {static}/images/rubik-files/rubik-3d.svg
    :height: 300px
    :align: center
-   :alt: Whole cube rotations 
+   :alt: Whole cube rotations
 
 F
     rotate the front face of the cube clock-wise
@@ -52,7 +52,7 @@ D
 |G_D|
     rotate the whole cube to the right (as D turn)
 
-The primed letter means change of direction to counterclockwise: 
+The primed letter means change of direction to counterclockwise:
 F', B', R', L', U', D', |M'_R|, |M'_D|, |M'_F|, |G'_R|, |G'_F|, |G'_D|.
 
 

@@ -42,7 +42,7 @@ by John Wiegley (CC BY-ND 4.0).
 Основные конструкции
 --------------------
 
-.. image:: {filename}/images/git-gerrit-basics/commits.png
+.. image:: {static}/images/git-gerrit-basics/commits.png
    :alt: кирпичики Гита
 
 * **Blob** - объект хранящий “файл”.
@@ -64,7 +64,7 @@ by John Wiegley (CC BY-ND 4.0).
 двухступенчатая процедура внесения изменений - через *Index*
 (он же *Staging Area*).
 
-.. image:: {filename}/images/git-gerrit-basics/lifecycle.png
+.. image:: {static}/images/git-gerrit-basics/lifecycle.png
    :alt: основы основ
 
 * **Working area** - реальные файлы на файловой системе

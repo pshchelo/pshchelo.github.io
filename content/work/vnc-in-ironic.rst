@@ -40,7 +40,7 @@ As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
 managed by ironic.
 
-.. image:: {filename}/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png
+.. image:: {static}/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png
    :align: center
    :alt: Screenshot of a VNC console of the baremetal node in horizon Dashboard
 

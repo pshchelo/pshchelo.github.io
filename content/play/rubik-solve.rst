@@ -98,7 +98,7 @@ Rotate the cube FUR
 
 [ ( R F' R' F )\ |^2| ]\ |^n| {U | U' | U\ |^2| } [ ( R F' R' F )\ |^2| ]\ |^n|
 
-+ ``n`` - rotates FUR by ``n/3`` clockwise 
++ ``n`` - rotates FUR by ``n/3`` clockwise
 + U - rotates FUR and RUB
 + U' - rotates FUR and FUL
 + U\ |^2| - rotates FUR and LUB

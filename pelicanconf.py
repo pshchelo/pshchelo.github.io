@@ -5,11 +5,12 @@ from __future__ import unicode_literals
 AUTHOR = u'Pavlo Shchelokovskyy'
 SITENAME = u'Bits and Pieces'
 SITEURL = ''
-RELATIVE_URLS = True
+
+PATH = 'content'
 
 TIMEZONE = 'Europe/Kiev'
 
-DEFAULT_PAGINATION = 5
+DEFAULT_LANG = 'en'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -18,7 +19,6 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-GITHUB_URL = 'https://github.com/pshchelo'
 # Blogroll
 LINKS = (
     ('Python.org', 'http://python.org/'),
@@ -33,11 +33,18 @@ SOCIAL = (
     ('Twitter', 'https://twitter.com/pshchelo'),
     ('LinkedIn', 'https://www.linkedin.com/in/pshchelo'),
 )
-DISQUS_SITENAME = 'pshchelo'
+
+DEFAULT_PAGINATION = 10
+
+# Uncomment following line if you want document-relative URLs when developing
+RELATIVE_URLS = True
 
 THEME = 'pelican-bootstrap3'
 TYPOGRIFY = True
 
+
+# Copied over from old config, do I need theese?
+GITHUB_URL = 'https://github.com/pshchelo'
 STATIC_PATHS = [
         'images',
         'extra/robots.txt',

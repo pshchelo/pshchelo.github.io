@@ -1,4 +1,3 @@
 *.py[co]
-.tox
 /cache
 /output

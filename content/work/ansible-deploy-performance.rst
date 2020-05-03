@@ -134,7 +134,7 @@ Nodes per driver
 This plot shows the number of nodes registered per each driver
 to set time frame reference for further graphs.
 
-.. image:: {filename}/images/ansible-deploy-performance/node-by-driver100.png
+.. image:: {static}/images/ansible-deploy-performance/node-by-driver100.png
    :align: center
    :alt: Nodes per driver
 
@@ -153,7 +153,7 @@ Nodes by state
 This plot shows the number of nodes in either "deploying/wait-callback"
 or "active" state.
 
-.. image:: {filename}/images/ansible-deploy-performance/ironic-nodes100.png
+.. image:: {static}/images/ansible-deploy-performance/ironic-nodes100.png
    :align: center
    :alt: Active vs being deployed nodes
 
@@ -164,22 +164,22 @@ Batches of 50
 ~~~~~~~~~~~~~
 
 CPU usage
-   .. image:: {filename}/images/ansible-deploy-performance/cpu-usage.png
+   .. image:: {static}/images/ansible-deploy-performance/cpu-usage.png
       :align: center
       :alt: CPU usage, batches of 50
 
 Load average
-   .. image:: {filename}/images/ansible-deploy-performance/load-average.png
+   .. image:: {static}/images/ansible-deploy-performance/load-average.png
       :align: center
       :alt: System load, batches of 50
 
 Memory usage
-   .. image:: {filename}/images/ansible-deploy-performance/memory-usage.png
+   .. image:: {static}/images/ansible-deploy-performance/memory-usage.png
       :align: center
       :alt: Memory usage, batches of 50
 
 TCP counters
-   .. image:: {filename}/images/ansible-deploy-performance/tcp-counters.png
+   .. image:: {static}/images/ansible-deploy-performance/tcp-counters.png
       :align: center
       :alt: TCP counters, batches of 50
 
@@ -201,22 +201,22 @@ can handle.
 Overall test (both 50 and 100 batches)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CPU usage
-   .. image:: {filename}/images/ansible-deploy-performance/cpu-usage100.png
+   .. image:: {static}/images/ansible-deploy-performance/cpu-usage100.png
       :align: center
       :alt: CPU usage, total (batches of 50 and 100)
 
 Load average
-   .. image:: {filename}/images/ansible-deploy-performance/load-average100.png
+   .. image:: {static}/images/ansible-deploy-performance/load-average100.png
       :align: center
       :alt: System load, total (batches of 50 and 100)
 
 Memory usage
-   .. image:: {filename}/images/ansible-deploy-performance/memory-usage100.png
+   .. image:: {static}/images/ansible-deploy-performance/memory-usage100.png
       :align: center
       :alt: Memory usage, total (batches of 50 and 100)
 
 TCP counters
-   .. image:: {filename}/images/ansible-deploy-performance/tcp-counters100.png
+   .. image:: {static}/images/ansible-deploy-performance/tcp-counters100.png
       :align: center
       :alt: TCP counters, total (batches of 50 and 100)
 
