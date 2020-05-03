@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Pavlo Shchelokovskyy'
+AUTHOR = u'pshchelo'
 SITENAME = u'Bits and Pieces'
 SITEURL = ''
 
@@ -26,25 +26,27 @@ LINKS = (
 )
 
 # Social widget
+SOCIAL_WIDGET_NAME = "Contacts"
 SOCIAL = (
     ('GitHub', 'https://github.com/pshchelo'),
     ('BitBucket', 'https://bitbucket.org/pshchelo'),
-    ('Google+', 'https://plus.google.com/+PavloShchelokovskyy/about'),
     ('Twitter', 'https://twitter.com/pshchelo'),
     ('LinkedIn', 'https://www.linkedin.com/in/pshchelo'),
 )
 
-DEFAULT_PAGINATION = 10
+# To enable "Fork Me" ribbon
+#GITHUB_URL = "https://github.com/pshchelo/pshchelo.github.io
+
+# Enable "share on twitter link"
+#TWITTER_USERNAME = "pshchelo"
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-THEME = 'pelican-bootstrap3'
 TYPOGRIFY = True
+# Use default theme
+# THEME = "notmyidea"
 
-
-# Copied over from old config, do I need theese?
-GITHUB_URL = 'https://github.com/pshchelo'
 STATIC_PATHS = [
         'images',
         'extra/robots.txt',

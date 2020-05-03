@@ -42,6 +42,7 @@ managed by ironic.
 
 .. image:: {static}/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png
    :align: center
+   :width: 100%
    :alt: Screenshot of a VNC console of the baremetal node in horizon Dashboard
 
 Lessons learned

@@ -10,7 +10,6 @@ Moving on with OpenStack
 :category: work
 :slug: oo-moving-on
 :lang: en
-:authors: pas-ha
 :summary: stay in community while moving along
 
 So, you are changing jobs and moving to a next big thing,

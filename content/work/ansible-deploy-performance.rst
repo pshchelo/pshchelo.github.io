@@ -10,7 +10,7 @@ Performance testing of Ansible-deploy driver for OpenStack Ironic
 :category: work
 :slug: ansible-deploy-perf
 :lang: en
-:authors: pas-ha, vsaienk0
+:authors: pshchelo,jumpojoy
 :summary: Comparative performance testing of ansible-deploy and agent ironic drivers
 
 What and why are we testing
