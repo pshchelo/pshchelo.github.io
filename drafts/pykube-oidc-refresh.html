@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
         <title>Testing pykube for OpenID Connect support</title>
         <link rel="stylesheet" href="https://pshchelo.github.io/theme/css/main.css" />
         <link href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Bits and Pieces Atom Feed" />
+        <meta name="description" content="Setting up local dev env to test OpenID Connect support in PyKube" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="https://pshchelo.github.io/">Bits and Pieces </a></h1>
+                <h1><a href="https://pshchelo.github.io/">Bits and Pieces</a></h1>
                 <nav><ul>
                     <li><a href="https://pshchelo.github.io/pages/about-me.html">About&nbsp;Me</a></li>
                     <li><a href="https://pshchelo.github.io/category/play.html">play</a></li>
@@ -41,41 +43,147 @@
 <p>tags: <a href="https://pshchelo.github.io/tag/kubernetes.html">kubernetes</a> <a href="https://pshchelo.github.io/tag/openid.html">openid</a> <a href="https://pshchelo.github.io/tag/oidc.html">oidc</a> <a href="https://pshchelo.github.io/tag/okta.html">okta</a> <a href="https://pshchelo.github.io/tag/microk8s.html">microk8s</a> <a href="https://pshchelo.github.io/tag/pykube.html">pykube</a> </p>
 </footer><!-- /.post-info -->      <div class="section" id="why">
 <h2>Why</h2>
+<p>During review of my <tt class="docutils literal"><span class="caps">PR</span></tt> to the <tt class="docutils literal">pykube</tt> to add OpenIDConnect token
+refresh capabilities I was asked to provide some instructions on how to
+setup a Kubernetes cluster with OpenIDConnect for
+development/testing/verification of that <span class="caps">PR</span>.</p>
+<p>At work, we have a central common Keycloak instance running, which I was
+testing my patch against.
+I myself never set up something like this, so this seemed like a good
+opportunity to get creative and learn something new in the process&nbsp;:-)</p>
 </div>
-<div class="section" id="setting-up-openid-idp">
-<h2>Setting up OpenID&nbsp;IdP</h2>
-<p>I am starting completely fresh with Google&#8217;s <span class="caps">API</span>, so doing all from scratch
-(I do have google mail address though&nbsp;already).</p>
+<div class="section" id="choosing-an-openid-provider">
+<h2>Choosing an OpenID&nbsp;provider</h2>
+<p>Most available sources and tools I could find are using either
+Google or Azure as OpenID providers together with&nbsp;Kubernetes.</p>
+<p>I don&#8217;t have Azure account, and when I tried Google it seems that all
+previous instructions were a bit outdated. Google seems to have
+tightened its security around OpenID (which is understandable as &#8220;Login with
+Google&#8221; is quite popular and may be abused). It now requires proper registered
+domain for callbacks with properly signed <span class="caps">TLS</span> cert (not a self-signed one).
+Both of those are overly restrictive / impossible for a local dev&nbsp;env.</p>
+<p>While searching for alternatives and more info on OpenID in general I stumbled
+on very nice set of articles by Okta
+(first part <a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1">https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1</a>),
+that helped me a lot with understanding the concept and flow.
+So I decided to give Okta a try and set up my dev env&nbsp;there.</p>
+</div>
+<div class="section" id="setting-up-okta-as-idp">
+<h2>Setting up Okta as&nbsp;IdP</h2>
 <ol class="arabic simple">
-<li>Go to Google Cloud console&nbsp;htps://console.developers.google.com</li>
-<li>Create new project (current quota seems to be 12 projects)
-<tt class="docutils literal"><span class="pre">k8s-test-project</span></tt> name, <span class="caps">ID</span> is that with random nums&nbsp;appended</li>
-</ol>
-<p>Create new&nbsp;credentials</p>
-<ul class="simple">
-<li>OAuth Client <span class="caps">ID</span></li>
-<li>Web&nbsp;Application</li>
-<li>Authorized redirect URIs: <a class="reference external" href="http://127.0.0.1:64464/callback">http://127.0.0.1:64464/callback</a></li>
+<li>Create free account on <a class="reference external" href="https://developer.okta.com/">https://developer.okta.com/</a>
+Free tier is <span class="caps">IMO</span> quite enough for personal development (currently it caps
+at 1k monthly active users and 5&nbsp;apps/clients).</li>
+<li>Note the &#8220;Site <span class="caps">URL</span>&#8221; (see screenshot). This is going to be the base of
+the <span class="caps">URL</span> of the OpenID provider and will be used quite a lot throughout.<!-- image goes here -->
+</li>
+<li>Add a new application of &#8220;Web&#8221; type. OpenIDConnect supports several auth
+flows and <span class="caps">AFAIU</span> only this one supports refresh tokens that kubernetes
+clients rely upon.<!-- image goes here -->
+</li>
+<li>Configure new app (I called mine <tt class="docutils literal">kube</tt>)<ul>
+<li>Default <strong>Login redirect <span class="caps">URI</span></strong> pointing to <em>localhost</em> is almost good
+enough, you just have to <strong>make sure it uses <span class="caps">HTTPS</span> scheme</strong> -
+Python&#8217;s <tt class="docutils literal">oauth2</tt> lib is picky about that.
+Change all other URIs to https as well for&nbsp;consistency.</li>
+<li>Make sure you enable <strong>Refresh Token</strong> in <strong>Grant type allowed</strong> -
+after all we are about to test them in the first place.<!-- image goes here -->
+</li>
 </ul>
+</li>
+<li>On the &#8220;General&#8221; settings of your new app there are now 3 details you going
+to need further:<ul>
+<li>Login redirect <span class="caps">URI</span></li>
+<li>Client <span class="caps">ID</span></li>
+<li>Client secret (required by Okta, but can be optional in e.g.&nbsp;Keycloak)</li>
+</ul>
+</li>
+<li>Go to &#8220;Assignments&#8221; tab of application settings and check that there is at
+least you yourself assigned as user allowed to use this app
+(should be by default but better to double check).
+As you see on screenshot I&#8217;ve added couple more dummy users to my org
+to play with.<!-- image goes here -->
+</li>
+</ol>
 </div>
 <div class="section" id="installing-and-configuring-microk8s">
 <h2>Installing and configuring&nbsp;microk8s</h2>
-<p><a class="reference external" href="https://microk8s.io/docs/configuring-services">https://microk8s.io/docs/configuring-services</a></p>
-<p>api-server&nbsp;flags:</p>
-<pre class="literal-block">
---oidc-issuer-url=https://accounts.google.com
---oidc-username-claim=email
---oidc-client-id=&lt;client id from previous step&gt;
+<p>I am using <tt class="docutils literal">microk8s</tt> installed on my local Ubuntu machine for&nbsp;testing.</p>
+<pre class="code bash literal-block">
+sudo snap install microk8s
 </pre>
+<p>I use it with all plugins disabled, including <span class="caps">RBAC</span> one to simplify&nbsp;things.</p>
+<p>Edit <a class="reference external" href="https://microk8s.io/docs/configuring-services">https://microk8s.io/docs/configuring-services</a> arguments of
+<tt class="docutils literal"><span class="pre">kube-apiserver</span></tt> to add the following&nbsp;flags:</p>
+<pre class="literal-block">
+--oidc-username-claim=email
+--oidc-issuer-url=&lt;okta-site-url&gt;/oauth2/default
+--oidc-client-id=&lt;client-id&gt;
+</pre>
+<p>where <tt class="docutils literal"><span class="pre">&lt;okta-site-url&gt;</span></tt> is is your site org <span class="caps">URL</span> (the one looking like
+<tt class="docutils literal"><span class="pre">https://dev-<span class="caps">NNNN</span>.okta.com</span></tt>) and <tt class="docutils literal"><span class="pre">client-id</span></tt> is the <em>Client <span class="caps">ID</span></em> of the
+client you&#8217;ve created in the previous&nbsp;steps.</p>
+<p>Restart <tt class="docutils literal"><span class="pre">kube-apiserver</span></tt> for changes to take&nbsp;effect.</p>
 </div>
 <div class="section" id="obtaining-proper-kube-config">
 <h2>Obtaining proper kube&nbsp;config</h2>
+<p>Now is the tricky part where we need some actual code :-)
+Effectively we need to pretend we are that web application that we&#8217;ve set
+with Okta to get the access, id and refresh&nbsp;tokens.</p>
+<p>There are already helpers for that, but most are public cloud specific (Google,
+Azure), or otherwise hardcoded to work with other OpenID providers like&nbsp;Keycloak.</p>
+<p>Again, to play with Python&#8217;s libs implementing the OAuth2, I&#8217;ve written
+my own small helper that theoretically should be compatible with most OpenID
+providers with minimal&nbsp;changes.</p>
+<script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"></script><p>If you&#8217;ve been following this guide, you&#8217;d need to set some shell variables
+first (here and forth I assume we are running in a&nbsp;virtualenv):</p>
+<pre class="code bash literal-block">
+pip install pykube-ng requests-oauthlib oauthlib
+<span class="c1"># the same as oidc-issure-url we've set up for kube-apiserver
+</span><span class="nb">export</span> <span class="nv">OAUTH_URI</span><span class="o">=</span>&lt;your okta site url&gt;/oauth2/default
+<span class="c1"># copy from Login redirect URI on General tab of our Okta applicaiton settings
+</span><span class="nb">export</span> <span class="nv">OAUTH_REDIRECT_URI</span><span class="o">=</span>https://localhost:8080/authorization-code/callback
+<span class="c1"># copy Client ID from General tab of your Okta application settings
+</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_ID</span><span class="o">=</span>&lt;your client id&gt;
+<span class="c1"># copy Client secret from General tab of your Okta application settings
+</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_SECRET</span><span class="o">=</span>&lt;your client secret&gt;
+</pre>
+<p>Now run the script. It will open your default browser with the login to your
+Okta site prompt. After logging in copy the <strong>whole <span class="caps">URL</span></strong> your browser
+was redirected to and tried to open but failed (as it was <tt class="docutils literal">localhost:8080</tt>)
+and paste it back to the script prompt at the&nbsp;terminal</p>
+<pre class="code bash literal-block">
+$ python3 k8s-oidc-helper.py
+Please go to <span class="s2">&quot;&lt;REDUCTED&gt;&quot;</span> and authorize access.
+Enter the full callback URL as attempted by the browser: https://localhost:8080/authorization-code/callback?code<span class="o">=</span>&lt;REDUCTED&gt;
+</pre>
+<p>The script will output the token it got in return, as well as a snippet
+to merge into the <tt class="docutils literal">users</tt> section of your kubeconfig (and persist some of
+that info in the <tt class="docutils literal">/tmp/kubeuser</tt> file).</p>
+<p>Now edit your kubeconfig to add appropriate new context with the new user we&#8217;ve
+just created and the microk8s cluster we&#8217;ve set up and we are ready to&nbsp;go:</p>
+<pre class="code bash literal-block">
+kubectl config use-context &lt;your new context&gt;
+kubectl get ns
+</pre>
+</div>
+<div class="section" id="testing-token-refresh-in-pukube-ng">
+<h2>Testing token refresh in&nbsp;pukube-ng</h2>
+<p>Now how to verify <tt class="docutils literal">pykube</tt> functionality:
+- instantiate pykube from this kubeconfig and context
+- access some kubernetes resources
+- delete user&#8217;s id-token from the context
+- try to access k8s&nbsp;again</p>
+<p>W/o my Pull Request the client can&#8217;t authorize.
+With it is successfully uses refresh-token together with the rest of the info
+to get a new id token and persists it in the kubeconfig&nbsp;file.</p>
 </div>
 <div class="section" id="links">
 <h2>Links</h2>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/gini/dexter">https://github.com/gini/dexter</a></li>
 <li><a class="reference external" href="https://github.com/micahhausler/k8s-oidc-helper">https://github.com/micahhausler/k8s-oidc-helper</a></li>
+<li><a class="reference external" href="https://github.com/making/k8s-keycloak-oidc-helper">https://github.com/making/k8s-keycloak-oidc-helper</a></li>
 <li><a class="reference external" href="https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937">https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937</a></li>
 <li><a class="reference external" href="https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login">https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login</a></li>
 <li><a class="reference external" href="https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow">https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow</a></li>
@@ -111,10 +219,10 @@
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 <script type="text/javascript">
