@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Testing pykube for OpenID Connect support</title>
+        <link rel="stylesheet" href="https://pshchelo.github.io/theme/css/main.css" />
+        <link href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Bits and Pieces Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://pshchelo.github.io/">Bits and Pieces </a></h1>
+                <nav><ul>
+                    <li><a href="https://pshchelo.github.io/pages/about-me.html">About&nbsp;Me</a></li>
+                    <li><a href="https://pshchelo.github.io/category/play.html">play</a></li>
+                    <li class="active"><a href="https://pshchelo.github.io/category/work.html">work</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://pshchelo.github.io/drafts/pykube-oidc-refresh.html" rel="bookmark"
+           title="Permalink to Testing pykube for OpenID Connect support">Testing pykube for OpenID Connect&nbsp;support</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2020-05-03T00:00:00+03:00">
+                Published: Sun 03 May 2020
+        </abbr>
+		<br />
+        <abbr class="modified" title="2020-05-03T00:00:00+03:00">
+                Updated: Sun 03 May 2020
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
+        </address>
+<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
+<p>tags: <a href="https://pshchelo.github.io/tag/kubernetes.html">kubernetes</a> <a href="https://pshchelo.github.io/tag/openid.html">openid</a> <a href="https://pshchelo.github.io/tag/oidc.html">oidc</a> <a href="https://pshchelo.github.io/tag/okta.html">okta</a> <a href="https://pshchelo.github.io/tag/microk8s.html">microk8s</a> <a href="https://pshchelo.github.io/tag/pykube.html">pykube</a> </p>
+</footer><!-- /.post-info -->      <div class="section" id="why">
+<h2>Why</h2>
+</div>
+<div class="section" id="setting-up-openid-idp">
+<h2>Setting up OpenID&nbsp;IdP</h2>
+<p>I am starting completely fresh with Google&#8217;s <span class="caps">API</span>, so doing all from scratch
+(I do have google mail address though&nbsp;already).</p>
+<ol class="arabic simple">
+<li>Go to Google Cloud console&nbsp;htps://console.developers.google.com</li>
+<li>Create new project (current quota seems to be 12 projects)
+<tt class="docutils literal"><span class="pre">k8s-test-project</span></tt> name, <span class="caps">ID</span> is that with random nums&nbsp;appended</li>
+</ol>
+<p>Create new&nbsp;credentials</p>
+<ul class="simple">
+<li>OAuth Client <span class="caps">ID</span></li>
+<li>Web&nbsp;Application</li>
+<li>Authorized redirect URIs: <a class="reference external" href="http://127.0.0.1:64464/callback">http://127.0.0.1:64464/callback</a></li>
+</ul>
+</div>
+<div class="section" id="installing-and-configuring-microk8s">
+<h2>Installing and configuring&nbsp;microk8s</h2>
+<p><a class="reference external" href="https://microk8s.io/docs/configuring-services">https://microk8s.io/docs/configuring-services</a></p>
+<p>api-server&nbsp;flags:</p>
+<pre class="literal-block">
+--oidc-issuer-url=https://accounts.google.com
+--oidc-username-claim=email
+--oidc-client-id=&lt;client id from previous step&gt;
+</pre>
+</div>
+<div class="section" id="obtaining-proper-kube-config">
+<h2>Obtaining proper kube&nbsp;config</h2>
+</div>
+<div class="section" id="links">
+<h2>Links</h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/gini/dexter">https://github.com/gini/dexter</a></li>
+<li><a class="reference external" href="https://github.com/micahhausler/k8s-oidc-helper">https://github.com/micahhausler/k8s-oidc-helper</a></li>
+<li><a class="reference external" href="https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937">https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937</a></li>
+<li><a class="reference external" href="https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login">https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login</a></li>
+<li><a class="reference external" href="https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow">https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow</a></li>
+<li><a class="reference external" href="https://medium.com/&#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe">https://medium.com/&#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe</a></li>
+<li><a class="reference external" href="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8">https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8</a></li>
+</ul>
+</div>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://www.openstack.org/">OpenStack</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>Contacts</h2>
+                        <ul>
+                            <li><a href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/pshchelo">GitHub</a></li>
+                            <li><a href="https://bitbucket.org/pshchelo">BitBucket</a></li>
+                            <li><a href="https://twitter.com/pshchelo">Twitter</a></li>
+                            <li><a href="https://www.linkedin.com/in/pshchelo">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'pshchelo';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+</html>

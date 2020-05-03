@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2018-06-09T00:00:00+03:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2018-06-09T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-05-03T00:00:00+03:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
 &lt;h2&gt;What and why are we&amp;nbsp;testing&lt;/h2&gt;
 &lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
@@ -244,7 +244,7 @@ within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2018-06-09T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
 probably will continue working on OpenStack on your new&amp;nbsp;place?&lt;/p&gt;
@@ -324,7 +324,7 @@ setups to sort the usual mail&amp;nbsp;flood.&lt;/p&gt;
 &lt;p&gt;Export personal notes etc. &lt;em&gt;Beware of sensitive nature of some documents&lt;/em&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="https://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="https://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
@@ -353,7 +353,7 @@ virt-driver in nova.
 As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
 managed by&amp;nbsp;ironic.&lt;/p&gt;
-&lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="https://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" /&gt;
+&lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="https://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" style="width: 100%;" /&gt;
 &lt;div class="section" id="lessons-learned"&gt;
 &lt;h2&gt;Lessons&amp;nbsp;learned&lt;/h2&gt;
 &lt;p&gt;Of course no prototype is complete and without any bugs/problems discovered
@@ -456,7 +456,7 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2018-06-09T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
@@ -465,7 +465,7 @@ mapping submanifolds of a Hilbert space&amp;#8221;
 &lt;a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968"&gt;chi wai lau (&amp;#64;tabqwerty)&lt;/a&gt;&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного&amp;nbsp;мнения.&lt;/p&gt;
 &lt;div class="contents topic" id="id1"&gt;
-&lt;p class="topic-title first"&gt;О чем тут&amp;nbsp;вообще&lt;/p&gt;
+&lt;p class="topic-title"&gt;О чем тут&amp;nbsp;вообще&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#id2" id="id11"&gt;Самое&amp;nbsp;Главное&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#git" id="id12"&gt;Git&lt;/a&gt;&lt;ul&gt;
@@ -844,7 +844,7 @@ git review
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
+</content><category term="work"></category><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
@@ -929,7 +929,7 @@ plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
 Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
-</content><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="https://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
+</content><category term="work"></category><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="https://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
 on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
 the solutions for recent DevStack (early Juno as of this
@@ -942,7 +942,7 @@ some changes might be&amp;nbsp;necessary.&lt;/p&gt;
 &lt;dd&gt;Tried DevStack on fresh Ubuntu 14.04 &lt;span class="caps"&gt;LTS&lt;/span&gt; (Trusty Thar), updated&amp;nbsp;tips.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;div class="contents topic" id="contents"&gt;
-&lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
+&lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#install-devstack" id="id1"&gt;Install&amp;nbsp;DevStack&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#allow-vm-internet-connectivity" id="id2"&gt;Allow &lt;span class="caps"&gt;VM&lt;/span&gt; Internet&amp;nbsp;connectivity&lt;/a&gt;&lt;/li&gt;
@@ -1165,7 +1165,7 @@ options kvm-intel nested=1
 &lt;/pre&gt;
 &lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="https://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>Pavlo Shchelokovskyy</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
+</content><category term="work"></category><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="https://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="problem"&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
 &lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
@@ -1243,4 +1243,4 @@ if I need, and also I can safely use SAVE_DEFAULT option of Grub.
 For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
 there is still possibility to override first boot option during &lt;span class="caps"&gt;POST&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>
+</content><category term="work"></category><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>
