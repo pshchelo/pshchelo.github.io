@@ -1,5 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-05-03T00:00:00+03:00</updated><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-05-11T00:00:00+03:00</updated><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in&amp;nbsp;PyKube&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="why"&gt;
+&lt;h2&gt;Why&lt;/h2&gt;
+&lt;p&gt;During review of my &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;&lt;span class="caps"&gt;PR&lt;/span&gt;#49&lt;/a&gt;
+to the &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; library to add OpenIDConnect token
+refresh capabilities I was asked to provide some instructions on how to
+setup a Kubernetes cluster with OpenIDConnect for
+development/testing/verification of that &lt;span class="caps"&gt;PR&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;At work, we have a central common Keycloak instance running, which I was
+testing my patch against.
+I myself never set up something like this, so this seemed like a good
+opportunity to get creative and learn something new in the process&amp;nbsp;:-)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="choosing-an-openid-provider"&gt;
+&lt;h2&gt;Choosing an OpenID&amp;nbsp;provider&lt;/h2&gt;
+&lt;p&gt;Most available sources and tools I could find are using either
+Google or Azure as OpenID providers together with&amp;nbsp;Kubernetes.&lt;/p&gt;
+&lt;p&gt;I don&amp;#8217;t have Azure account, and when I tried Google it seems that all
+previous instructions were a bit outdated. Google seems to have
+tightened its security around OpenID (which is understandable as &amp;#8220;Login with
+Google&amp;#8221; is quite popular and may be abused). It now requires proper registered
+domain for callbacks with properly signed &lt;span class="caps"&gt;TLS&lt;/span&gt; cert (not a self-signed one).
+Both of those are overly restrictive / impossible for a local dev&amp;nbsp;env.&lt;/p&gt;
+&lt;p&gt;While searching for alternatives and more info on OpenID in general I stumbled
+on very nice set of articles by Okta
+(&lt;a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1"&gt;first part&lt;/a&gt;),
+that helped me a lot with understanding the concept and flow.
+So I decided to give Okta a try and set up my dev env&amp;nbsp;there.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setting-up-okta-as-idp"&gt;
+&lt;h2&gt;Setting up Okta as&amp;nbsp;IdP&lt;/h2&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Create free account on &lt;a class="reference external" href="https://developer.okta.com"&gt;https://developer.okta.com&lt;/a&gt;
+Free tier is &lt;span class="caps"&gt;IMO&lt;/span&gt; quite enough for personal development (currently it caps
+at 1k monthly active users and 5&amp;nbsp;apps/clients).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;On the Okta site Dashboard note the &amp;#8220;Site &lt;span class="caps"&gt;URL&lt;/span&gt;&amp;#8221; (see screenshot below).
+This is going to be the base of the &lt;span class="caps"&gt;URL&lt;/span&gt; of the OpenID provider and will be
+used quite a lot throughout this&amp;nbsp;guide.&lt;/p&gt;
+&lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-dashboard.png" style="width: 100%;" /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Add a new application of &amp;#8220;Web&amp;#8221; type. OpenIDConnect supports several auth
+flows and &lt;span class="caps"&gt;AFAIU&lt;/span&gt; only this one supports refresh tokens that kubernetes
+clients rely&amp;nbsp;on.&lt;/p&gt;
+&lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-new-web-app.png" style="width: 100%;" /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Configure new app (I called mine &lt;tt class="docutils literal"&gt;kube&lt;/tt&gt;)&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Default &lt;strong&gt;Login redirect &lt;span class="caps"&gt;URI&lt;/span&gt;&lt;/strong&gt; pointing to &lt;em&gt;localhost&lt;/em&gt; is almost good
+enough, you just have to &lt;strong&gt;make sure it uses &lt;span class="caps"&gt;HTTPS&lt;/span&gt; scheme&lt;/strong&gt; -
+Python&amp;#8217;s &lt;tt class="docutils literal"&gt;oauth2&lt;/tt&gt; lib is picky about that.
+Change all other URIs to use &lt;tt class="docutils literal"&gt;https&lt;/tt&gt; as well for&amp;nbsp;consistency.&lt;/li&gt;
+&lt;li&gt;Make sure you enable &lt;strong&gt;Refresh Token&lt;/strong&gt; in &lt;strong&gt;Grant type allowed&lt;/strong&gt; -
+after all we are about to test them in the first&amp;nbsp;place.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-configure.png" style="width: 100%;" /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;On the &amp;#8220;General&amp;#8221; settings of your new app there are now 3 details you going
+to need&amp;nbsp;further:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Login redirect &lt;span class="caps"&gt;URI&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Client &lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Client secret (required by Okta, but can be optional in e.g.&amp;nbsp;Keycloak)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-overview.png" style="width: 100%;" /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Go to &amp;#8220;Assignments&amp;#8221; tab of application settings and check that there is at
+least you yourself assigned as user allowed to use this app
+(should be by default but better to double check).
+As you see on screenshot I&amp;#8217;ve added couple more dummy users to my org
+to play&amp;nbsp;with.&lt;/p&gt;
+&lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-assignments.png" style="width: 100%;" /&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-and-configuring-microk8s"&gt;
+&lt;h2&gt;Installing and configuring&amp;nbsp;microk8s&lt;/h2&gt;
+&lt;p&gt;I am using &lt;tt class="docutils literal"&gt;microk8s&lt;/tt&gt; installed on my local Ubuntu machine for&amp;nbsp;testing.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+sudo snap install microk8s
+&lt;/pre&gt;
+&lt;p&gt;I use it with all plugins disabled, including &lt;span class="caps"&gt;RBAC&lt;/span&gt; one to simplify&amp;nbsp;things.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://microk8s.io/docs/configuring-services"&gt;Edit&lt;/a&gt; arguments of
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; to add the following&amp;nbsp;flags:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+--oidc-username-claim=email
+--oidc-issuer-url=&amp;lt;okta-site-url&amp;gt;/oauth2/default
+--oidc-client-id=&amp;lt;client-id&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;where &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;okta-site-url&amp;gt;&lt;/span&gt;&lt;/tt&gt; is is your site org &lt;span class="caps"&gt;URL&lt;/span&gt; (the one looking like
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://dev-&lt;span class="caps"&gt;NNNN&lt;/span&gt;.okta.com&lt;/span&gt;&lt;/tt&gt;) and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;client-id&lt;/span&gt;&lt;/tt&gt; is the &lt;em&gt;Client &lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/em&gt; of the
+client you&amp;#8217;ve created in the previous&amp;nbsp;steps.&lt;/p&gt;
+&lt;p&gt;Restart &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; for changes to take&amp;nbsp;effect.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="obtaining-proper-kube-config"&gt;
+&lt;h2&gt;Obtaining proper kube&amp;nbsp;config&lt;/h2&gt;
+&lt;p&gt;Now is the tricky part where we need some actual code&amp;nbsp;:-)&lt;/p&gt;
+&lt;p&gt;Effectively we need to pretend we are that web application that we&amp;#8217;ve set
+with Okta to get the access, id and refresh tokens.
+There are already OpenIDConnect helpers for that,
+but most are either public cloud specific (Google, Azure),
+or otherwise hardcoded to work with other OpenID providers like&amp;nbsp;Keycloak.&lt;/p&gt;
+&lt;p&gt;Again, to play with Python&amp;#8217;s libs implementing the OAuth2, I&amp;#8217;ve written
+my own small helper that theoretically should be compatible with most OpenID
+providers with minimal&amp;nbsp;changes.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"&gt;&lt;/script&gt;&lt;p&gt;If you&amp;#8217;ve been following this guide, you&amp;#8217;d need to set some shell variables
+first (here and forth I assume we are running in a&amp;nbsp;virtualenv):&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+pip install pykube-ng requests-oauthlib oauthlib
+&lt;span class="c1"&gt;# the same as oidc-issuer-url we've set up for kube-apiserver
+&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;OAUTH_URI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your okta site url&amp;gt;/oauth2/default
+&lt;span class="c1"&gt;# copy from Login redirect URI on General tab of our Okta applicaiton settings
+&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;OAUTH_REDIRECT_URI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://localhost:8080/authorization-code/callback
+&lt;span class="c1"&gt;# copy Client ID from General tab of your Okta application settings
+&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;OAUTH_CLIENT_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your client id&amp;gt;
+&lt;span class="c1"&gt;# copy Client secret from General tab of your Okta application settings
+&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;OAUTH_CLIENT_SECRET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your client secret&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Now run the script. It will open your default browser with the login to your
+Okta site prompt. After logging in copy the &lt;strong&gt;whole &lt;span class="caps"&gt;URL&lt;/span&gt;&lt;/strong&gt; your browser
+was redirected to and tried to open but failed (as there should be nothing
+serving requests on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://localhost:8080&lt;/span&gt;&lt;/tt&gt;)
+and paste it back to the script prompt at the&amp;nbsp;terminal&lt;/p&gt;
+&lt;pre class="code shell literal-block"&gt;
+$ python3 k8s-oidc-helper.py
+Please go to &lt;span class="s2"&gt;&amp;quot;&amp;lt;REDUCTED&amp;gt;&amp;quot;&lt;/span&gt; and authorize access.
+Enter the full callback URL as attempted by the browser: https://localhost:8080/authorization-code/callback?code&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;REDUCTED&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;The script will output the token it got in return, as well as a snippet
+to merge into the &lt;tt class="docutils literal"&gt;users&lt;/tt&gt; section of your kubeconfig (and persist some of
+that info in the &lt;tt class="docutils literal"&gt;/tmp/kubeuser&lt;/tt&gt; file).&lt;/p&gt;
+&lt;p&gt;Now edit your kubeconfig to add appropriate new context with the new user we&amp;#8217;ve
+just created and the microk8s cluster we&amp;#8217;ve set up and we are ready to&amp;nbsp;go:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+kubectl config use-context &amp;lt;your new context&amp;gt;
+kubectl get ns
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testing-token-refresh-in-pukube-ng"&gt;
+&lt;h2&gt;Testing token refresh in&amp;nbsp;pukube-ng&lt;/h2&gt;
+&lt;p&gt;Now how to verify &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; functionality:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;instantiate &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; from this kubeconfig and&amp;nbsp;context&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;access some kubernetes&amp;nbsp;resources&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;for example something global like&amp;nbsp;Namespaces&lt;/p&gt;
+&lt;pre class="code shell literal-block"&gt;
+$ python3 -m pykube
+&amp;gt;&amp;gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;n.name &lt;span class="k"&gt;for&lt;/span&gt; n in Namespace.objects&lt;span class="o"&gt;(&lt;/span&gt;api&lt;span class="o"&gt;)]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'default'&lt;/span&gt;, &lt;span class="s1"&gt;'kube-node-lease'&lt;/span&gt;, &lt;span class="s1"&gt;'kube-public'&lt;/span&gt;, &lt;span class="s1"&gt;'kube-system'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;delete user&amp;#8217;s id-token from the&amp;nbsp;context&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;alternatively you can wait for 1 hour (token expiry in Okta), but
+do not access the cluster with kubectl and this context during wait time
+as it will refresh the token for&amp;nbsp;you&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;try to access k8s&amp;nbsp;again&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;W/o &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;&lt;span class="caps"&gt;PR&lt;/span&gt;#49&lt;/a&gt; the client can&amp;#8217;t&amp;nbsp;authorize.&lt;/p&gt;
+&lt;p&gt;With it is successfully uses refresh-token together with the rest of the info
+to get a new id token and persists it in the kubeconfig&amp;nbsp;file.&lt;/p&gt;
+&lt;p&gt;Whenever refresh token expires itself (not sure yet of the Okta defaults
+for this) you will have to repeat &lt;a class="reference internal" href="#obtaining-proper-kube-config"&gt;Obtaining proper kube config&lt;/a&gt; part to
+actually login (with password &lt;em&gt;etc&lt;/em&gt;) to get a new refresh&amp;nbsp;token.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="links"&gt;
+&lt;h2&gt;Links&lt;/h2&gt;
+&lt;p&gt;Links I&amp;#8217;ve found useful and interesting while digging in all&amp;nbsp;this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1"&gt;https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/gini/dexter"&gt;https://github.com/gini/dexter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/micahhausler/k8s-oidc-helper"&gt;https://github.com/micahhausler/k8s-oidc-helper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/making/k8s-keycloak-oidc-helper"&gt;https://github.com/making/k8s-keycloak-oidc-helper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937"&gt;https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login"&gt;https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow"&gt;https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe"&gt;https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="work"></category><category term="kubernetes"></category><category term="openid"></category><category term="oidc"></category><category term="okta"></category><category term="microk8s"></category><category term="pykube"></category></entry><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
 &lt;h2&gt;What and why are we&amp;nbsp;testing&lt;/h2&gt;
 &lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
@@ -244,7 +430,7 @@ within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
 probably will continue working on OpenStack on your new&amp;nbsp;place?&lt;/p&gt;
@@ -456,7 +642,7 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2020-05-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;#8220;git gets easier once you get the basic idea
