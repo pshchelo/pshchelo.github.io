@@ -26,6 +26,8 @@ https://asciinema.org
    <script type="text/javascript" src="https://asciinema.org/a/8bd6ang0cfrky0or7abwkaxcm.js" id="asciicast-8bd6ang0cfrky0or7abwkaxcm" async data-size="medium"></script>
 
 This is how it can be emedded even into static site like Pelican
+See more tips on embedding and available options
+`here <https://asciinema.org/docs/embedding>`_
 
 Example of GitHub Gist embed
 ----------------------------
