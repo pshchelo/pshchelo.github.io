@@ -1,515 +1,409 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <meta name="generator" content="Pelican" />
-        <title>Bits and Pieces - pshchelo</title>
-        <link rel="stylesheet" href="https://pshchelo.github.io/theme/css/main.css" />
-        <link href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Bits and Pieces Atom Feed" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://pshchelo.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://pshchelo.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://pshchelo.github.io/theme/pygments/solarized-light.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://pshchelo.github.io/theme/pygments/solarized-light.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://pshchelo.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://pshchelo.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://pshchelo.github.io/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Bits and Pieces Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+
+
+    <meta name="author" content="pshchelo" />
+    <meta name="description" content="" />
+<meta property="og:site_name" content="Bits and Pieces"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:title" content="Bits and Pieces"/>
+<meta property="og:description" content=""/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://pshchelo.github.io"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Bits and Pieces &ndash; Posts by pshchelo:</title>
+
 </head>
+<body >
+  <aside>
+    <div>
+      <a href="https://pshchelo.github.io">
+        <img src="/images/avatar.jpg" alt="" title="">
+      </a>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://pshchelo.github.io/">Bits and Pieces</a></h1>
-                <nav><ul>
-                    <li><a href="https://pshchelo.github.io/pages/about-me.html">About&nbsp;Me</a></li>
-                    <li><a href="https://pshchelo.github.io/category/play.html">play</a></li>
-                    <li><a href="https://pshchelo.github.io/category/work.html">work</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+      <h1>
+        <a href="https://pshchelo.github.io"></a>
+      </h1>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://pshchelo.github.io/pykube-oidc-refresh.html">Testing pykube for OpenID Connect&nbsp;support</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2020-05-11T00:00:00+03:00">
-                Published: Mon 11 May 2020
-        </abbr>
-		<br />
-        <abbr class="modified" title="2020-05-11T00:00:00+03:00">
-                Updated: Mon 11 May 2020
-        </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/kubernetes.html">kubernetes</a> <a href="https://pshchelo.github.io/tag/openid.html">openid</a> <a href="https://pshchelo.github.io/tag/oidc.html">oidc</a> <a href="https://pshchelo.github.io/tag/okta.html">okta</a> <a href="https://pshchelo.github.io/tag/microk8s.html">microk8s</a> <a href="https://pshchelo.github.io/tag/pykube.html">pykube</a> </p>
-</footer><!-- /.post-info --><div class="section" id="why">
-<h2>Why</h2>
-<p>During review of my <a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"><span class="caps">PR</span>#49</a>
-to the <tt class="docutils literal">pykube</tt> library to add OpenIDConnect token
-refresh capabilities I was asked to provide some instructions on how to
-setup a Kubernetes cluster with OpenIDConnect for
-development/testing/verification of that <span class="caps">PR</span>.</p>
-<p>At work, we have a central common Keycloak instance running, which I was
-testing my patch against.
-I myself never set up something like this, so this seemed like a good
-opportunity to get creative and learn something new in the process&nbsp;:-)</p>
-</div>
-<div class="section" id="choosing-an-openid-provider">
-<h2>Choosing an OpenID&nbsp;provider</h2>
-<p>Most available sources and tools I could find are using either
-Google or Azure as OpenID providers together with&nbsp;Kubernetes.</p>
-<p>I don&#8217;t have Azure account, and when I tried Google it seems that all
-previous instructions were a bit outdated. Google seems to have
-tightened its security around OpenID (which is understandable as &#8220;Login with
-Google&#8221; is quite popular and may be abused). It now requires proper registered
-domain for callbacks with properly signed <span class="caps">TLS</span> cert (not a self-signed one).
-Both of those are overly restrictive / impossible for a local dev&nbsp;env.</p>
-<p>While searching for alternatives and more info on OpenID in general I stumbled
-on very nice set of articles by Okta
-(<a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1">first part</a>),
-that helped me a lot with understanding the concept and flow.
-So I decided to give Okta a try and set up my dev env&nbsp;there.</p>
-</div>
-<div class="section" id="setting-up-okta-as-idp">
-<h2>Setting up Okta as&nbsp;IdP</h2>
-<ol class="arabic">
-<li><p class="first">Create free account on <a class="reference external" href="https://developer.okta.com">https://developer.okta.com</a>
-Free tier is <span class="caps">IMO</span> quite enough for personal development (currently it caps
-at 1k monthly active users and 5&nbsp;apps/clients).</p>
-</li>
-<li><p class="first">On the Okta site Dashboard note the &#8220;Site <span class="caps">URL</span>&#8221; (see screenshot below).
-This is going to be the base of the <span class="caps">URL</span> of the OpenID provider and will be
-used quite a lot throughout this&nbsp;guide.</p>
-<img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-dashboard.png" style="width: 100%;" />
-</li>
-<li><p class="first">Add a new application of &#8220;Web&#8221; type. OpenIDConnect supports several auth
-flows and <span class="caps">AFAIU</span> only this one supports refresh tokens that kubernetes
-clients rely&nbsp;on.</p>
-<img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-new-web-app.png" style="width: 100%;" />
-</li>
-<li><p class="first">Configure new app (I called mine <tt class="docutils literal">kube</tt>)</p>
-<ul class="simple">
-<li>Default <strong>Login redirect <span class="caps">URI</span></strong> pointing to <em>localhost</em> is almost good
-enough, you just have to <strong>make sure it uses <span class="caps">HTTPS</span> scheme</strong> -
-Python&#8217;s <tt class="docutils literal">oauth2</tt> lib is picky about that.
-Change all other URIs to use <tt class="docutils literal">https</tt> as well for&nbsp;consistency.</li>
-<li>Make sure you enable <strong>Refresh Token</strong> in <strong>Grant type allowed</strong> -
-after all we are about to test them in the first&nbsp;place.</li>
-</ul>
-<img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-configure.png" style="width: 100%;" />
-</li>
-<li><p class="first">On the &#8220;General&#8221; settings of your new app there are now 3 details you going
-to need&nbsp;further:</p>
-<ul class="simple">
-<li>Login redirect <span class="caps">URI</span></li>
-<li>Client <span class="caps">ID</span></li>
-<li>Client secret (required by Okta, but can be optional in e.g.&nbsp;Keycloak)</li>
-</ul>
-<img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-overview.png" style="width: 100%;" />
-</li>
-<li><p class="first">Go to &#8220;Assignments&#8221; tab of application settings and check that there is at
-least you yourself assigned as user allowed to use this app
-(should be by default but better to double check).
-As you see on screenshot I&#8217;ve added couple more dummy users to my org
-to play&nbsp;with.</p>
-<img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-assignments.png" style="width: 100%;" />
-</li>
-</ol>
-</div>
-<div class="section" id="installing-and-configuring-microk8s">
-<h2>Installing and configuring&nbsp;microk8s</h2>
-<p>I am using <tt class="docutils literal">microk8s</tt> installed on my local Ubuntu machine for&nbsp;testing.</p>
-<pre class="code bash literal-block">
-sudo snap install microk8s
-</pre>
-<p>I use it with all plugins disabled, including <span class="caps">RBAC</span> one to simplify&nbsp;things.</p>
-<p><a class="reference external" href="https://microk8s.io/docs/configuring-services">Edit</a> arguments of
-<tt class="docutils literal"><span class="pre">kube-apiserver</span></tt> to add the following&nbsp;flags:</p>
-<pre class="literal-block">
---oidc-username-claim=email
---oidc-issuer-url=&lt;okta-site-url&gt;/oauth2/default
---oidc-client-id=&lt;client-id&gt;
-</pre>
-<p>where <tt class="docutils literal"><span class="pre">&lt;okta-site-url&gt;</span></tt> is is your site org <span class="caps">URL</span> (the one looking like
-<tt class="docutils literal"><span class="pre">https://dev-<span class="caps">NNNN</span>.okta.com</span></tt>) and <tt class="docutils literal"><span class="pre">client-id</span></tt> is the <em>Client <span class="caps">ID</span></em> of the
-client you&#8217;ve created in the previous&nbsp;steps.</p>
-<p>Restart <tt class="docutils literal"><span class="pre">kube-apiserver</span></tt> for changes to take&nbsp;effect.</p>
-</div>
-<div class="section" id="obtaining-proper-kube-config">
-<h2>Obtaining proper kube&nbsp;config</h2>
-<p>Now is the tricky part where we need some actual code&nbsp;:-)</p>
-<p>Effectively we need to pretend we are that web application that we&#8217;ve set
-with Okta to get the access, id and refresh tokens.
-There are already OpenIDConnect helpers for that,
-but most are either public cloud specific (Google, Azure),
-or otherwise hardcoded to work with other OpenID providers like&nbsp;Keycloak.</p>
-<p>Again, to play with Python&#8217;s libs implementing the OAuth2, I&#8217;ve written
-my own small helper that theoretically should be compatible with most OpenID
-providers with minimal&nbsp;changes.</p>
-<script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"></script><p>If you&#8217;ve been following this guide, you&#8217;d need to set some shell variables
-first (here and forth I assume we are running in a&nbsp;virtualenv):</p>
-<pre class="code bash literal-block">
-pip install pykube-ng requests-oauthlib oauthlib
-<span class="c1"># the same as oidc-issuer-url we've set up for kube-apiserver
-</span><span class="nb">export</span> <span class="nv">OAUTH_URI</span><span class="o">=</span>&lt;your okta site url&gt;/oauth2/default
-<span class="c1"># copy from Login redirect URI on General tab of our Okta applicaiton settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_REDIRECT_URI</span><span class="o">=</span>https://localhost:8080/authorization-code/callback
-<span class="c1"># copy Client ID from General tab of your Okta application settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_ID</span><span class="o">=</span>&lt;your client id&gt;
-<span class="c1"># copy Client secret from General tab of your Okta application settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_SECRET</span><span class="o">=</span>&lt;your client secret&gt;
-</pre>
-<p>Now run the script. It will open your default browser with the login to your
-Okta site prompt. After logging in copy the <strong>whole <span class="caps">URL</span></strong> your browser
-was redirected to and tried to open but failed (as there should be nothing
-serving requests on <tt class="docutils literal"><span class="pre">https://localhost:8080</span></tt>)
-and paste it back to the script prompt at the&nbsp;terminal</p>
-<pre class="code shell literal-block">
-$ python3 k8s-oidc-helper.py
-Please go to <span class="s2">&quot;&lt;REDUCTED&gt;&quot;</span> and authorize access.
-Enter the full callback URL as attempted by the browser: https://localhost:8080/authorization-code/callback?code<span class="o">=</span>&lt;REDUCTED&gt;
-</pre>
-<p>The script will output the token it got in return, as well as a snippet
-to merge into the <tt class="docutils literal">users</tt> section of your kubeconfig (and persist some of
-that info in the <tt class="docutils literal">/tmp/kubeuser</tt> file).</p>
-<p>Now edit your kubeconfig to add appropriate new context with the new user we&#8217;ve
-just created and the microk8s cluster we&#8217;ve set up and we are ready to&nbsp;go:</p>
-<pre class="code bash literal-block">
-kubectl config use-context &lt;your new context&gt;
-kubectl get ns
-</pre>
-</div>
-<div class="section" id="testing-token-refresh-in-pukube-ng">
-<h2>Testing token refresh in&nbsp;pukube-ng</h2>
-<p>Now how to verify <tt class="docutils literal">pykube</tt> functionality:</p>
-<ul>
-<li><p class="first">instantiate <tt class="docutils literal">pykube</tt> from this kubeconfig and&nbsp;context</p>
-</li>
-<li><p class="first">access some kubernetes&nbsp;resources</p>
-<ul>
-<li><p class="first">for example something global like&nbsp;Namespaces</p>
-<pre class="code shell literal-block">
-$ python3 -m pykube
-&gt;&gt;&gt; <span class="o">[</span>n.name <span class="k">for</span> n in Namespace.objects<span class="o">(</span>api<span class="o">)]</span>
-<span class="o">[</span><span class="s1">'default'</span>, <span class="s1">'kube-node-lease'</span>, <span class="s1">'kube-public'</span>, <span class="s1">'kube-system'</span><span class="o">]</span>
-</pre>
-</li>
-</ul>
-</li>
-<li><p class="first">delete user&#8217;s id-token from the&nbsp;context</p>
-<ul class="simple">
-<li>alternatively you can wait for 1 hour (token expiry in Okta), but
-do not access the cluster with kubectl and this context during wait time
-as it will refresh the token for&nbsp;you</li>
-</ul>
-</li>
-<li><p class="first">try to access k8s&nbsp;again</p>
-</li>
-</ul>
-<p>W/o <a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"><span class="caps">PR</span>#49</a> the client can&#8217;t&nbsp;authorize.</p>
-<p>With it is successfully uses refresh-token together with the rest of the info
-to get a new id token and persists it in the kubeconfig&nbsp;file.</p>
-<p>Whenever refresh token expires itself (not sure yet of the Okta defaults
-for this) you will have to repeat <a class="reference internal" href="#obtaining-proper-kube-config">Obtaining proper kube config</a> part to
-actually login (with password <em>etc</em>) to get a new refresh&nbsp;token.</p>
-</div>
-<div class="section" id="links">
-<h2>Links</h2>
-<p>Links I&#8217;ve found useful and interesting while digging in all&nbsp;this:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1">https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1</a></li>
-<li><a class="reference external" href="https://github.com/gini/dexter">https://github.com/gini/dexter</a></li>
-<li><a class="reference external" href="https://github.com/micahhausler/k8s-oidc-helper">https://github.com/micahhausler/k8s-oidc-helper</a></li>
-<li><a class="reference external" href="https://github.com/making/k8s-keycloak-oidc-helper">https://github.com/making/k8s-keycloak-oidc-helper</a></li>
-<li><a class="reference external" href="https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937">https://blog.gini.net/frictionless-kubernetes-openid-connect-integration-f1c356140937</a></li>
-<li><a class="reference external" href="https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login">https://github.com/okta/samples-python-flask/tree/master/okta-hosted-login</a></li>
-<li><a class="reference external" href="https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow">https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow</a></li>
-<li><a class="reference external" href="https://medium.com/&#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe">https://medium.com/&#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe</a></li>
-</ul>
-</div>
-<p>There are <a href="https://pshchelo.github.io/pykube-oidc-refresh.html#disqus_thread">comments</a>.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="bookmark"
-                           title="Permalink to Performance testing of Ansible-deploy driver for OpenStack Ironic">Performance testing of Ansible-deploy driver for OpenStack&nbsp;Ironic</a></h1>
-                </header>
+      <nav>
+        <ul class="list">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-09-01T00:00:00+03:00">
-                Published: Fri 01 September 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2020-05-11T00:00:00+03:00">
-                Updated: Mon 11 May 2020
-        </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-                        <a class="url fn" href="https://pshchelo.github.io/author/jumpojoy.html">jumpojoy</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a> <a href="https://pshchelo.github.io/tag/ironic.html">ironic</a> <a href="https://pshchelo.github.io/tag/ansible.html">ansible</a> <a href="https://pshchelo.github.io/tag/deploy.html">deploy</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Comparative performance testing of ansible-deploy and agent ironic&nbsp;drivers</p>
+              <li>
+                <a target="_self"
+                   href="https://pshchelo.github.io/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
 
-                <a class="readmore" href="https://pshchelo.github.io/ansible-deploy-perf.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/ansible-deploy-perf.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+            <li>
+              <a target="_self" href="http://python.org/" >Python</a>
+            </li>
+            <li>
+              <a target="_self" href="http://www.openstack.org/" >OpenStack</a>
+            </li>
+        </ul>
+      </nav>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/oo-moving-on.html" rel="bookmark"
-                           title="Permalink to Moving on with OpenStack">Moving on with&nbsp;OpenStack</a></h1>
-                </header>
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/pshchelo" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-bitbucket" href="https://bitbucket.org/pshchelo" target="_blank">
+              <i class="fab fa-bitbucket"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/pshchelo" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/pshchelo" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-03-07T00:00:00+02:00">
-                Published: Tue 07 March 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2020-05-11T00:00:00+03:00">
-                Updated: Mon 11 May 2020
-        </abbr>
+  </aside>
+  <main>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a> <a href="https://pshchelo.github.io/tag/community.html">community</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">stay in community while moving&nbsp;along</p>
+    <nav>
+      <a href="https://pshchelo.github.io">Home</a>
 
-                <a class="readmore" href="https://pshchelo.github.io/oo-moving-on.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/oo-moving-on.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/vnc-in-ironic.html" rel="bookmark"
-                           title="Permalink to Graphical VNC console in ironic - early prototype">Graphical <span class="caps">VNC</span> console in ironic - early&nbsp;prototype</a></h1>
-                </header>
+      <a href="https://pshchelo.github.io/feeds/all.atom.xml">Atom</a>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-12-12T00:00:00+02:00">
-                Published: Mon 12 December 2016
-        </abbr>
+    </nav>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/ironic.html">ironic</a> <a href="https://pshchelo.github.io/tag/vnc.html">vnc</a> <a href="https://pshchelo.github.io/tag/drac.html">drac</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">enabling <span class="caps">VNC</span> access to nova instances deployed to ironic baremetal&nbsp;nodes</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/vnc-in-ironic.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/vnc-in-ironic.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="bookmark"
-                           title="Permalink to Азы Git и Gerrit workflow в проектах OpenStack">Азы Git и Gerrit workflow в проектах&nbsp;OpenStack</a></h1>
-                </header>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/pykube-oidc-refresh.html#pykube-oidc-refresh">Testing pykube for OpenID Connect support</a></h2>
+    <p>
+      Posted on Mon 11 May 2020 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-09-20T00:00:00+03:00">
-                Published: Tue 20 September 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2020-05-11T00:00:00+03:00">
-                Updated: Mon 11 May 2020
-        </abbr>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/kubernetes.html">kubernetes</a>,              <a href="https://pshchelo.github.io/tag/openid.html">openid</a>,              <a href="https://pshchelo.github.io/tag/oidc.html">oidc</a>,              <a href="https://pshchelo.github.io/tag/okta.html">okta</a>,              <a href="https://pshchelo.github.io/tag/microk8s.html">microk8s</a>,              <a href="https://pshchelo.github.io/tag/pykube.html">pykube</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Setting up local dev env to test OpenID Connect support in PyKube</p>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/git.html">git</a> <a href="https://pshchelo.github.io/tag/gerrit.html">gerrit</a> <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Quick-n-Dirty opinionated introduction for beginners, in&nbsp;Russian.</p>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/pykube-oidc-refresh.html#pykube-oidc-refresh">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/ansible-deploy-perf.html#ansible-deploy-perf">Performance testing of Ansible-deploy driver for OpenStack Ironic</a></h2>
+    <p>
+      Posted on Fri 01 September 2017 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-                <a class="readmore" href="https://pshchelo.github.io/git-gerrit-basics-ru.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/git-gerrit-basics-ru.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a>,              <a href="https://pshchelo.github.io/tag/ironic.html">ironic</a>,              <a href="https://pshchelo.github.io/tag/ansible.html">ansible</a>,              <a href="https://pshchelo.github.io/tag/deploy.html">deploy</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Comparative performance testing of ansible-deploy and agent ironic drivers</p>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="bookmark"
-                           title="Permalink to Single Russian-Ukrainian keyboard layout on Ubuntu">Single Russian-Ukrainian keyboard layout on&nbsp;Ubuntu</a></h1>
-                </header>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/ansible-deploy-perf.html#ansible-deploy-perf">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/oo-moving-on.html#oo-moving-on">Moving on with OpenStack</a></h2>
+    <p>
+      Posted on Tue 07 March 2017 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-12-20T00:00:00+02:00">
-                Published: Sat 20 December 2014
-        </abbr>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a>,              <a href="https://pshchelo.github.io/tag/community.html">community</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">stay in community while moving along</p>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/keyboard.html">keyboard</a> <a href="https://pshchelo.github.io/tag/ukraine.html">ukraine</a> <a href="https://pshchelo.github.io/tag/ubuntu.html">ubuntu</a> </p>Translations:
-        <a href="https://pshchelo.github.io/ubuntu-ruu-kbd-ru.html" hreflang="ru">ru</a>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/oo-moving-on.html#oo-moving-on">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/vnc-in-ironic.html#vnc-in-ironic">Graphical VNC console in ironic - early prototype</a></h2>
+    <p>
+      Posted on Mon 12 December 2016 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-</footer><!-- /.post-info -->                <p class="first last">Using single keyboard layout to input both Russian and Ukrainian in&nbsp;Ubuntu</p>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/ironic.html">ironic</a>,              <a href="https://pshchelo.github.io/tag/vnc.html">vnc</a>,              <a href="https://pshchelo.github.io/tag/drac.html">drac</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">enabling VNC access to nova instances deployed to ironic baremetal nodes</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/ubuntu-ruu-kbd.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/ubuntu-ruu-kbd.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/vnc-in-ironic.html#vnc-in-ironic">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/git-gerrit-basics-ru.html#git-gerrit-basics">Азы Git и Gerrit workflow в проектах OpenStack</a></h2>
+    <p>
+      Posted on Tue 20 September 2016 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/devstack-with-neutron.html" rel="bookmark"
-                           title="Permalink to How to set DevStack with Neutron">How to set DevStack with&nbsp;Neutron</a></h1>
-                </header>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/git.html">git</a>,              <a href="https://pshchelo.github.io/tag/gerrit.html">gerrit</a>,              <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Quick-n-Dirty opinionated introduction for beginners, in Russian.</p>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-04-21T00:00:00+03:00">
-                Published: Mon 21 April 2014
-        </abbr>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/git-gerrit-basics-ru.html#git-gerrit-basics">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/ubuntu-ruu-kbd.html#ubuntu-ruu-kbd">Single Russian-Ukrainian keyboard layout on Ubuntu</a></h2>
+    <p>
+      Posted on Sat 20 December 2014 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/devstack.html">devstack</a> <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">tips and tricks on setting&nbsp;DevStack</p>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/keyboard.html">keyboard</a>,              <a href="https://pshchelo.github.io/tag/ukraine.html">ukraine</a>,              <a href="https://pshchelo.github.io/tag/ubuntu.html">ubuntu</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Using single keyboard layout to input both Russian and Ukrainian in Ubuntu</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/devstack-with-neutron.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/devstack-with-neutron.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/ubuntu-ruu-kbd.html#ubuntu-ruu-kbd">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/devstack-with-neutron.html#devstack-with-neutron">How to set DevStack with Neutron</a></h2>
+    <p>
+      Posted on Mon 21 April 2014 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/uefi-boot-hp.html" rel="bookmark"
-                           title="Permalink to UEFI boot order on dualbooted HP EliteBook 840"><span class="caps">UEFI</span> boot order on dualbooted <span class="caps">HP</span> EliteBook&nbsp;840</a></h1>
-                </header>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/devstack.html">devstack</a>,              <a href="https://pshchelo.github.io/tag/openstack.html">openstack</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">tips and tricks on setting DevStack</p>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-04-14T00:00:00+03:00">
-                Published: Mon 14 April 2014
-        </abbr>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/devstack-with-neutron.html#devstack-with-neutron">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/uefi-boot-hp.html#uefi-boot-hp">UEFI boot order on dualbooted HP EliteBook 840</a></h2>
+    <p>
+      Posted on Mon 14 April 2014 in <a href="https://pshchelo.github.io/category/work.html">work</a>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/work.html">work</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/hp.html">hp</a> <a href="https://pshchelo.github.io/tag/dualboot.html">dualboot</a> <a href="https://pshchelo.github.io/tag/uefi.html">uefi</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">setting up dualbooted <span class="caps">HP</span> notebook in <span class="caps">UEFI</span>&nbsp;mode</p>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/hp.html">hp</a>,              <a href="https://pshchelo.github.io/tag/dualboot.html">dualboot</a>,              <a href="https://pshchelo.github.io/tag/uefi.html">uefi</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">setting up dualbooted HP notebook in UEFI mode</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/uefi-boot-hp.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/uefi-boot-hp.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/uefi-boot-hp.html#uefi-boot-hp">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/rubik-solve.html#rubik-solve">Solving the Rubik's Cube</a></h2>
+    <p>
+      Posted on Thu 03 April 2014 in <a href="https://pshchelo.github.io/category/play.html">play</a>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/rubik-solve.html" rel="bookmark"
-                           title="Permalink to Solving the Rubik’s Cube">Solving the Rubik&#8217;s&nbsp;Cube</a></h1>
-                </header>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a>,              <a href="https://pshchelo.github.io/tag/rubick.html">rubick</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Algorithm for solving Rubik's Cube.</p>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-04-03T00:00:00+03:00">
-                Published: Thu 03 April 2014
-        </abbr>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/rubik-solve.html#rubik-solve">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/rubik-figures.html#rubik-figures">Figures from the solved Rubik's Cube</a></h2>
+    <p>
+      Posted on Wed 02 April 2014 in <a href="https://pshchelo.github.io/category/play.html">play</a>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/play.html">play</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a> <a href="https://pshchelo.github.io/tag/rubick.html">rubick</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Algorithm for solving Rubik&#8217;s&nbsp;Cube.</p>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a>,              <a href="https://pshchelo.github.io/tag/rubik.html">rubik</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Figures from solved Rubik's Cube</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/rubik-solve.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/rubik-solve.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/rubik-figures.html#rubik-figures">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="https://pshchelo.github.io/rubik-notation.html#rubik-notation">Rubik's Cube</a></h2>
+    <p>
+      Posted on Tue 01 April 2014 in <a href="https://pshchelo.github.io/category/play.html">play</a>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/rubik-figures.html" rel="bookmark"
-                           title="Permalink to Figures from the solved Rubik’s Cube">Figures from the solved Rubik&#8217;s&nbsp;Cube</a></h1>
-                </header>
+          &#8226; Tagged with
+              <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a>,              <a href="https://pshchelo.github.io/tag/rubik.html">rubik</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Notation used in posts on Rubik's Cube</p>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-04-02T00:00:00+03:00">
-                Published: Wed 02 April 2014
-        </abbr>
+        <br>
+        <a class="btn"
+           href="https://pshchelo.github.io/rubik-notation.html#rubik-notation">
+          Continue reading
+        </a>
+  </div>
+</article>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/play.html">play</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a> <a href="https://pshchelo.github.io/tag/rubik.html">rubik</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Figures from solved Rubik&#8217;s&nbsp;Cube</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/rubik-figures.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/rubik-figures.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://pshchelo.github.io/rubik-notation.html" rel="bookmark"
-                           title="Permalink to Rubik’s Cube">Rubik&#8217;s&nbsp;Cube</a></h1>
-                </header>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-04-01T00:00:00+03:00">
-                Published: Tue 01 April 2014
-        </abbr>
+    <footer>
+<p>&copy; 2020 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://pshchelo.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p>    </footer>
+  </main>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://pshchelo.github.io/author/pshchelo.html">pshchelo</a>
-        </address>
-<p>In <a href="https://pshchelo.github.io/category/play.html">play</a>.</p>
-<p>tags: <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a> <a href="https://pshchelo.github.io/tag/rubik.html">rubik</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Notation used in posts on Rubik&#8217;s&nbsp;Cube</p>
 
-                <a class="readmore" href="https://pshchelo.github.io/rubik-notation.html">read more</a>
-<p>There are <a href="https://pshchelo.github.io/rubik-notation.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://www.openstack.org/">OpenStack</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>Contacts</h2>
-                        <ul>
-                            <li><a href="https://pshchelo.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/pshchelo">GitHub</a></li>
-                            <li><a href="https://bitbucket.org/pshchelo">BitBucket</a></li>
-                            <li><a href="https://twitter.com/pshchelo">Twitter</a></li>
-                            <li><a href="https://www.linkedin.com/in/pshchelo">LinkedIn</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-<script type="text/javascript">
-    var disqus_shortname = 'pshchelo';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Bits and Pieces ",
+  "url" : "https://pshchelo.github.io",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
 </script>
+<a href="https://github.com/pshchelo/pshchelo.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
 </body>
 </html>

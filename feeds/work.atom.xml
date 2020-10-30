@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-05-11T00:00:00+03:00</updated><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in&amp;nbsp;PyKube&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - work</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/work.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-10-30T00:00:00+02:00</updated><subtitle></subtitle><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2020-10-30T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in PyKube&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="why"&gt;
 &lt;h2&gt;Why&lt;/h2&gt;
-&lt;p&gt;During review of my &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;&lt;span class="caps"&gt;PR&lt;/span&gt;#49&lt;/a&gt;
+&lt;p&gt;During review of my &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;PR#49&lt;/a&gt;
 to the &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; library to add OpenIDConnect token
 refresh capabilities I was asked to provide some instructions on how to
 setup a Kubernetes cluster with OpenIDConnect for
-development/testing/verification of that &lt;span class="caps"&gt;PR&lt;/span&gt;.&lt;/p&gt;
+development/testing/verification of that PR.&lt;/p&gt;
 &lt;p&gt;At work, we have a central common Keycloak instance running, which I was
 testing my patch against.
 I myself never set up something like this, so this seemed like a good
-opportunity to get creative and learn something new in the process&amp;nbsp;:-)&lt;/p&gt;
+opportunity to get creative and learn something new in the process :-)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="choosing-an-openid-provider"&gt;
-&lt;h2&gt;Choosing an OpenID&amp;nbsp;provider&lt;/h2&gt;
+&lt;h2&gt;Choosing an OpenID provider&lt;/h2&gt;
 &lt;p&gt;Most available sources and tools I could find are using either
-Google or Azure as OpenID providers together with&amp;nbsp;Kubernetes.&lt;/p&gt;
-&lt;p&gt;I don&amp;#8217;t have Azure account, and when I tried Google it seems that all
+Google or Azure as OpenID providers together with Kubernetes.&lt;/p&gt;
+&lt;p&gt;I don't have Azure account, and when I tried Google it seems that all
 previous instructions were a bit outdated. Google seems to have
-tightened its security around OpenID (which is understandable as &amp;#8220;Login with
-Google&amp;#8221; is quite popular and may be abused). It now requires proper registered
-domain for callbacks with properly signed &lt;span class="caps"&gt;TLS&lt;/span&gt; cert (not a self-signed one).
-Both of those are overly restrictive / impossible for a local dev&amp;nbsp;env.&lt;/p&gt;
+tightened its security around OpenID (which is understandable as &amp;quot;Login with
+Google&amp;quot; is quite popular and may be abused). It now requires proper registered
+domain for callbacks with properly signed TLS cert (not a self-signed one).
+Both of those are overly restrictive / impossible for a local dev env.&lt;/p&gt;
 &lt;p&gt;While searching for alternatives and more info on OpenID in general I stumbled
 on very nice set of articles by Okta
 (&lt;a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1"&gt;first part&lt;/a&gt;),
 that helped me a lot with understanding the concept and flow.
-So I decided to give Okta a try and set up my dev env&amp;nbsp;there.&lt;/p&gt;
+So I decided to give Okta a try and set up my dev env there.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="setting-up-okta-as-idp"&gt;
-&lt;h2&gt;Setting up Okta as&amp;nbsp;IdP&lt;/h2&gt;
+&lt;h2&gt;Setting up Okta as IdP&lt;/h2&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;Create free account on &lt;a class="reference external" href="https://developer.okta.com"&gt;https://developer.okta.com&lt;/a&gt;
-Free tier is &lt;span class="caps"&gt;IMO&lt;/span&gt; quite enough for personal development (currently it caps
-at 1k monthly active users and 5&amp;nbsp;apps/clients).&lt;/p&gt;
+Free tier is IMO quite enough for personal development (currently it caps
+at 1k monthly active users and 5 apps/clients).&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;On the Okta site Dashboard note the &amp;#8220;Site &lt;span class="caps"&gt;URL&lt;/span&gt;&amp;#8221; (see screenshot below).
-This is going to be the base of the &lt;span class="caps"&gt;URL&lt;/span&gt; of the OpenID provider and will be
-used quite a lot throughout this&amp;nbsp;guide.&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;On the Okta site Dashboard note the &amp;quot;Site URL&amp;quot; (see screenshot below).
+This is going to be the base of the URL of the OpenID provider and will be
+used quite a lot throughout this guide.&lt;/p&gt;
 &lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-dashboard.png" style="width: 100%;" /&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Add a new application of &amp;#8220;Web&amp;#8221; type. OpenIDConnect supports several auth
-flows and &lt;span class="caps"&gt;AFAIU&lt;/span&gt; only this one supports refresh tokens that kubernetes
-clients rely&amp;nbsp;on.&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;Add a new application of &amp;quot;Web&amp;quot; type. OpenIDConnect supports several auth
+flows and AFAIU only this one supports refresh tokens that kubernetes
+clients rely on.&lt;/p&gt;
 &lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-new-web-app.png" style="width: 100%;" /&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Configure new app (I called mine &lt;tt class="docutils literal"&gt;kube&lt;/tt&gt;)&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Default &lt;strong&gt;Login redirect &lt;span class="caps"&gt;URI&lt;/span&gt;&lt;/strong&gt; pointing to &lt;em&gt;localhost&lt;/em&gt; is almost good
-enough, you just have to &lt;strong&gt;make sure it uses &lt;span class="caps"&gt;HTTPS&lt;/span&gt; scheme&lt;/strong&gt; -
-Python&amp;#8217;s &lt;tt class="docutils literal"&gt;oauth2&lt;/tt&gt; lib is picky about that.
-Change all other URIs to use &lt;tt class="docutils literal"&gt;https&lt;/tt&gt; as well for&amp;nbsp;consistency.&lt;/li&gt;
+&lt;li&gt;Default &lt;strong&gt;Login redirect URI&lt;/strong&gt; pointing to &lt;em&gt;localhost&lt;/em&gt; is almost good
+enough, you just have to &lt;strong&gt;make sure it uses HTTPS scheme&lt;/strong&gt; -
+Python's &lt;tt class="docutils literal"&gt;oauth2&lt;/tt&gt; lib is picky about that.
+Change all other URIs to use &lt;tt class="docutils literal"&gt;https&lt;/tt&gt; as well for consistency.&lt;/li&gt;
 &lt;li&gt;Make sure you enable &lt;strong&gt;Refresh Token&lt;/strong&gt; in &lt;strong&gt;Grant type allowed&lt;/strong&gt; -
-after all we are about to test them in the first&amp;nbsp;place.&lt;/li&gt;
+after all we are about to test them in the first place.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-configure.png" style="width: 100%;" /&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;On the &amp;#8220;General&amp;#8221; settings of your new app there are now 3 details you going
-to need&amp;nbsp;further:&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;On the &amp;quot;General&amp;quot; settings of your new app there are now 3 details you going
+to need further:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Login redirect &lt;span class="caps"&gt;URI&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Client &lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Client secret (required by Okta, but can be optional in e.g.&amp;nbsp;Keycloak)&lt;/li&gt;
+&lt;li&gt;Login redirect URI&lt;/li&gt;
+&lt;li&gt;Client ID&lt;/li&gt;
+&lt;li&gt;Client secret (required by Okta, but can be optional in e.g. Keycloak)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-overview.png" style="width: 100%;" /&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Go to &amp;#8220;Assignments&amp;#8221; tab of application settings and check that there is at
+&lt;li&gt;&lt;p class="first"&gt;Go to &amp;quot;Assignments&amp;quot; tab of application settings and check that there is at
 least you yourself assigned as user allowed to use this app
 (should be by default but better to double check).
-As you see on screenshot I&amp;#8217;ve added couple more dummy users to my org
-to play&amp;nbsp;with.&lt;/p&gt;
+As you see on screenshot I've added couple more dummy users to my org
+to play with.&lt;/p&gt;
 &lt;img alt="Okta dashboard" class="align-center" src="https://pshchelo.github.io/images/pykube-oidc-refresh/okta-app-assignments.png" style="width: 100%;" /&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class="section" id="installing-and-configuring-microk8s"&gt;
-&lt;h2&gt;Installing and configuring&amp;nbsp;microk8s&lt;/h2&gt;
-&lt;p&gt;I am using &lt;tt class="docutils literal"&gt;microk8s&lt;/tt&gt; installed on my local Ubuntu machine for&amp;nbsp;testing.&lt;/p&gt;
+&lt;h2&gt;Installing and configuring microk8s&lt;/h2&gt;
+&lt;p&gt;I am using &lt;tt class="docutils literal"&gt;microk8s&lt;/tt&gt; installed on my local Ubuntu machine for testing.&lt;/p&gt;
 &lt;pre class="code bash literal-block"&gt;
 sudo snap install microk8s
 &lt;/pre&gt;
-&lt;p&gt;I use it with all plugins disabled, including &lt;span class="caps"&gt;RBAC&lt;/span&gt; one to simplify&amp;nbsp;things.&lt;/p&gt;
+&lt;p&gt;I use it with all plugins disabled, including RBAC one to simplify things.&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://microk8s.io/docs/configuring-services"&gt;Edit&lt;/a&gt; arguments of
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; to add the following&amp;nbsp;flags:&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; to add the following flags:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 --oidc-username-claim=email
 --oidc-issuer-url=&amp;lt;okta-site-url&amp;gt;/oauth2/default
 --oidc-client-id=&amp;lt;client-id&amp;gt;
 &lt;/pre&gt;
-&lt;p&gt;where &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;okta-site-url&amp;gt;&lt;/span&gt;&lt;/tt&gt; is is your site org &lt;span class="caps"&gt;URL&lt;/span&gt; (the one looking like
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://dev-&lt;span class="caps"&gt;NNNN&lt;/span&gt;.okta.com&lt;/span&gt;&lt;/tt&gt;) and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;client-id&lt;/span&gt;&lt;/tt&gt; is the &lt;em&gt;Client &lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/em&gt; of the
-client you&amp;#8217;ve created in the previous&amp;nbsp;steps.&lt;/p&gt;
-&lt;p&gt;Restart &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; for changes to take&amp;nbsp;effect.&lt;/p&gt;
+&lt;p&gt;where &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;okta-site-url&amp;gt;&lt;/span&gt;&lt;/tt&gt; is is your site org URL (the one looking like
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://dev-NNNN.okta.com&lt;/span&gt;&lt;/tt&gt;) and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;client-id&lt;/span&gt;&lt;/tt&gt; is the &lt;em&gt;Client ID&lt;/em&gt; of the
+client you've created in the previous steps.&lt;/p&gt;
+&lt;p&gt;Restart &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;kube-apiserver&lt;/span&gt;&lt;/tt&gt; for changes to take effect.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="obtaining-proper-kube-config"&gt;
-&lt;h2&gt;Obtaining proper kube&amp;nbsp;config&lt;/h2&gt;
-&lt;p&gt;Now is the tricky part where we need some actual code&amp;nbsp;:-)&lt;/p&gt;
-&lt;p&gt;Effectively we need to pretend we are that web application that we&amp;#8217;ve set
+&lt;h2&gt;Obtaining proper kube config&lt;/h2&gt;
+&lt;p&gt;Now is the tricky part where we need some actual code :-)&lt;/p&gt;
+&lt;p&gt;Effectively we need to pretend we are that web application that we've set
 with Okta to get the access, id and refresh tokens.
 There are already OpenIDConnect helpers for that,
 but most are either public cloud specific (Google, Azure),
-or otherwise hardcoded to work with other OpenID providers like&amp;nbsp;Keycloak.&lt;/p&gt;
-&lt;p&gt;Again, to play with Python&amp;#8217;s libs implementing the OAuth2, I&amp;#8217;ve written
+or otherwise hardcoded to work with other OpenID providers like Keycloak.&lt;/p&gt;
+&lt;p&gt;Again, to play with Python's libs implementing the OAuth2, I've written
 my own small helper that theoretically should be compatible with most OpenID
-providers with minimal&amp;nbsp;changes.&lt;/p&gt;
-&lt;script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"&gt;&lt;/script&gt;&lt;p&gt;If you&amp;#8217;ve been following this guide, you&amp;#8217;d need to set some shell variables
-first (here and forth I assume we are running in a&amp;nbsp;virtualenv):&lt;/p&gt;
+providers with minimal changes.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"&gt;&lt;/script&gt;&lt;p&gt;If you've been following this guide, you'd need to set some shell variables
+first (here and forth I assume we are running in a virtualenv):&lt;/p&gt;
 &lt;pre class="code bash literal-block"&gt;
 pip install pykube-ng requests-oauthlib oauthlib
 &lt;span class="c1"&gt;# the same as oidc-issuer-url we've set up for kube-apiserver
@@ -118,10 +118,10 @@ pip install pykube-ng requests-oauthlib oauthlib
 &lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;OAUTH_CLIENT_SECRET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your client secret&amp;gt;
 &lt;/pre&gt;
 &lt;p&gt;Now run the script. It will open your default browser with the login to your
-Okta site prompt. After logging in copy the &lt;strong&gt;whole &lt;span class="caps"&gt;URL&lt;/span&gt;&lt;/strong&gt; your browser
+Okta site prompt. After logging in copy the &lt;strong&gt;whole URL&lt;/strong&gt; your browser
 was redirected to and tried to open but failed (as there should be nothing
 serving requests on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://localhost:8080&lt;/span&gt;&lt;/tt&gt;)
-and paste it back to the script prompt at the&amp;nbsp;terminal&lt;/p&gt;
+and paste it back to the script prompt at the terminal&lt;/p&gt;
 &lt;pre class="code shell literal-block"&gt;
 $ python3 k8s-oidc-helper.py
 Please go to &lt;span class="s2"&gt;&amp;quot;&amp;lt;REDUCTED&amp;gt;&amp;quot;&lt;/span&gt; and authorize access.
@@ -130,22 +130,22 @@ Enter the full callback URL as attempted by the browser: https://localhost:8080/
 &lt;p&gt;The script will output the token it got in return, as well as a snippet
 to merge into the &lt;tt class="docutils literal"&gt;users&lt;/tt&gt; section of your kubeconfig (and persist some of
 that info in the &lt;tt class="docutils literal"&gt;/tmp/kubeuser&lt;/tt&gt; file).&lt;/p&gt;
-&lt;p&gt;Now edit your kubeconfig to add appropriate new context with the new user we&amp;#8217;ve
-just created and the microk8s cluster we&amp;#8217;ve set up and we are ready to&amp;nbsp;go:&lt;/p&gt;
+&lt;p&gt;Now edit your kubeconfig to add appropriate new context with the new user we've
+just created and the microk8s cluster we've set up and we are ready to go:&lt;/p&gt;
 &lt;pre class="code bash literal-block"&gt;
 kubectl config use-context &amp;lt;your new context&amp;gt;
 kubectl get ns
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="testing-token-refresh-in-pukube-ng"&gt;
-&lt;h2&gt;Testing token refresh in&amp;nbsp;pukube-ng&lt;/h2&gt;
+&lt;h2&gt;Testing token refresh in pukube-ng&lt;/h2&gt;
 &lt;p&gt;Now how to verify &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; functionality:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;instantiate &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; from this kubeconfig and&amp;nbsp;context&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;instantiate &lt;tt class="docutils literal"&gt;pykube&lt;/tt&gt; from this kubeconfig and context&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;access some kubernetes&amp;nbsp;resources&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;access some kubernetes resources&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;for example something global like&amp;nbsp;Namespaces&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;for example something global like Namespaces&lt;/p&gt;
 &lt;pre class="code shell literal-block"&gt;
 $ python3 -m pykube
 &amp;gt;&amp;gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;n.name &lt;span class="k"&gt;for&lt;/span&gt; n in Namespace.objects&lt;span class="o"&gt;(&lt;/span&gt;api&lt;span class="o"&gt;)]&lt;/span&gt;
@@ -154,26 +154,27 @@ $ python3 -m pykube
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;delete user&amp;#8217;s id-token from the&amp;nbsp;context&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;delete user's id-token from the context&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;alternatively you can wait for 1 hour (token expiry in Okta), but
 do not access the cluster with kubectl and this context during wait time
-as it will refresh the token for&amp;nbsp;you&lt;/li&gt;
+as it will refresh the token for you&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;try to access k8s&amp;nbsp;again&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;try to access k8s again&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;W/o &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;&lt;span class="caps"&gt;PR&lt;/span&gt;#49&lt;/a&gt; the client can&amp;#8217;t&amp;nbsp;authorize.&lt;/p&gt;
+&lt;p&gt;W/o &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;PR#49&lt;/a&gt; the client can't
+authorize.&lt;/p&gt;
 &lt;p&gt;With it is successfully uses refresh-token together with the rest of the info
-to get a new id token and persists it in the kubeconfig&amp;nbsp;file.&lt;/p&gt;
+to get a new id token and persists it in the kubeconfig file.&lt;/p&gt;
 &lt;p&gt;Whenever refresh token expires itself (not sure yet of the Okta defaults
 for this) you will have to repeat &lt;a class="reference internal" href="#obtaining-proper-kube-config"&gt;Obtaining proper kube config&lt;/a&gt; part to
-actually login (with password &lt;em&gt;etc&lt;/em&gt;) to get a new refresh&amp;nbsp;token.&lt;/p&gt;
+actually login (with password &lt;em&gt;etc&lt;/em&gt;) to get a new refresh token.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="links"&gt;
 &lt;h2&gt;Links&lt;/h2&gt;
-&lt;p&gt;Links I&amp;#8217;ve found useful and interesting while digging in all&amp;nbsp;this:&lt;/p&gt;
+&lt;p&gt;Links I've found useful and interesting while digging in all this:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1"&gt;https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="https://github.com/gini/dexter"&gt;https://github.com/gini/dexter&lt;/a&gt;&lt;/li&gt;
@@ -185,182 +186,182 @@ actually login (with password &lt;em&gt;etc&lt;/em&gt;) to get a new refresh&amp
 &lt;li&gt;&lt;a class="reference external" href="https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe"&gt;https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="kubernetes"></category><category term="openid"></category><category term="oidc"></category><category term="okta"></category><category term="microk8s"></category><category term="pykube"></category></entry><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic&amp;nbsp;drivers&lt;/p&gt;
+</content><category term="work"></category><category term="kubernetes"></category><category term="openid"></category><category term="oidc"></category><category term="okta"></category><category term="microk8s"></category><category term="pykube"></category></entry><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2020-10-30T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic drivers&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
-&lt;h2&gt;What and why are we&amp;nbsp;testing&lt;/h2&gt;
+&lt;h2&gt;What and why are we testing&lt;/h2&gt;
 &lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
 deploy driver interface for OpenStack ironic service.
 Contrary to the standard &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;iscsi&lt;/tt&gt; deploy interfaces that depend
-on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-python-agent&lt;/span&gt;&lt;/tt&gt; service (&lt;span class="caps"&gt;IPA&lt;/span&gt;) running in the deploy ramdisk,
+on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-python-agent&lt;/span&gt;&lt;/tt&gt; service (IPA) running in the deploy ramdisk,
 this new &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface is using Ansible to provision the node,
 with the steps to execute during provisioning or cleaning defined as Ansible
 playbooks/roles/tasks &lt;em&gt;etc&lt;/em&gt;.
 The main advantage of this approach is greater flexibility regarding
-fine-tuning of the provisioning process this deploy interface&amp;nbsp;allows.&lt;/p&gt;
+fine-tuning of the provisioning process this deploy interface allows.&lt;/p&gt;
 &lt;p&gt;This &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface and classic ironic drivers using it are
 already available as part of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-staging-driver&lt;/span&gt;&lt;/tt&gt; project &lt;a class="footnote-reference" href="#id9" id="id1"&gt;[1]&lt;/a&gt;,
 and we are in the process of proposing &lt;a class="footnote-reference" href="#id10" id="id2"&gt;[2]&lt;/a&gt; to include this interface
-to the ironic project&amp;nbsp;itself.&lt;/p&gt;
+to the ironic project itself.&lt;/p&gt;
 &lt;p&gt;One of the topics raised during discussions is the performance
 of this new driver interface.
 Contrary to the &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; deploy interface that offloads most of the work
-to be executed by &lt;span class="caps"&gt;IPA&lt;/span&gt; that runs on the node being provisioned,
+to be executed by IPA that runs on the node being provisioned,
 this new interface involves executing code on the side of ironic-conductor
 service, thus we were asked to show that the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface
 can cope with deploying several nodes in parallel (50 at least) without severe
-performance degradation on the side of ironic-conductor&amp;nbsp;service/host.&lt;/p&gt;
+performance degradation on the side of ironic-conductor service/host.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="testbed"&gt;
 &lt;h2&gt;Testbed&lt;/h2&gt;
 &lt;p&gt;Lab setup and tests were performed by my colleague Vasyl Saienko &lt;a class="footnote-reference" href="#id11" id="id3"&gt;[3]&lt;/a&gt;,
 with me mostly consulting on setting up and tuning the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy
-interface and Ansible&amp;nbsp;itself.&lt;/p&gt;
-&lt;p&gt;The lab consisted of 4 baremetal nodes with the following relevant&amp;nbsp;stats:&lt;/p&gt;
+interface and Ansible itself.&lt;/p&gt;
+&lt;p&gt;The lab consisted of 4 baremetal nodes with the following relevant stats:&lt;/p&gt;
 &lt;dl class="docutils"&gt;
-&lt;dt&gt;1x ironic&amp;nbsp;host&lt;/dt&gt;
-&lt;dd&gt;&lt;strong&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/strong&gt;: Intel(R) Xeon(R) &lt;span class="caps"&gt;CPU&lt;/span&gt; E5-2620, 32 cores,
-&lt;strong&gt;&lt;span class="caps"&gt;RAM&lt;/span&gt;&lt;/strong&gt;: &lt;span class="caps"&gt;32GB&lt;/span&gt;&lt;/dd&gt;
-&lt;dt&gt;3x enrolled into&amp;nbsp;ironic&lt;/dt&gt;
-&lt;dd&gt;&lt;strong&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/strong&gt;: Intel(R) Xeon(R) &lt;span class="caps"&gt;CPU&lt;/span&gt; E5-2650, 32 cores
-&lt;strong&gt;&lt;span class="caps"&gt;RAM&lt;/span&gt;&lt;/strong&gt;: &lt;span class="caps"&gt;64GB&lt;/span&gt;&lt;/dd&gt;
+&lt;dt&gt;1x ironic host&lt;/dt&gt;
+&lt;dd&gt;&lt;strong&gt;CPU&lt;/strong&gt;: Intel(R) Xeon(R) CPU E5-2620, 32 cores,
+&lt;strong&gt;RAM&lt;/strong&gt;: 32GB&lt;/dd&gt;
+&lt;dt&gt;3x enrolled into ironic&lt;/dt&gt;
+&lt;dd&gt;&lt;strong&gt;CPU&lt;/strong&gt;: Intel(R) Xeon(R) CPU E5-2650, 32 cores
+&lt;strong&gt;RAM&lt;/strong&gt;: 64GB&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;We have deployed a minimal single host ironic installation as of 7.0.2 version
 (Ocata release) on the ironic host node using Mirantis Cloud Platform 1.1 &lt;a class="footnote-reference" href="#id12" id="id4"&gt;[4]&lt;/a&gt;.
 The Ansible-deploy interface was taken from &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ironic-staging-drivers&lt;/span&gt;&lt;/tt&gt; project
 as of stable/ocata branch.
 The deployment also included OpenStack Identity (keystone)
-and Networking (neutron) services, also of Ocata&amp;nbsp;release.&lt;/p&gt;
-&lt;p&gt;We used Ansible 2.3.2.0 &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;-installed from&amp;nbsp;PyPI.&lt;/p&gt;
+and Networking (neutron) services, also of Ocata release.&lt;/p&gt;
+&lt;p&gt;We used Ansible 2.3.2.0 &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;-installed from PyPI.&lt;/p&gt;
 &lt;p&gt;We enrolled the 3 slave baremetal nodes in ironic,
 deployed them with Ubuntu Xenial image,
 created 100 VMs on each of them, and enrolled those to ironic using
-&lt;tt class="docutils literal"&gt;virtualbmc&lt;/tt&gt; utility to simulate &lt;span class="caps"&gt;IPMI&lt;/span&gt;-capable hardware nodes.
-This effectively gave us 300 ironic nodes to test deployment&amp;nbsp;on.&lt;/p&gt;
-&lt;p&gt;Overall order of the tests was the&amp;nbsp;following:&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;virtualbmc&lt;/tt&gt; utility to simulate IPMI-capable hardware nodes.
+This effectively gave us 300 ironic nodes to test deployment on.&lt;/p&gt;
+&lt;p&gt;Overall order of the tests was the following:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 50 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 50 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 100 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 100 nodes, repeat 3&amp;nbsp;times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 50 nodes, repeat 3 times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 50 nodes, repeat 3 times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;agent_ipmitool&lt;/tt&gt; driver, deploy 100 nodes, repeat 3 times&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;pxe_ipmitool_ansible&lt;/tt&gt; driver, deploy 100 nodes, repeat 3 times&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The deploy ramdisk used for both drivers was the &lt;tt class="docutils literal"&gt;tinyipa&lt;/tt&gt; image
 as of stable/ocata rebuilt for usage with &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface.
-We provisioned nodes with standard Ubuntu Xenial cloud&amp;nbsp;image.&lt;/p&gt;
+We provisioned nodes with standard Ubuntu Xenial cloud image.&lt;/p&gt;
 &lt;p&gt;Concurrent deployment was done via trivial bash script calling ironic client
 commands in a &lt;tt class="docutils literal"&gt;for&lt;/tt&gt; loop.
-For each iteration &amp;#8220;virtual&amp;#8221; nodes to be provisioned were chosen
+For each iteration &amp;quot;virtual&amp;quot; nodes to be provisioned were chosen
 to be equally distributed between real baremetal nodes
-to decrease possible&amp;nbsp;congestion.&lt;/p&gt;
-&lt;p&gt;Monitoring was performed with Cacti, with results presented and discussed&amp;nbsp;below.&lt;/p&gt;
+to decrease possible congestion.&lt;/p&gt;
+&lt;p&gt;Monitoring was performed with Cacti, with results presented and discussed below.&lt;/p&gt;
 &lt;div class="section" id="lab-tuning"&gt;
-&lt;h3&gt;Lab&amp;nbsp;tuning&lt;/h3&gt;
+&lt;h3&gt;Lab tuning&lt;/h3&gt;
 &lt;ol class="arabic simple"&gt;
 &lt;li&gt;The static image store was moved outside of ironic node&lt;ul&gt;
 &lt;li&gt;due to physical network layout of the lab,
 this separate storage had better connection speed with baremetal nodes,
-and thus was performing&amp;nbsp;better&lt;/li&gt;
+and thus was performing better&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;The timeout for downloading the image &lt;a class="footnote-reference" href="#id13" id="id5"&gt;[5]&lt;/a&gt; was increased.&lt;ul&gt;
 &lt;li&gt;Current hard-coded value is more suitable for small &lt;tt class="docutils literal"&gt;cirros&lt;/tt&gt; image
-used in OpenStack &lt;span class="caps"&gt;CI&lt;/span&gt;,
+used in OpenStack CI,
 and turned out to be not sufficient for downloading the image
-we were using given performance of our image&amp;nbsp;store&lt;/li&gt;
-&lt;li&gt;We plan to make such values actually configurable&amp;nbsp;later&lt;/li&gt;
+we were using given performance of our image store&lt;/li&gt;
+&lt;li&gt;We plan to make such values actually configurable later&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;We switched Ansible to use &lt;tt class="docutils literal"&gt;paramiko&lt;/tt&gt; transport instead of the default
 &lt;tt class="docutils literal"&gt;smart&lt;/tt&gt; &lt;a class="footnote-reference" href="#id14" id="id6"&gt;[6]&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;We experienced weird problems with &lt;span class="caps"&gt;SSH&lt;/span&gt; timeouts both on initial connection
-and when executing&amp;nbsp;tasks.&lt;/li&gt;
+&lt;li&gt;We experienced weird problems with SSH timeouts both on initial connection
+and when executing tasks.&lt;/li&gt;
 &lt;li&gt;There are number of bugs reported against Ansible that might be relevant,
 &lt;em&gt;e.g.&lt;/em&gt; &lt;a class="footnote-reference" href="#id15" id="id7"&gt;[7]&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Using &lt;tt class="docutils literal"&gt;paramiko&lt;/tt&gt; for &lt;span class="caps"&gt;SSH&lt;/span&gt; may have introduced an extra performance cost
-compared to the native &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;binaries.&lt;/li&gt;
+&lt;li&gt;Using &lt;tt class="docutils literal"&gt;paramiko&lt;/tt&gt; for SSH may have introduced an extra performance cost
+compared to the native SSH binaries.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;We increased the &lt;tt class="docutils literal"&gt;internal_poll_interval&lt;/tt&gt; Ansible configuration setting
 &lt;a class="footnote-reference" href="#id16" id="id8"&gt;[8]&lt;/a&gt; to &lt;tt class="docutils literal"&gt;0.01&lt;/tt&gt; (from default &lt;tt class="docutils literal"&gt;0.001&lt;/tt&gt;).&lt;ul&gt;
 &lt;li&gt;Available since Ansible 2.2, this setting was specifically introduced for
-better &lt;span class="caps"&gt;CPU&lt;/span&gt;-wise performance of Ansible in use-cases that do not require
-responsiveness of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process console&amp;nbsp;output.&lt;/li&gt;
+better CPU-wise performance of Ansible in use-cases that do not require
+responsiveness of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process console output.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="results-and-discussion"&gt;
-&lt;h2&gt;Results and&amp;nbsp;discussion&lt;/h2&gt;
+&lt;h2&gt;Results and discussion&lt;/h2&gt;
 &lt;div class="section" id="nodes-per-driver"&gt;
-&lt;h3&gt;Nodes per&amp;nbsp;driver&lt;/h3&gt;
+&lt;h3&gt;Nodes per driver&lt;/h3&gt;
 &lt;p&gt;This plot shows the number of nodes registered per each driver
-to set time frame reference for further&amp;nbsp;graphs.&lt;/p&gt;
+to set time frame reference for further graphs.&lt;/p&gt;
 &lt;img alt="Nodes per driver" class="align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/node-by-driver100.png" /&gt;
 &lt;p&gt;And we immediately see one of the troubles we stumbled upon - the dips in the
 second graph around 10:35 and 11:30.
-These graphs were plotted by Cacti periodically polling the ironic &lt;span class="caps"&gt;API&lt;/span&gt;
+These graphs were plotted by Cacti periodically polling the ironic API
 for number of nodes - and at these points requests simply timed out.
 It happened for both drivers, so we tend to attribute this to the fact that
-ironic &lt;span class="caps"&gt;API&lt;/span&gt; was running as the &lt;strong&gt;eventlet sever&lt;/strong&gt; instead of &lt;span class="caps"&gt;WSGI&lt;/span&gt; behind a more
-robust webserver (Note that running ironic as &lt;span class="caps"&gt;WSGI&lt;/span&gt; app was not yet officially
-supported in Ocata&amp;nbsp;release).&lt;/p&gt;
+ironic API was running as the &lt;strong&gt;eventlet sever&lt;/strong&gt; instead of WSGI behind a more
+robust webserver (Note that running ironic as WSGI app was not yet officially
+supported in Ocata release).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="nodes-by-state"&gt;
-&lt;h3&gt;Nodes by&amp;nbsp;state&lt;/h3&gt;
-&lt;p&gt;This plot shows the number of nodes in either &amp;#8220;deploying/wait-callback&amp;#8221;
-or &amp;#8220;active&amp;#8221;&amp;nbsp;state.&lt;/p&gt;
+&lt;h3&gt;Nodes by state&lt;/h3&gt;
+&lt;p&gt;This plot shows the number of nodes in either &amp;quot;deploying/wait-callback&amp;quot;
+or &amp;quot;active&amp;quot; state.&lt;/p&gt;
 &lt;img alt="Active vs being deployed nodes" class="align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/ironic-nodes100.png" /&gt;
 &lt;/div&gt;
 &lt;div class="section" id="ironic-host-performance-stats"&gt;
-&lt;h3&gt;Ironic host performance&amp;nbsp;stats&lt;/h3&gt;
+&lt;h3&gt;Ironic host performance stats&lt;/h3&gt;
 &lt;div class="section" id="batches-of-50"&gt;
-&lt;h4&gt;Batches of&amp;nbsp;50&lt;/h4&gt;
+&lt;h4&gt;Batches of 50&lt;/h4&gt;
 &lt;dl class="docutils"&gt;
-&lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
+&lt;dt&gt;CPU usage&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="CPU usage, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
+&lt;dt&gt;Load average&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="System load, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/load-average.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
+&lt;dt&gt;Memory usage&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="Memory usage, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/memory-usage.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
+&lt;dt&gt;TCP counters&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="TCP counters, batches of 50" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters.png" /&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
-&lt;p&gt;The sharp spikes in &lt;span class="caps"&gt;CPU&lt;/span&gt; utilization are well attributed to the &lt;span class="caps"&gt;TFTP&lt;/span&gt; server
-serving multiple concurrent&amp;nbsp;requests.&lt;/p&gt;
-&lt;p&gt;We also see that using &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface consumes more &lt;span class="caps"&gt;CPU&lt;/span&gt;
-(about 3% at peaks) and more &lt;span class="caps"&gt;RAM&lt;/span&gt; (about 3 &lt;span class="caps"&gt;GB&lt;/span&gt;) than agent-deploy.
+&lt;p&gt;The sharp spikes in CPU utilization are well attributed to the TFTP server
+serving multiple concurrent requests.&lt;/p&gt;
+&lt;p&gt;We also see that using &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface consumes more CPU
+(about 3% at peaks) and more RAM (about 3 GB) than agent-deploy.
 This is due to the task execution engine (Ansible) is being run locally on
-conductor instead of remotely on the node being deployed (&lt;span class="caps"&gt;IPA&lt;/span&gt;).&lt;/p&gt;
-&lt;p&gt;Nevertheless the overall time to provision all nodes and the average &lt;span class="caps"&gt;CPU&lt;/span&gt; load
+conductor instead of remotely on the node being deployed (IPA).&lt;/p&gt;
+&lt;p&gt;Nevertheless the overall time to provision all nodes and the average CPU load
 is nearly the same,
 and the toll multiple Ansible processes take on the conductor node
 is well within of what a real server suitable for such scaled baremetal cloud
-can&amp;nbsp;handle.&lt;/p&gt;
+can handle.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="overall-test-both-50-and-100-batches"&gt;
-&lt;h4&gt;Overall test (both 50 and 100&amp;nbsp;batches)&lt;/h4&gt;
+&lt;h4&gt;Overall test (both 50 and 100 batches)&lt;/h4&gt;
 &lt;dl class="docutils"&gt;
-&lt;dt&gt;&lt;span class="caps"&gt;CPU&lt;/span&gt;&amp;nbsp;usage&lt;/dt&gt;
+&lt;dt&gt;CPU usage&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="CPU usage, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/cpu-usage100.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;Load&amp;nbsp;average&lt;/dt&gt;
+&lt;dt&gt;Load average&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="System load, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/load-average100.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;Memory&amp;nbsp;usage&lt;/dt&gt;
+&lt;dt&gt;Memory usage&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="Memory usage, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/memory-usage100.png" /&gt;
 &lt;/dd&gt;
-&lt;dt&gt;&lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;counters&lt;/dt&gt;
+&lt;dt&gt;TCP counters&lt;/dt&gt;
 &lt;dd&gt;&lt;img alt="TCP counters, total (batches of 50 and 100)" class="first last align-center" src="https://pshchelo.github.io/images/ansible-deploy-performance/tcp-counters100.png" /&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;As expected, using &lt;tt class="docutils literal"&gt;direct&lt;/tt&gt; driver interface scales better whith increasing
 the number of nodes and is close to &lt;tt class="docutils literal"&gt;O(1)&lt;/tt&gt;,
 while overhead of using &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface scales closer to &lt;tt class="docutils literal"&gt;O(n)&lt;/tt&gt;
-of number of nodes, especially for &lt;span class="caps"&gt;RAM&lt;/span&gt;&amp;nbsp;consumption.&lt;/p&gt;
+of number of nodes, especially for RAM consumption.&lt;/p&gt;
 &lt;p&gt;We tend to attribute such scaling difference to the fact
 that current internal architecture of ironic does not allow us to use Ansible
 as it was designed,
@@ -368,16 +369,16 @@ with one &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-play
 identical input variables against several nodes.
 Instead, we launch separate &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ansible-playbook&lt;/span&gt;&lt;/tt&gt; process for each node
 even when nodes are being provisioning with the same image and other settings,
-which obviously has negative impact on resources&amp;nbsp;used.&lt;/p&gt;
+which obviously has negative impact on resources used.&lt;/p&gt;
 &lt;p&gt;This difference has to be taken into account when planning an (under)cloud
-ironic deployment that is going to allow usage the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy&amp;nbsp;interface.&lt;/p&gt;
+ironic deployment that is going to allow usage the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusion"&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Overall we think that the &lt;tt class="docutils literal"&gt;ansible&lt;/tt&gt; deploy interface performs and scales
-within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
+within acceptable limits on a quite standard server hardware.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="references"&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -430,71 +431,71 @@ within acceptable limits on a quite standard server&amp;nbsp;hardware.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving&amp;nbsp;along&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2020-10-30T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving along&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
-probably will continue working on OpenStack on your new&amp;nbsp;place?&lt;/p&gt;
+probably will continue working on OpenStack on your new place?&lt;/p&gt;
 &lt;p&gt;Below are a couple of things that you may consider to do to keep your
-profile in OpenStack community accessible, and some other&amp;nbsp;tips.&lt;/p&gt;
+profile in OpenStack community accessible, and some other tips.&lt;/p&gt;
 &lt;div class="section" id="accounts"&gt;
 &lt;h2&gt;Accounts&lt;/h2&gt;
 &lt;p&gt;Basically the main account to change is Ubuntu One -
-it ties to both Launchpad and&amp;nbsp;Openstack.org&lt;/p&gt;
-&lt;p&gt;After each change ensure you can login with new, personal&amp;nbsp;credentials.&lt;/p&gt;
+it ties to both Launchpad and Openstack.org&lt;/p&gt;
+&lt;p&gt;After each change ensure you can login with new, personal credentials.&lt;/p&gt;
 &lt;div class="section" id="ubuntuone"&gt;
 &lt;h3&gt;UbuntuOne&lt;/h3&gt;
-&lt;p&gt;Change you primary e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Change you primary e-mail to non-corporate one.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="launchpad"&gt;
 &lt;h3&gt;Launchpad&lt;/h3&gt;
-&lt;p&gt;Change you primary e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Change you primary e-mail to non-corporate one.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="openstack"&gt;
 &lt;h3&gt;OpenStack&lt;/h3&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://www.openstack.org/profile/"&gt;https://www.openstack.org/profile/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Change your primary e-mail to a non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Change your primary e-mail to a non-corporate one.&lt;/p&gt;
 &lt;p&gt;Change affiliation.
 Note, that if you will be officially working on OpenStack on your new job,
 your new company should have signed the corporate license agreement
 with OpenStack foundation.
-If you change your affiliation to &amp;#8216;Independent&amp;#8217;,
-you&amp;#8217;ll have to sign a new license agreement for independent&amp;nbsp;contributors.&lt;/p&gt;
-&lt;p&gt;If concerned about Stackalytics metrics, &lt;span class="caps"&gt;AFAIK&lt;/span&gt; for some time already it uses
+If you change your affiliation to 'Independent',
+you'll have to sign a new license agreement for independent contributors.&lt;/p&gt;
+&lt;p&gt;If concerned about Stackalytics metrics, AFAIK for some time already it uses
 affiliation from o.o (and not the e-mail domain)
-to track contributions&amp;nbsp;per-company.&lt;/p&gt;
+to track contributions per-company.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="gerrit"&gt;
 &lt;h3&gt;Gerrit&lt;/h3&gt;
 &lt;div class="section" id="upstream"&gt;
 &lt;h4&gt;Upstream&lt;/h4&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://review.openstack.org"&gt;https://review.openstack.org&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Add your non-corporate e-mail, make it a primary&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Add your non-corporate e-mail, make it a primary one.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="other-downstream-gerrits"&gt;
-&lt;h4&gt;Other downstream&amp;nbsp;Gerrits&lt;/h4&gt;
+&lt;h4&gt;Other downstream Gerrits&lt;/h4&gt;
 &lt;p&gt;Depending on whether there are open repos at all, might consider trying to add
-your personal e-mail to the registered e-mail&amp;nbsp;addresses.&lt;/p&gt;
+your personal e-mail to the registered e-mail addresses.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="github"&gt;
 &lt;h3&gt;GitHub&lt;/h3&gt;
-&lt;p&gt;Ensure your primary e-mail is a non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;p&gt;Ensure your primary e-mail is a non-corporate one.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="git"&gt;
 &lt;h3&gt;Git&lt;/h3&gt;
-&lt;p&gt;Don&amp;#8217;t forget to change your user.email in the &lt;tt class="docutils literal"&gt;.gitconfig&lt;/tt&gt; accordingly.&lt;/p&gt;
+&lt;p&gt;Don't forget to change your user.email in the &lt;tt class="docutils literal"&gt;.gitconfig&lt;/tt&gt; accordingly.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="irc-irccloud"&gt;
-&lt;h3&gt;&lt;span class="caps"&gt;IRC&lt;/span&gt;/IRCCloud&lt;/h3&gt;
-&lt;p&gt;If you were using that, change your e-mail to non-corporate&amp;nbsp;one.&lt;/p&gt;
+&lt;h3&gt;IRC/IRCCloud&lt;/h3&gt;
+&lt;p&gt;If you were using that, change your e-mail to non-corporate one.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="code"&gt;
 &lt;h3&gt;Code&lt;/h3&gt;
 &lt;p&gt;If you have any running envs (e.g.DevStack) with upstream code -
-push it to OpenStack&amp;#8217;s gerrit or to the forks on your personal
-GitHub/BitBucket&amp;nbsp;etc.&lt;/p&gt;
+push it to OpenStack's gerrit or to the forks on your personal
+GitHub/BitBucket etc.&lt;/p&gt;
 &lt;p&gt;If you have any running envs with downstream code -
-push it to appropriate downstream&amp;nbsp;repo/Gerrit.&lt;/p&gt;
+push it to appropriate downstream repo/Gerrit.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="others"&gt;
@@ -502,111 +503,114 @@ push it to appropriate downstream&amp;nbsp;repo/Gerrit.&lt;/p&gt;
 &lt;div class="section" id="mail"&gt;
 &lt;h3&gt;Mail&lt;/h3&gt;
 &lt;p&gt;Consider exporting mail filters, usually people end up with quite elaborate
-setups to sort the usual mail&amp;nbsp;flood.&lt;/p&gt;
+setups to sort the usual mail flood.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="docs"&gt;
 &lt;h3&gt;Docs&lt;/h3&gt;
-&lt;p&gt;GDrive/Confluence/Dropbox etc - whatever corporate tool you were&amp;nbsp;using.&lt;/p&gt;
+&lt;p&gt;GDrive/Confluence/Dropbox etc - whatever corporate tool you were using.&lt;/p&gt;
 &lt;p&gt;Export personal notes etc. &lt;em&gt;Beware of sensitive nature of some documents&lt;/em&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="https://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling &lt;span class="caps"&gt;VNC&lt;/span&gt; access to nova instances deployed to ironic baremetal&amp;nbsp;nodes&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="community"></category></entry><entry><title>Graphical VNC console in ironic - early prototype</title><link href="https://pshchelo.github.io/vnc-in-ironic.html" rel="alternate"></link><published>2016-12-12T00:00:00+02:00</published><updated>2016-12-12T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-12-12:/vnc-in-ironic.html</id><summary type="html">&lt;p class="first last"&gt;enabling VNC access to nova instances deployed to ironic baremetal nodes&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;In integrated case (working as part of OpenStack deployment) nova instances
 deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
 In particular it is not currently possible to access the graphical console
-of such instance for example via horizon&amp;nbsp;Dashboard.&lt;/p&gt;
+of such instance for example via horizon Dashboard.&lt;/p&gt;
 &lt;p&gt;This is about to change with ironic community starting to work &lt;a class="footnote-reference" href="#id6" id="id1"&gt;[1]&lt;/a&gt;
 on introducing a framework for graphical console access for baremetal nodes.
 As each hardware vendor implements a different way to provide graphical
 console access, the framework is planned to be quite generic,
 leaving details of actual graphical console configuration and management
-to a proposed GraphicalConsole interface of an ironic&amp;nbsp;driver.&lt;/p&gt;
+to a proposed GraphicalConsole interface of an ironic driver.&lt;/p&gt;
 &lt;p&gt;One interesting hardware to consider in this regard is Dell servers supporting
 iDRACv7 or newer &lt;a class="footnote-reference" href="#id7" id="id2"&gt;[2]&lt;/a&gt;.
 The iDRAC firmware on such servers supports native access to the server’s
 graphical console over OpenVNC-compatible protocol directly,
-without a need of proprietary &lt;span class="caps"&gt;VNC&lt;/span&gt; proxies or clients.
+without a need of proprietary VNC proxies or clients.
 An administrator who has appropriate access to the iDRAC configuration can
-enable this built-in &lt;span class="caps"&gt;VNC&lt;/span&gt; server and set the password, connection timeout and
-&lt;span class="caps"&gt;SSL&lt;/span&gt; encryption&amp;nbsp;options.&lt;/p&gt;
-&lt;p&gt;In order to test the &lt;span class="caps"&gt;VNC&lt;/span&gt; capabilities of such hardware I have implemented
-a prototype &lt;a class="footnote-reference" href="#id8" id="id3"&gt;[3]&lt;/a&gt; of a graphical console interface for the &lt;span class="caps"&gt;DRAC&lt;/span&gt; driver.
-It uses &lt;span class="caps"&gt;WS&lt;/span&gt;-&lt;span class="caps"&gt;MAN&lt;/span&gt; &lt;span class="caps"&gt;HTTP&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt; (as the rest of &lt;span class="caps"&gt;DRAC&lt;/span&gt;-specific driver interfaces)
-to toggle the &lt;span class="caps"&gt;VNC&lt;/span&gt; server feature on and off and set its properties.
+enable this built-in VNC server and set the password, connection timeout and
+SSL encryption options.&lt;/p&gt;
+&lt;p&gt;In order to test the VNC capabilities of such hardware I have implemented
+a prototype &lt;a class="footnote-reference" href="#id8" id="id3"&gt;[3]&lt;/a&gt; of a graphical console interface for the DRAC driver.
+It uses WS-MAN HTTP API (as the rest of DRAC-specific driver interfaces)
+to toggle the VNC server feature on and off and set its properties.
 I have also created a prototype &lt;a class="footnote-reference" href="#id9" id="id4"&gt;[4]&lt;/a&gt; of &lt;tt class="docutils literal"&gt;get_vnc_console&lt;/tt&gt; method for ironic
 virt-driver in nova.
 As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
-managed by&amp;nbsp;ironic.&lt;/p&gt;
+managed by ironic.&lt;/p&gt;
 &lt;img alt="Screenshot of a VNC console of the baremetal node in horizon Dashboard" class="align-center" src="https://pshchelo.github.io/images/ironic-vnc-console-files/bm-vnc-console-in-horizon.png" style="width: 100%;" /&gt;
 &lt;div class="section" id="lessons-learned"&gt;
-&lt;h2&gt;Lessons&amp;nbsp;learned&lt;/h2&gt;
+&lt;h2&gt;Lessons learned&lt;/h2&gt;
 &lt;p&gt;Of course no prototype is complete and without any bugs/problems discovered
 during testing.
 Here is what I’ve been hitting my head and hacking around while making
-this to&amp;nbsp;work:&lt;/p&gt;
+this to work:&lt;/p&gt;
 &lt;div class="section" id="prototype-limitations"&gt;
-&lt;h3&gt;Prototype&amp;nbsp;limitations&lt;/h3&gt;
+&lt;h3&gt;Prototype limitations&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;This prototype is done prior to the generic graphical console framework
 implementation done in ironic.
 Thus the prototype implementation is for now overriding the existing serial
 console interface in a specifically created for this purpose ironic driver.
 That means currently it is not possible to have both serial console
-and graphical&amp;nbsp;console.&lt;/p&gt;
+and graphical console.&lt;/p&gt;
 &lt;p&gt;Conveniently though, the proposed base GraphicalConsole interface will have
-the same &lt;span class="caps"&gt;API&lt;/span&gt; as the current Console (SerialConsole in the future) interface.
+the same API as the current Console (SerialConsole in the future) interface.
 This means that once the generic framework for graphical console interfaces
 is implemented in ironic, this prototype can be plugged as graphical
-console interface basically&amp;nbsp;as-is.&lt;/p&gt;
+console interface basically as-is.&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;The interface implementation is using low-level &lt;span class="caps"&gt;WS&lt;/span&gt;-&lt;span class="caps"&gt;MAN&lt;/span&gt; Python client calls
+&lt;li&gt;&lt;p class="first"&gt;The interface implementation is using low-level WS-MAN Python client calls
 for now since support for managing iDracCardService is yet lacking
 from python-dracclient.
-The work to enable this functionality is already ongoing in the community&amp;nbsp;though.&lt;/p&gt;
+The work to enable this functionality is already ongoing in the community
+though.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The ironic virt-driver changes are rather specific for this particular case
 to let me quickly test this functionality.
 It will be changed after the generic graphical console is implemented in
-Ironic and required complementary functionality is available in&amp;nbsp;python-ironicclient.&lt;/p&gt;
+Ironic and required complementary functionality is available in
+python-ironicclient.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="idrac-vnc-limitations"&gt;
-&lt;h3&gt;iDrac &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;limitations&lt;/h3&gt;
+&lt;h3&gt;iDrac VNC limitations&lt;/h3&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
 not properly connect to it resulting in an apparently connected console
 with no graphical output &lt;a class="footnote-reference" href="#id10" id="id5"&gt;[5]&lt;/a&gt;.
 A single passed encoding parameter must be disabled in noVNC code.
 I had to resort to noVNC patched accordingly, but the implications of such
-patch on access to standard &lt;span class="caps"&gt;VM&lt;/span&gt; graphical console are yet to be&amp;nbsp;tested.&lt;/li&gt;
-&lt;li&gt;Password must be set on the &lt;span class="caps"&gt;VNC&lt;/span&gt; server as noVNC can not connect to it
+patch on access to standard VM graphical console are yet to be tested.&lt;/li&gt;
+&lt;li&gt;Password must be set on the VNC server as noVNC can not connect to it
 otherwise.
-It seems setting the password for the iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server to None/empty string
-still results in &lt;span class="caps"&gt;VNC&lt;/span&gt; server requesting a password on connection,
+It seems setting the password for the iDRAC VNC server to None/empty string
+still results in VNC server requesting a password on connection,
 but noVNC can not accept an empty password in its password prompt.
-I am not sure if this should be considered a bug in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server or
-in&amp;nbsp;noVNC.&lt;/li&gt;
-&lt;li&gt;I have not tested yet how iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server works with noVNC when &lt;span class="caps"&gt;SSL&lt;/span&gt; is
-enabled in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt;&amp;nbsp;Server.&lt;/li&gt;
-&lt;li&gt;The iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is limited to a single &lt;span class="caps"&gt;VNC&lt;/span&gt; session at a time,
+I am not sure if this should be considered a bug in iDRAC VNC server or
+in noVNC.&lt;/li&gt;
+&lt;li&gt;I have not tested yet how iDRAC VNC server works with noVNC when SSL is
+enabled in iDRAC VNC Server.&lt;/li&gt;
+&lt;li&gt;The iDRAC VNC server is limited to a single VNC session at a time,
 so it is not really multi-user setup.
 On the other hand this still might suffice for undercloud-like use cases
-such as&amp;nbsp;TrippleO.&lt;/li&gt;
+such as TrippleO.&lt;/li&gt;
 &lt;li&gt;Note that in the current prototype, all nodes running nova-novncproxy
 service (or the single one specified as &lt;tt class="docutils literal"&gt;vncserver_proxyclient_address&lt;/tt&gt;
 in config for nova-compute with ironic virt-driver) must effectively have
-access to the &lt;span class="caps"&gt;BMC&lt;/span&gt; network as the built-in iDRAC &lt;span class="caps"&gt;VNC&lt;/span&gt; server is serving from
-its own &lt;span class="caps"&gt;BMC&lt;/span&gt; &lt;span class="caps"&gt;IP&lt;/span&gt; address.
-Care has to be taken to setup such proxying securely in a clustered nova&amp;nbsp;deployment.&lt;/li&gt;
+access to the BMC network as the built-in iDRAC VNC server is serving from
+its own BMC IP address.
+Care has to be taken to setup such proxying securely in a clustered nova
+deployment.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Nevertheless, this seems like an interesting and promising development on
 the hardware market.
 I consider it as yet another small step on the way forward to close the gap
 between baremetal and virtual servers in OpenStack and enable a unified user
-experience for compute&amp;nbsp;service.&lt;/p&gt;
+experience for compute service.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="references"&gt;
 &lt;h3&gt;References&lt;/h3&gt;
@@ -642,79 +646,79 @@ experience for compute&amp;nbsp;service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2020-05-11T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in&amp;nbsp;Russian.&lt;/p&gt;
+</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2020-10-30T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
-&amp;#8220;git gets easier once you get the basic idea
+&amp;quot;git gets easier once you get the basic idea
 that branches are homeomorphic endofunctors
-mapping submanifolds of a Hilbert space&amp;#8221;
+mapping submanifolds of a Hilbert space&amp;quot;
 &lt;a class="reference external" href="https://twitter.com/tabqwerty/status/45611899953491968"&gt;chi wai lau (&amp;#64;tabqwerty)&lt;/a&gt;&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного&amp;nbsp;мнения.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Осторожно&lt;/strong&gt; - много англицизмов и моего личного мнения.&lt;/p&gt;
 &lt;div class="contents topic" id="id1"&gt;
-&lt;p class="topic-title"&gt;О чем тут&amp;nbsp;вообще&lt;/p&gt;
+&lt;p class="topic-title"&gt;О чем тут вообще&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id2" id="id11"&gt;Самое&amp;nbsp;Главное&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id2" id="id11"&gt;Самое Главное&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#git" id="id12"&gt;Git&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id3" id="id13"&gt;Основные&amp;nbsp;конструкции&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id3" id="id13"&gt;Основные конструкции&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#id4" id="id14"&gt;Индекс&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id5" id="id15"&gt;Бранчи и&amp;nbsp;Теги&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id5" id="id15"&gt;Бранчи и Теги&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#remotes" id="id16"&gt;Remotes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#very-basic-git-workflow" id="id17"&gt;Very Basic git&amp;nbsp;workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#merg" id="id18"&gt;Mergе и&amp;nbsp;конфликты&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#very-basic-git-workflow" id="id17"&gt;Very Basic git workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#merg" id="id18"&gt;Mergе и конфликты&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#cherry-pick" id="id19"&gt;Cherry-pick&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#rebase" id="id20"&gt;Rebase&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id6" id="id21"&gt;Правки и изменения&amp;nbsp;истории&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id6" id="id21"&gt;Правки и изменения истории&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#tools" id="id22"&gt;Tools&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id7" id="id23"&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id8" id="id24"&gt;Для ковбоев&amp;nbsp;консоли&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id7" id="id23"&gt;Для любителей кнопочек и менюшечек&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id8" id="id24"&gt;Для ковбоев консоли&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#fun" id="id25"&gt;Fun&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#gerrit-workflow-openstack" id="id26"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#openstack-english" id="id27"&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#openstack-english" id="id27"&gt;Специфика сообщества OpenStack (english)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#git-review" id="id28"&gt;git-review&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#basic-workflow" id="id29"&gt;Basic workflow&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#change-id" id="id30"&gt;Change-Id&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id9" id="id31"&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#id10" id="id32"&gt;Правим свой старый&amp;nbsp;патч&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id9" id="id31"&gt;Работа над новым, независимым изменением (баг, фича)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id10" id="id32"&gt;Правим свой старый патч&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#rebase-or-not-rebase" id="id33"&gt;Rebase or not&amp;nbsp;Rebase?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#rebase-or-not-rebase" id="id33"&gt;Rebase or not Rebase?&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id2"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id11"&gt;Самое&amp;nbsp;Главное&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id11"&gt;Самое Главное&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Не лениться и вдумчиво читать то, что&lt;/strong&gt; &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; &lt;strong&gt;или&lt;/strong&gt; &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;
-&lt;strong&gt;выводит в командную&amp;nbsp;строку.&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;выводит в командную строку.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Там очень часто весьма внятно описано что пошло или может пойти не так,
-и какие есть варианты действий, с примерами&amp;nbsp;команд&lt;/p&gt;
+и какие есть варианты действий, с примерами команд&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="git"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="#id12"&gt;Git&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Чумовая книжечка -
 &lt;a class="reference external" href="http://jwiegley.github.io/git-from-the-bottom-up/"&gt;Git from the Bottom Up&lt;/a&gt;
-by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&gt;BY&lt;/span&gt;-&lt;span class="caps"&gt;ND&lt;/span&gt; 4.0).
-Картинки скопированы оттуда, и общая канва повествования немного&amp;nbsp;тоже.&lt;/p&gt;
+by John Wiegley (CC BY-ND 4.0).
+Картинки скопированы оттуда, и общая канва повествования немного тоже.&lt;/p&gt;
 &lt;div class="section" id="id3"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id13"&gt;Основные&amp;nbsp;конструкции&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id13"&gt;Основные конструкции&lt;/a&gt;&lt;/h3&gt;
 &lt;img alt="кирпичики Гита" src="https://pshchelo.github.io/images/git-gerrit-basics/commits.png" /&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;strong&gt;Blob&lt;/strong&gt; - объект хранящий “файл”.
 То, ради чего все затевалось.
 Определяется своим хэшем, который определяется только размером файла
-и его&amp;nbsp;содержанием.&lt;/li&gt;
+и его содержанием.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Tree&lt;/strong&gt; - содержит ссылки на блобы и другие tree а также метадату для них.
-Тоже имеет хэш, определяемый хэшами содержимого и&amp;nbsp;метадатой.&lt;/li&gt;
+Тоже имеет хэш, определяемый хэшами содержимого и метадатой.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Commit&lt;/strong&gt; - содержит одно дерево, и ссылки на родительские коммиты,
 формируя историю.
 Тоже имеет хэш, определяемый всем этим - содержанием дерева,
-коммит мессаджем и хэшами родительских&amp;nbsp;коммитов.&lt;/li&gt;
+коммит мессаджем и хэшами родительских коммитов.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Все остальное опирается на эти три базовых&amp;nbsp;идеи.&lt;/p&gt;
+&lt;p&gt;Все остальное опирается на эти три базовых идеи.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id4"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id14"&gt;Индекс&lt;/a&gt;&lt;/h3&gt;
@@ -723,39 +727,40 @@ by John Wiegley (&lt;span class="caps"&gt;CC&lt;/span&gt; &lt;span class="caps"&
 (он же &lt;em&gt;Staging Area&lt;/em&gt;).&lt;/p&gt;
 &lt;img alt="основы основ" src="https://pshchelo.github.io/images/git-gerrit-basics/lifecycle.png" /&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;strong&gt;Working area&lt;/strong&gt; - реальные файлы на файловой&amp;nbsp;системе&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Index&lt;/strong&gt; - &amp;nbsp;изменения которые будут занесены в репозиторий как следующий&amp;nbsp;коммит&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Repository&lt;/strong&gt; - хранилище&amp;nbsp;коммитов&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Working area&lt;/strong&gt; - реальные файлы на файловой системе&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Index&lt;/strong&gt; - &amp;nbsp;изменения которые будут занесены в репозиторий как следующий
+коммит&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repository&lt;/strong&gt; - хранилище коммитов&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id5"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id15"&gt;Бранчи и&amp;nbsp;Теги&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id15"&gt;Бранчи и Теги&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Бранчи и теги - не более чем символические ссылки на commit id
-имеющие человеко-читаемые&amp;nbsp;имена.&lt;/p&gt;
-&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;HEAD&lt;/span&gt;&lt;/tt&gt; - специальная ссылка на текущее (последнее чекаутное)
-состояние Working&amp;nbsp;Tree.&lt;/p&gt;
-&lt;p&gt;&lt;tt class="docutils literal"&gt;&amp;lt;ref&amp;gt;^&lt;/tt&gt; - родитель коммита&amp;nbsp;&amp;lt;ref&amp;gt;&lt;/p&gt;
-&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;^^&lt;/span&gt;&lt;/tt&gt; - второй родитель (есть однозначный типа &lt;span class="caps"&gt;MRO&lt;/span&gt;,
+имеющие человеко-читаемые имена.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;HEAD&lt;/tt&gt; - специальная ссылка на текущее (последнее чекаутное)
+состояние Working Tree.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&amp;lt;ref&amp;gt;^&lt;/tt&gt; - родитель коммита &amp;lt;ref&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;^^&lt;/span&gt;&lt;/tt&gt; - второй родитель (есть однозначный типа MRO,
 но точно не помню какой).
-В принцие может быть больше двух родителей (^^^&amp;#8230;)&amp;nbsp;aka octopus merge,
-но в жизни пока не встречал/не приходилось&amp;nbsp;делать.&lt;/p&gt;
-&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;~N&lt;/span&gt;&lt;/tt&gt; - Nый родитель вдаль по&amp;nbsp;истории&lt;/p&gt;
+В принцие может быть больше двух родителей (^^^...)&amp;nbsp;aka octopus merge,
+но в жизни пока не встречал/не приходилось делать.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;&amp;lt;ref&amp;gt;~N&lt;/span&gt;&lt;/tt&gt; - Nый родитель вдаль по истории&lt;/p&gt;
 &lt;p&gt;Основное отличие тегов в том что для них нельзя просто переопределить
 ссылку на коммит - надо только удалить старый тег и создать такой же новый.
-Но &lt;em&gt;IMnsHO&lt;/em&gt; тому кто двигает теги надо отрубать&amp;nbsp;руки.&lt;/p&gt;
+Но &lt;em&gt;IMnsHO&lt;/em&gt; тому кто двигает теги надо отрубать руки.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="remotes"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id16"&gt;Remotes&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Ремоуты - это специальный вид бранчей, которые указывают на коммиты
-на удаленном &amp;nbsp;репозитории (точнее в его локальной&amp;nbsp;копии).&lt;/p&gt;
-&lt;p&gt;Можно - и часто нужно! - иметь много remotes в своей локальной&amp;nbsp;репе.&lt;/p&gt;
+на удаленном &amp;nbsp;репозитории (точнее в его локальной копии).&lt;/p&gt;
+&lt;p&gt;Можно - и часто нужно! - иметь много remotes в своей локальной репе.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git remote -v
 git remote add &amp;lt;remote-name&amp;gt; &amp;lt;url&amp;gt;
 git fetch &amp;lt;remote-name&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="very-basic-git-workflow"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id17"&gt;Very Basic git&amp;nbsp;workflow&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id17"&gt;Very Basic git workflow&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# создаем новый репозиторий&lt;/span&gt;
 mkdir &amp;lt;repo&amp;gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$_&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git init
 &lt;span class="c1"&gt;# или стягиваем готовый&lt;/span&gt;
@@ -766,74 +771,74 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;span class="c1"&gt;# git push [remote] # выкладываем изменения в удаленный репозиторий&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Интерактивный &lt;tt class="docutils literal"&gt;git add &lt;span class="pre"&gt;--patch&lt;/span&gt;&lt;/tt&gt; позволяет заносить в индекс отдельные
-куски изменений (&lt;em&gt;hunks&lt;/em&gt;), а не весь файл&amp;nbsp;целиком.&lt;/p&gt;
+куски изменений (&lt;em&gt;hunks&lt;/em&gt;), а не весь файл целиком.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="merg"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id18"&gt;Mergе и&amp;nbsp;конфликты&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;Создание коммита с несколькими&amp;nbsp;родителями.&lt;/p&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id18"&gt;Mergе и конфликты&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Создание коммита с несколькими родителями.&lt;/p&gt;
 &lt;p&gt;Часта ситуация когда некоторые файлы отличаются в обоих родителях,
 и алгоритмы Git (на самом деле весьма продвинутые) не могут однозначно
 определить, как должна выглядеть их “сумма”.
-Появляются merge conflicts которые надо&amp;nbsp;чинить.&lt;/p&gt;
-&lt;p&gt;Ищем в файлах&amp;nbsp;строчки&lt;/p&gt;
+Появляются merge conflicts которые надо чинить.&lt;/p&gt;
+&lt;p&gt;Ищем в файлах строчки&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;&amp;lt;&amp;lt;[some-ref]
 # код того куда мержим
 ====
 # код того что примерживаем
 &amp;gt;&amp;gt;&amp;gt;[other-ref]
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;И выбираем какая версия больше нравится. А может и переписываем кусок&amp;nbsp;совсем.&lt;/p&gt;
+&lt;p&gt;И выбираем какая версия больше нравится. А может и переписываем кусок совсем.&lt;/p&gt;
 &lt;dl class="docutils"&gt;
-&lt;dt&gt;git&amp;nbsp;mergetool&lt;/dt&gt;
+&lt;dt&gt;git mergetool&lt;/dt&gt;
 &lt;dd&gt;удобная штука, которая из коробки умеет работать со многими
 редакторами/сравнителями (vimdiff, meld, diffuse, WinMerge, kdiff3 и т.п.).
 Настраивается через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-config&lt;/span&gt;&lt;/tt&gt;.&lt;/dd&gt;
 &lt;/dl&gt;
-&lt;p&gt;Обычно в редакторе будут файлы заканчивающиеся&amp;nbsp;на:&lt;/p&gt;
+&lt;p&gt;Обычно в редакторе будут файлы заканчивающиеся на:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;BASE&lt;/span&gt;&lt;/tt&gt; - версия файла из ближайшего общего&amp;nbsp;предка&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;LOCAL&lt;/span&gt;&lt;/tt&gt; - то куда&amp;nbsp;мержится&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что&amp;nbsp;мержится&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;BASE&lt;/tt&gt; - версия файла из ближайшего общего предка&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;LOCAL&lt;/tt&gt; - то куда мержится&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;REMOTE&lt;/tt&gt; - то что мержится&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="cherry-pick"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id19"&gt;Cherry-pick&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Берет дифф данного коммита и пытается сделать коммит с таким же диффом
 поверх другого (по сути делает копию коммита, но с другим родителем).
-Возможны&amp;nbsp;конфликты.&lt;/p&gt;
+Возможны конфликты.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="rebase"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id20"&gt;Rebase&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;Пересаживает коммит/ветку на нового родителя. Изменяет&amp;nbsp;историю!&lt;/p&gt;
+&lt;p&gt;Пересаживает коммит/ветку на нового родителя. Изменяет историю!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git rebase &lt;span class="o"&gt;[&lt;/span&gt;-i&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;target-ref&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Интерактивный ребейз - очень мощная штука.
 Позволяет выбрать какие коммиты и в каком порядке пересаживать,
-слепливать несколько коммитов в один, изменять их содержимое и&amp;nbsp;мессаджи.&lt;/p&gt;
-&lt;p&gt;Конфликты возможны на каждом пересаживаемом&amp;nbsp;патче.&lt;/p&gt;
-&lt;p&gt;В случае мерж конфликтов при ребейзе &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;LOCAL&lt;/span&gt;&lt;/tt&gt; относится к тому на что
-ребейзится, а &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;REMOTE&lt;/span&gt;&lt;/tt&gt; - то что ребейзится.
+слепливать несколько коммитов в один, изменять их содержимое и мессаджи.&lt;/p&gt;
+&lt;p&gt;Конфликты возможны на каждом пересаживаемом патче.&lt;/p&gt;
+&lt;p&gt;В случае мерж конфликтов при ребейзе &lt;tt class="docutils literal"&gt;LOCAL&lt;/tt&gt; относится к тому на что
+ребейзится, а &lt;tt class="docutils literal"&gt;REMOTE&lt;/tt&gt; - то что ребейзится.
 Это иногда не интуитивно - например, у вас был старый master,
 от которого отбранчевана feature-branch.
 Вы обновили мастер и пытаетесь ребейзнуть свой feature-branch на него.
-С первого взгляда интуитивно кажется что &lt;span class="caps"&gt;LOCAL&lt;/span&gt; - это ваш код
+С первого взгляда интуитивно кажется что LOCAL - это ваш код
 (вот, же он, локальный, еще может даже никуда не выложеный),
-а &lt;span class="caps"&gt;REMOTE&lt;/span&gt; - это тот код из master, что вы только что выкачали
-(из удаленного же хранилища, да?&amp;#8230;).
-Надо просто&amp;nbsp;запомнить.&lt;/p&gt;
+а REMOTE - это тот код из master, что вы только что выкачали
+(из удаленного же хранилища, да?...).
+Надо просто запомнить.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id6"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id21"&gt;Правки и изменения&amp;nbsp;истории&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id21"&gt;Правки и изменения истории&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;В &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; есть несколько команд, которые изменяют историю коммитов,
-как минимум с точки зрения внешнего мира (список не&amp;nbsp;полный):&lt;/p&gt;
+как минимум с точки зрения внешнего мира (список не полный):&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--amend&lt;/span&gt;&lt;/tt&gt; - дополняет последний коммит изменениями
 находящимися в индексе. Поскольку id коммита определяется его содержимым,
-изменяет id&amp;nbsp;коммита&lt;/li&gt;
+изменяет id коммита&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;git rebase&lt;/tt&gt; - так как id коммита определяется также и id его родителей,
-ребейз меняет id &lt;em&gt;всех&lt;/em&gt; коммитов попавших под&amp;nbsp;ребейз.&lt;/li&gt;
+ребейз меняет id &lt;em&gt;всех&lt;/em&gt; коммитов попавших под ребейз.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Что тут надо&amp;nbsp;учитывать:&lt;/p&gt;
+&lt;p&gt;Что тут надо учитывать:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Выложить такие изменения в уже существющую удаленную ветку на remote вы уже
 просто так не сможете - история разъехалась&lt;ul&gt;
@@ -843,15 +848,15 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;li&gt;Но теперь при этом в вашей удаленной ветке тоже изменилась история.
 И теперь у любого, кто уже успел скачать через &lt;tt class="docutils literal"&gt;pull/fetch&lt;/tt&gt; себе вашу
 удаленную ветку при попытке обновления возникнут проблемы -
-их &amp;#8220;локальная&amp;#8221; история разошлась с &amp;#8220;апстримной&amp;#8221;, а это значит мерж-конфликты
+их &amp;quot;локальная&amp;quot; история разошлась с &amp;quot;апстримной&amp;quot;, а это значит мерж-конфликты
 и прочая головная боль на пустом месте (они-то свой код не трогали..).
-Не надо так с людьми&amp;nbsp;обходиться.&lt;/li&gt;
+Не надо так с людьми обходиться.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Поэтому общее правило для такого рода изменений -
 они только для локальных коммитов.
 Как только коммит в составе ветки выложен на удаленный репозиторий,
 откуда эту ветку мог скачать кто-то ещё - переписывайте историю этой ветки
-только будучи готовыми к лучам любви от этих&amp;nbsp;людей.&lt;/p&gt;
+только будучи готовыми к лучам любви от этих людей.&lt;/p&gt;
 &lt;p&gt;Но что примечательно - есть основаные на &lt;tt class="docutils literal"&gt;git&lt;/tt&gt; системы, очень активно
 использующие &lt;tt class="docutils literal"&gt;amend&lt;/tt&gt; и &lt;tt class="docutils literal"&gt;rebase&lt;/tt&gt; в своей работе
 (см &lt;a class="reference internal" href="#gerrit-workflow-openstack"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;).&lt;/p&gt;
@@ -859,34 +864,34 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;div class="section" id="tools"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id22"&gt;Tools&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="section" id="id7"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id23"&gt;Для любителей кнопочек и&amp;nbsp;менюшечек&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id23"&gt;Для любителей кнопочек и менюшечек&lt;/a&gt;&lt;/h4&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;gitk/git-gui - на лицо ужасный (Tcl/Tk),
-добрый внутри “дефолтный” &lt;span class="caps"&gt;GUI&lt;/span&gt; для гита&lt;ul&gt;
-&lt;li&gt;gitk - браузер&amp;nbsp;истории&lt;/li&gt;
-&lt;li&gt;git-gui - коммиты и&amp;nbsp;проч.&lt;/li&gt;
+добрый внутри “дефолтный” GUI для гита&lt;ul&gt;
+&lt;li&gt;gitk - браузер истории&lt;/li&gt;
+&lt;li&gt;git-gui - коммиты и проч.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;gitg - весьма пристойный аскетичный Гуй на&amp;nbsp;Gtk&lt;/li&gt;
+&lt;li&gt;gitg - весьма пристойный аскетичный Гуй на Gtk&lt;/li&gt;
 &lt;li&gt;git-cola - тоже неплохо,
-прикольная визуализация &lt;span class="caps"&gt;DAG&lt;/span&gt; (directed acyclic graph) дерева&amp;nbsp;коммитов&lt;/li&gt;
+прикольная визуализация DAG (directed acyclic graph) дерева коммитов&lt;/li&gt;
 &lt;li&gt;SourceTree - для Win/Mac,
-не открытый но бесплатный, от Atlassian, на Яблоке&amp;nbsp;красивый&lt;/li&gt;
-&lt;li&gt;Ваш &lt;span class="caps"&gt;IDE&lt;/span&gt; - наверное то же что-то есть (PyCharm,&amp;nbsp;Eclipse+PyDev…)&lt;/li&gt;
+не открытый но бесплатный, от Atlassian, на Яблоке красивый&lt;/li&gt;
+&lt;li&gt;Ваш IDE - наверное то же что-то есть (PyCharm, Eclipse+PyDev…)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id8"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id24"&gt;Для ковбоев&amp;nbsp;консоли&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id24"&gt;Для ковбоев консоли&lt;/a&gt;&lt;/h4&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Git&amp;nbsp;:)&lt;/li&gt;
-&lt;li&gt;tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь&amp;nbsp;постоянно.&lt;/li&gt;
+&lt;li&gt;Git :)&lt;/li&gt;
+&lt;li&gt;tig - браузер, коммитер, диффер и проч на ncurses. Пользуюсь постоянно.&lt;/li&gt;
 &lt;li&gt;Vim плагины (у меня на нем профдеформация)&lt;ul&gt;
 &lt;li&gt;Vim-fugitive - весьма мощная штука, но пока я не очень пользуюсь,
-только для сложных интерактивных add. Надо переползать&amp;nbsp;плотнее…&lt;/li&gt;
+только для сложных интерактивных add. Надо переползать плотнее…&lt;/li&gt;
 &lt;li&gt;Vim-gitgutter - помечает добавленые/удаленные/измененные строчки,
 и может стейжить ханки.
 Так же интегрируется в vim-airline и показывает общее количество
-незакоммиченых изменений в открытом&amp;nbsp;файле.&lt;/li&gt;
+незакоммиченых изменений в открытом файле.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -894,7 +899,7 @@ git commit -m “My commit” &lt;span class="c1"&gt;# сохраняем инд
 &lt;div class="section" id="fun"&gt;
 &lt;h4&gt;&lt;a class="toc-backref" href="#id25"&gt;Fun&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;gource - визуализация развития гит репозитория в динамике. Просто&amp;nbsp;красиво&amp;nbsp;:)&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;gource - визуализация развития гит репозитория в динамике. Просто красиво&amp;nbsp;:)&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp;amp; gource
 &lt;/pre&gt;
@@ -904,26 +909,26 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="gerrit-workflow-openstack"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id26"&gt;Gerrit Workflow в&amp;nbsp;OpenStack&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Gerrit - система код-ревью основанная на&amp;nbsp;Гите.&lt;/p&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id26"&gt;Gerrit Workflow в OpenStack&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Gerrit - система код-ревью основанная на Гите.&lt;/p&gt;
 &lt;p&gt;В cвое время отфоркался от Rietveld написанного Гуидо ван Россумом,
-создателем&amp;nbsp;Python.&lt;/p&gt;
+создателем Python.&lt;/p&gt;
 &lt;p&gt;Основной принцип - содержит ченжи, внутри каждого патч-сеты.
 Каждый патч-сет - это отдельный бранч.
-Это позволяет вовсю пользоваться rebase и commit &amp;#8212;amend,
+Это позволяет вовсю пользоваться rebase и commit --amend,
 перезаписывая локальную историю и выкладывая ее на remote,
 &lt;em&gt;что в общем случае очень сильно не рекомендуется&lt;/em&gt;
 (см &lt;a class="reference internal" href="#id6"&gt;Правки и изменения истории&lt;/a&gt;).&lt;/p&gt;
 &lt;div class="section" id="openstack-english"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id27"&gt;Специфика сообщества OpenStack&amp;nbsp;(english)&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id27"&gt;Специфика сообщества OpenStack (english)&lt;/a&gt;&lt;/h3&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
-&lt;dt&gt;Общее описание Development&amp;nbsp;Workflow&lt;/dt&gt;
+&lt;dt&gt;Общее описание Development Workflow&lt;/dt&gt;
 &lt;dd&gt;&lt;a class="reference external" href="http://docs.openstack.org/infra/manual/developers.html#development-workflow"&gt;http://docs.openstack.org/infra/manual/developers.html#development-workflow&lt;/a&gt;&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
-&lt;dt&gt;Как писать годный&amp;nbsp;коммит-мессадж&lt;/dt&gt;
+&lt;dt&gt;Как писать годный коммит-мессадж&lt;/dt&gt;
 &lt;dd&gt;&lt;a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages"&gt;https://wiki.openstack.org/wiki/GitCommitMessages&lt;/a&gt;&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
@@ -932,7 +937,7 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;div class="section" id="git-review"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id28"&gt;git-review&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;В принципе c Герритом можно работать через Git напрямую,
-но с &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; значительно&amp;nbsp;удобнее.&lt;/p&gt;
+но с &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; значительно удобнее.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo -H pip install -U git-review
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Стоит почитать&amp;nbsp;&lt;tt class="docutils literal"&gt;man &lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
@@ -945,25 +950,25 @@ sudo apt install gource &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt; &amp;amp;&amp
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="basic-workflow"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id29"&gt;Basic&amp;nbsp;workflow&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id29"&gt;Basic workflow&lt;/a&gt;&lt;/h3&gt;
 &lt;div class="section" id="change-id"&gt;
 &lt;h4&gt;&lt;a class="toc-backref" href="#id30"&gt;Change-Id&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt; добавляет пост-коммит хук,
-который добавляет в коммит-мессадж строчку (если её ещё там не&amp;nbsp;было):&lt;/p&gt;
+который добавляет в коммит-мессадж строчку (если её ещё там не было):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 Change-Id: INNNNNN…
 &lt;/pre&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Change-Id&lt;/dt&gt;
 &lt;dd&gt;независимый, Gerrit-specific хэш, по которому Геррит определяет
-в какой change ему добавить новую версию&amp;nbsp;коммита.&lt;/dd&gt;
-&lt;dt&gt;Очень&amp;nbsp;важно&lt;/dt&gt;
+в какой change ему добавить новую версию коммита.&lt;/dd&gt;
+&lt;dt&gt;Очень важно&lt;/dt&gt;
 &lt;dd&gt;не изменять строчку c Change-Id при обновлении патчей.
-Новый Change-Id =&amp;gt; новый change на&amp;nbsp;Геррите.&lt;/dd&gt;
+Новый Change-Id =&amp;gt; новый change на Геррите.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id9"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id31"&gt;Работа над новым, независимым изменением (баг,&amp;nbsp;фича)&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id31"&gt;Работа над новым, независимым изменением (баг, фича)&lt;/a&gt;&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# git clone … &amp;amp;&amp;amp; cd &amp;lt;repo&amp;gt;&lt;/span&gt;
 git review -s &lt;span class="c1"&gt;# создает новый remote по имени gerrit&lt;/span&gt;
 git checkout master
@@ -980,7 +985,7 @@ git review
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="id10"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id32"&gt;Правим свой старый&amp;nbsp;патч&lt;/a&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#id32"&gt;Правим свой старый патч&lt;/a&gt;&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# если ветки нет - скачиваем ее с Gerrit:&lt;/span&gt;
 git review -d NNNNNN &lt;span class="c1"&gt;# review.openstack.org/#/c/NNNNNN&lt;/span&gt;
 &lt;span class="c1"&gt;# создалась новая ветка review/&amp;lt;user_name&amp;gt;/&amp;lt;topic&amp;gt;&lt;/span&gt;
@@ -1001,47 +1006,47 @@ git add .
 git commit --amend
 git review
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Всегда коммитим обновления через аменд, перезаписывая последний&amp;nbsp;коммит.&lt;/p&gt;
+&lt;p&gt;Всегда коммитим обновления через аменд, перезаписывая последний коммит.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="rebase-or-not-rebase"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id33"&gt;Rebase or not&amp;nbsp;Rebase?&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id33"&gt;Rebase or not Rebase?&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;По дефолту, при выкладывании через &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;git-review&lt;/span&gt;&lt;/tt&gt;, его &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pre-push&lt;/span&gt; hook&lt;/tt&gt;
 попытается сделать ребейз вашего change на ту ветку в которую вы выкладываете
-(по дефолту&amp;nbsp;master).&lt;/p&gt;
+(по дефолту master).&lt;/p&gt;
 &lt;p&gt;Иногда это хорошо (вы забыли обновить мастер, и теперь есть мерж-конфликты -
-упадет сразу, не&amp;nbsp;выложив).&lt;/p&gt;
+упадет сразу, не выложив).&lt;/p&gt;
 &lt;p&gt;Это поведение отменяется ключом &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-R&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;Но чаще всего лучше делать осознанный ребейз руками - ревьюерам вашего кода
-проще сравнивать разные версии патч-сетов когда между ними не было&amp;nbsp;ребейза.&lt;/p&gt;
+проще сравнивать разные версии патч-сетов когда между ними не было ребейза.&lt;/p&gt;
 &lt;p&gt;Отдельная история - ваш change зависит от чужого, еще не вмерженого и
 находящегося на review.
-В таком случае не ребейзить чужие патчи - общее правило хорошего&amp;nbsp;тона.&lt;/p&gt;
-&lt;p&gt;Поэтому мой личный&amp;nbsp;алгоритм:&lt;/p&gt;
+В таком случае не ребейзить чужие патчи - общее правило хорошего тона.&lt;/p&gt;
+&lt;p&gt;Поэтому мой личный алгоритм:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Отключить авторебейз по&amp;nbsp;дефолту&lt;/li&gt;
-&lt;li&gt;Новый change - всегда от&amp;nbsp;мастера.&lt;/li&gt;
+&lt;li&gt;Отключить авторебейз по дефолту&lt;/li&gt;
+&lt;li&gt;Новый change - всегда от мастера.&lt;/li&gt;
 &lt;li&gt;Обновляю &lt;em&gt;свой, независимый&lt;/em&gt; старый change - ребейз только если:&lt;ul&gt;
-&lt;li&gt;еще не было ни одного ревью,&amp;nbsp;или&lt;/li&gt;
-&lt;li&gt;если merge conflict (тут уж без&amp;nbsp;вариантов)&lt;/li&gt;
+&lt;li&gt;еще не было ни одного ревью, или&lt;/li&gt;
+&lt;li&gt;если merge conflict (тут уж без вариантов)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;В остальных случаях - без&amp;nbsp;ребейза.&lt;/li&gt;
+&lt;li&gt;В остальных случаях - без ребейза.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in&amp;nbsp;Ubuntu&lt;/p&gt;
+</content><category term="work"></category><category term="git"></category><category term="gerrit"></category><category term="openstack"></category></entry><entry><title>Single Russian-Ukrainian keyboard layout on Ubuntu</title><link href="https://pshchelo.github.io/ubuntu-ruu-kbd.html" rel="alternate"></link><published>2014-12-20T00:00:00+02:00</published><updated>2014-12-20T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-12-20:/ubuntu-ruu-kbd.html</id><summary type="html">&lt;p class="first last"&gt;Using single keyboard layout to input both Russian and Ukrainian in Ubuntu&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My most used input language is English, with second used being Russian.
 Occasionally though I have to input text (e.g. in search field) in German,
 French or Ukrainian.
-For Western languages Ubuntu comes with &amp;#8220;English (international with AltGr dead keys)&amp;#8221;
+For Western languages Ubuntu comes with &amp;quot;English (international with AltGr dead keys)&amp;quot;
 available as a choice of input layout.
 It works out nicely as my default English layout,
 and those extra accented letters are easy within reach
 (plus some extra handy symbols are made available).
 On the Cyrillic languages side things are a bit more complicated.
-I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&lt;/p&gt;
-&lt;p&gt;It turns out there is one layout included in Ubuntu, one just has to manually turn it&amp;nbsp;on:&lt;/p&gt;
+I could not find any suitable layout in Ubuntu enabled out of the box.&lt;/p&gt;
+&lt;p&gt;It turns out there is one layout included in Ubuntu, one just has to manually turn it on:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;open file &lt;tt class="docutils literal"&gt;/usr/share/X11/xkb/rules/evdev.extras.xml&lt;/tt&gt;, find the layout named &lt;tt class="docutils literal"&gt;ruu&lt;/tt&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;variant&amp;gt;&lt;/span&gt;
@@ -1056,11 +1061,11 @@ I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&
 &lt;span class="nt"&gt;&amp;lt;/variant&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;copy the whole enclosing &lt;tt class="docutils literal"&gt;&amp;lt;variant&amp;gt;&lt;/tt&gt; tag as shown&amp;nbsp;above&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;copy the whole enclosing &lt;tt class="docutils literal"&gt;&amp;lt;variant&amp;gt;&lt;/tt&gt; tag as shown above&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;open file &lt;tt class="docutils literal"&gt;/usr/share/X11/xkb/rules/evdev.xml&lt;/tt&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;find Russian&amp;nbsp;section&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;find Russian section&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;layout&amp;gt;&lt;/span&gt;
   &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
@@ -1078,7 +1083,7 @@ I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&
         &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (phonetic)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;paste there copied &lt;tt class="docutils literal"&gt;ruu&lt;/tt&gt; variant alongside other available&amp;nbsp;variants&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;paste there copied &lt;tt class="docutils literal"&gt;ruu&lt;/tt&gt; variant alongside other available variants&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;layout&amp;gt;&lt;/span&gt;
   &lt;span class="nt"&gt;&amp;lt;configItem&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;ru&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
@@ -1106,61 +1111,61 @@ I could not find any suitable layout in Ubuntu enabled out of the&amp;nbsp;box.&
         &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Russian (phonetic)&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;restart X&amp;nbsp;server&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;restart X server&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Now you can choose a &amp;#8220;Russian (with Ukrainian-Belorussian layout)&amp;#8221; from available layouts.
-It is mostly a standard Russian layout (the biggest difference being position of &amp;#8220;ё&amp;#8221; character),
+&lt;p&gt;Now you can choose a &amp;quot;Russian (with Ukrainian-Belorussian layout)&amp;quot; from available layouts.
+It is mostly a standard Russian layout (the biggest difference being position of &amp;quot;ё&amp;quot; character),
 plus you can input Ukrainian- or Belorussian-specific characters via AltGr
 (usually right Alt), plus some more extra symbols are available via AltGr,
 like Ukrainian Hryvnia (₴) or some math symbols (e.g. ±).
-Check out the &amp;#8220;Keyboard Layout Chart&amp;#8221; for this layout to see all available&amp;nbsp;characters.&lt;/p&gt;
-</content><category term="work"></category><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="https://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting&amp;nbsp;DevStack&lt;/p&gt;
+Check out the &amp;quot;Keyboard Layout Chart&amp;quot; for this layout to see all available characters.&lt;/p&gt;
+</content><category term="work"></category><category term="keyboard"></category><category term="ukraine"></category><category term="ubuntu"></category></entry><entry><title>How to set DevStack with Neutron</title><link href="https://pshchelo.github.io/devstack-with-neutron.html" rel="alternate"></link><published>2014-04-21T00:00:00+03:00</published><updated>2014-04-21T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-21:/devstack-with-neutron.html</id><summary type="html">&lt;p class="first last"&gt;tips and tricks on setting DevStack&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;These tips try to solve problems I stumbled upon when starting my work
-on OpenStack, Grizzly release at that time. I&amp;#8217;ve tried to accommodate
+on OpenStack, Grizzly release at that time. I've tried to accommodate
 the solutions for recent DevStack (early Juno as of this
 writing), but some things might still be incorrect or already fixed -
-&lt;span class="caps"&gt;YMMV&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;All notes are concerning Ubuntu/Debian on an Intel &lt;span class="caps"&gt;CPU&lt;/span&gt;, so for other systems
-some changes might be&amp;nbsp;necessary.&lt;/p&gt;
+YMMV.&lt;/p&gt;
+&lt;p&gt;All notes are concerning Ubuntu/Debian on an Intel CPU, so for other systems
+some changes might be necessary.&lt;/p&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Update&lt;/dt&gt;
-&lt;dd&gt;Tried DevStack on fresh Ubuntu 14.04 &lt;span class="caps"&gt;LTS&lt;/span&gt; (Trusty Thar), updated&amp;nbsp;tips.&lt;/dd&gt;
+&lt;dd&gt;Tried DevStack on fresh Ubuntu 14.04 LTS (Trusty Thar), updated tips.&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title"&gt;Contents&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#install-devstack" id="id1"&gt;Install&amp;nbsp;DevStack&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#allow-vm-internet-connectivity" id="id2"&gt;Allow &lt;span class="caps"&gt;VM&lt;/span&gt; Internet&amp;nbsp;connectivity&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#note-on-unstack-sh-and-rebooting" id="id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and&amp;nbsp;rebooting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#install-devstack" id="id1"&gt;Install DevStack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#allow-vm-internet-connectivity" id="id2"&gt;Allow VM Internet connectivity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#note-on-unstack-sh-and-rebooting" id="id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and rebooting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#restore-settings-after-reboot" id="id4"&gt;Restore settings after reboot&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#stack-volumes" id="id5"&gt;Stack&amp;nbsp;volumes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#nat-settings" id="id6"&gt;&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;settings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#stack-volumes" id="id5"&gt;Stack volumes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#nat-settings" id="id6"&gt;NAT settings&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#bridges" id="id7"&gt;Bridges&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#sharing-files-between-your-physical-machine-and-devstack-host" id="id8"&gt;Sharing files between your physical machine and DevStack&amp;nbsp;host&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#problems-with-receiving-ips-for-vms" id="id9"&gt;Problems with receiving IPs for&amp;nbsp;VMs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="#nested-kvm" id="id10"&gt;Nested &lt;span class="caps"&gt;KVM&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#sharing-files-between-your-physical-machine-and-devstack-host" id="id8"&gt;Sharing files between your physical machine and DevStack host&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#problems-with-receiving-ips-for-vms" id="id9"&gt;Problems with receiving IPs for VMs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#nested-kvm" id="id10"&gt;Nested KVM&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="install-devstack"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Install&amp;nbsp;DevStack&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Install DevStack&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;Prepare a &lt;span class="caps"&gt;VM&lt;/span&gt; for DevStack&amp;nbsp;deployment&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;Prepare a VM for DevStack deployment&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;in this &lt;span class="caps"&gt;VM&lt;/span&gt; install &lt;tt class="docutils literal"&gt;git&lt;/tt&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;in this VM install &lt;tt class="docutils literal"&gt;git&lt;/tt&gt;&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sudo apt-get install git
 &lt;/pre&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;clone DevStack&amp;nbsp;repo&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;clone DevStack repo&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 git clone https://github.com/openstack-dev/devstack.git
 &lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;create &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; file in the &lt;tt class="docutils literal"&gt;devstack&lt;/tt&gt; folder to enable
-Neutron and set some passwords (choose your own if you&amp;nbsp;wish)&lt;/p&gt;
+Neutron and set some passwords (choose your own if you wish)&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 [[local|localrc]]
 DATABASE_PASSWORD=password
@@ -1173,10 +1178,10 @@ enable_service q-svc q-agt q-dhcp q-l3 q-meta neutron
 &lt;/pre&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;I have a &lt;a class="reference external" href="https://github.com/pshchelo/stackdev"&gt;repo&lt;/a&gt; with my
-DevStack customizations, you might want to check it&amp;nbsp;out.&lt;/li&gt;
+DevStack customizations, you might want to check it out.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;install&amp;nbsp;DevStack&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;install DevStack&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 ./stack.sh
 &lt;/pre&gt;
@@ -1186,25 +1191,25 @@ DevStack customizations, you might want to check it&amp;nbsp;out.&lt;/li&gt;
 Horizon, or join the running stack with &lt;tt class="docutils literal"&gt;./rejoin_stack.sh&lt;/tt&gt; command
 and check console outputs of all the running services for debug and error info.
 There are some networks and routers created by default, so you can
-start VMs and attach floating IPs to&amp;nbsp;them.&lt;/p&gt;
+start VMs and attach floating IPs to them.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="allow-vm-internet-connectivity"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id2"&gt;Allow &lt;span class="caps"&gt;VM&lt;/span&gt; Internet&amp;nbsp;connectivity&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id2"&gt;Allow VM Internet connectivity&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You might stumble on networking issues concerning outside access,
 like pinging or accessing Internet resources outside of your DevStack.
 First you need to change the Security Group settings -
-the &amp;#8220;default&amp;#8221; group created by DevStack seems to allow everything
-but in fact I&amp;#8217;ve always had problems with it, so just create your own
+the &amp;quot;default&amp;quot; group created by DevStack seems to allow everything
+but in fact I've always had problems with it, so just create your own
 security group and assign your VMs to it.
-Then you need to configure &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt; to pass through the&amp;nbsp;traffic:&lt;/p&gt;
+Then you need to configure &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt; to pass through the traffic:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 &lt;/pre&gt;
 &lt;p&gt;(after this &lt;a class="reference external" href="https://answers.launchpad.net/neutron/+question/208377"&gt;launchpad question&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="note-on-unstack-sh-and-rebooting"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and&amp;nbsp;rebooting&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;As I&amp;#8217;ve found the hard way, if you ever need to reboot your DevStack &lt;span class="caps"&gt;VM&lt;/span&gt;,
+&lt;h2&gt;&lt;a class="toc-backref" href="#id3"&gt;Note on &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; and rebooting&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As I've found the hard way, if you ever need to reboot your DevStack VM,
 &lt;strong&gt;do not&lt;/strong&gt; run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt; before that.
 Simply detach from screen and/or reboot as usual.
 The unstacking script not only stops the services run in screen,
@@ -1214,41 +1219,41 @@ Mostly it concerns network bridges from what I have seen.
 So if you run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt;, in order to have a working DevStack installation
 you have to run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; after it.
 That has a drawback that all your cloud configuration
-(e.g. everything stored in &lt;span class="caps"&gt;DB&lt;/span&gt; tables of OpenStack and content of stack-volume-backing-file) will be&amp;nbsp;reset.&lt;/p&gt;
-&lt;p&gt;Thus, the work flow looks somewhat like&amp;nbsp;this:&lt;/p&gt;
+(e.g. everything stored in DB tables of OpenStack and content of stack-volume-backing-file) will be reset.&lt;/p&gt;
+&lt;p&gt;Thus, the work flow looks somewhat like this:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
 &lt;li&gt;Start/configure DevStack with &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;&lt;/li&gt;
 &lt;li&gt;Join the stack with &lt;tt class="docutils literal"&gt;rejoin_stack.sh&lt;/tt&gt;&lt;/li&gt;
 &lt;li&gt;Make changes, restarting services affected on per-service basis via screen
-to put your changes in&amp;nbsp;effect.&lt;/li&gt;
-&lt;li&gt;If in need to reboot the DevStack &lt;span class="caps"&gt;VM&lt;/span&gt;, shut it down the usual way,
+to put your changes in effect.&lt;/li&gt;
+&lt;li&gt;If in need to reboot the DevStack VM, shut it down the usual way,
 and upon restart simply run &lt;tt class="docutils literal"&gt;rejoin_stack.sh&lt;/tt&gt; again,
-all services will be started in screen&amp;nbsp;again.&lt;/li&gt;
+all services will be started in screen again.&lt;/li&gt;
 &lt;li&gt;Only if you need to change the OpenStack/DevStack configuration,
 then run &lt;tt class="docutils literal"&gt;unstack.sh&lt;/tt&gt;, make changes in &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; / wherever you have to
 and then run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class="section" id="restore-settings-after-reboot"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id4"&gt;Restore settings after&amp;nbsp;reboot&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;After reboot of the DevStack &lt;span class="caps"&gt;VM&lt;/span&gt; the following will be&amp;nbsp;lost:&lt;/p&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id4"&gt;Restore settings after reboot&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;After reboot of the DevStack VM the following will be lost:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;stack volumes (this includes created storage volumes&amp;nbsp;etc.)&lt;/li&gt;
-&lt;li&gt;iptables/&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;setting&lt;/li&gt;
-&lt;li&gt;bridges&amp;nbsp;configurations&lt;/li&gt;
+&lt;li&gt;stack volumes (this includes created storage volumes etc.)&lt;/li&gt;
+&lt;li&gt;iptables/NAT setting&lt;/li&gt;
+&lt;li&gt;bridges configurations&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Here how to restore these settings or make them&amp;nbsp;permanent:&lt;/p&gt;
+&lt;p&gt;Here how to restore these settings or make them permanent:&lt;/p&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;Update&lt;/dt&gt;
 &lt;dd&gt;Right now it appears to be so involved to cleanly restore all the settings
 lost after reboot that a much safer and easier way is to make peace with
 everything in your OpenStack being lost (all the settings and things
-you&amp;#8217;ve created inside) and just run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; again (optionally with
-&lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OFFLINE&lt;/span&gt; = True&lt;/tt&gt; in your &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; to keep the code exactly as
-before&amp;nbsp;reboot).&lt;/dd&gt;
+you've created inside) and just run &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt; again (optionally with
+&lt;tt class="docutils literal"&gt;OFFLINE = True&lt;/tt&gt; in your &lt;tt class="docutils literal"&gt;local.conf&lt;/tt&gt; to keep the code exactly as
+before reboot).&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;div class="section" id="stack-volumes"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id5"&gt;Stack&amp;nbsp;volumes&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id5"&gt;Stack volumes&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; - with &lt;tt class="docutils literal"&gt;Swift&lt;/tt&gt; enabled actual loopback device may be other
 than &lt;tt class="docutils literal"&gt;/dev/loop0&lt;/tt&gt;&lt;/p&gt;
 &lt;p&gt;Check that volumes are created after fresh running of &lt;tt class="docutils literal"&gt;./stack.sh&lt;/tt&gt;:&lt;/p&gt;
@@ -1267,10 +1272,11 @@ losetup /dev/loop0 /opt/stack/data/stack-volumes-backing-file
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="nat-settings"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id6"&gt;&lt;span class="caps"&gt;NAT&lt;/span&gt;&amp;nbsp;settings&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;After &lt;a class="reference external" href="https://lists.launchpad.net/openstack/msg17016.html"&gt;this mail-list&amp;nbsp;post&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id6"&gt;NAT settings&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;After &lt;a class="reference external" href="https://lists.launchpad.net/openstack/msg17016.html"&gt;this mail-list
+post&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;permanently enable &lt;span class="caps"&gt;IP&lt;/span&gt;-forwarding&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;permanently enable IP-forwarding&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 &lt;/pre&gt;
@@ -1285,7 +1291,7 @@ post up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 &lt;div class="section" id="bridges"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="#id7"&gt;Bridges&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;After &lt;a class="reference external" href="https://gist.github.com/charlesflynn/5576114"&gt;this ghist&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Bridge &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;br-ex&lt;/span&gt;&lt;/tt&gt; has no &lt;span class="caps"&gt;IP&lt;/span&gt; after reboot.
+&lt;p&gt;Bridge &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;br-ex&lt;/span&gt;&lt;/tt&gt; has no IP after reboot.
 Use the following commands to set bridges according to default settings
 of &lt;tt class="docutils literal"&gt;stack.sh&lt;/tt&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1299,15 +1305,16 @@ sudo route add -net 10.0.0.0/24 gw 172.24.4.1
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="sharing-files-between-your-physical-machine-and-devstack-host"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id8"&gt;Sharing files between your physical machine and DevStack&amp;nbsp;host&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;As I use &lt;tt class="docutils literal"&gt;vim&lt;/tt&gt; as my Python &lt;span class="caps"&gt;IDE&lt;/span&gt; I personally prefer to work directly
-in the console of the guest DevStack instance, but if you prefer &lt;span class="caps"&gt;GUI&lt;/span&gt; &lt;span class="caps"&gt;IDE&lt;/span&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id8"&gt;Sharing files between your physical machine and DevStack host&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;As I use &lt;tt class="docutils literal"&gt;vim&lt;/tt&gt; as my Python IDE I personally prefer to work directly
+in the console of the guest DevStack instance, but if you prefer GUI IDE
 (like PyCharm) you might want to have access to the code on the DevStack
 guest right from your host. One rather straightforward possibility is
-&lt;tt class="docutils literal"&gt;sshfs&lt;/tt&gt;, but as it is usually pretty slow, you might want to try &lt;span class="caps"&gt;NFS&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;The following is adopted from &lt;a class="reference external" href="http://radix.twistedmatrix.com/2013/06/complete-guide-to-setting-up-openstack.html"&gt;this post by&amp;nbsp;radix&lt;/a&gt;&lt;/p&gt;
+&lt;tt class="docutils literal"&gt;sshfs&lt;/tt&gt;, but as it is usually pretty slow, you might want to try NFS.&lt;/p&gt;
+&lt;p&gt;The following is adopted from &lt;a class="reference external" href="http://radix.twistedmatrix.com/2013/06/complete-guide-to-setting-up-openstack.html"&gt;this post by
+radix&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;First, install the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nfs-kernel-server&lt;/span&gt;&lt;/tt&gt; package on the host system and
-then edit &lt;tt class="docutils literal"&gt;/etc/exports&lt;/tt&gt; to add the following&amp;nbsp;line:&lt;/p&gt;
+then edit &lt;tt class="docutils literal"&gt;/etc/exports&lt;/tt&gt; to add the following line:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 full_path_to_project_on_host    *(rw,async,root_squash,no_subtree_check)
 &lt;/pre&gt;
@@ -1316,15 +1323,15 @@ line to &lt;tt class="docutils literal"&gt;/etc/fstab&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 address_of_host:full_path_to_project_on_host    full_path_to_project_on_guest    nfs
 &lt;/pre&gt;
-&lt;p&gt;Don&amp;#8217;t forget to &lt;tt class="docutils literal"&gt;mkdir full_path_to_project_on_guest&lt;/tt&gt; in the guest.
+&lt;p&gt;Don't forget to &lt;tt class="docutils literal"&gt;mkdir full_path_to_project_on_guest&lt;/tt&gt; in the guest.
 You can then reboot the DevStack guest or just mount
 &lt;tt class="docutils literal"&gt;full_path_to_project_on_guest&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="problems-with-receiving-ips-for-vms"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id9"&gt;Problems with receiving IPs for&amp;nbsp;VMs&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Some versions of VirtIO network interface seem not to fill in checksums correctly in &lt;span class="caps"&gt;UDP&lt;/span&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id9"&gt;Problems with receiving IPs for VMs&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Some versions of VirtIO network interface seem not to fill in checksums correctly in UDP
 packets (something called checksum offloading), which interferes with
-receiving &lt;span class="caps"&gt;DHCP&lt;/span&gt; lease from neutron/nova-network when everything is
+receiving DHCP lease from neutron/nova-network when everything is
 running on a single host (e.g. DevStack). To fix this add the following
 rule to &lt;tt class="docutils literal"&gt;iptables&lt;/tt&gt;:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -1332,15 +1339,15 @@ sudo iptables -A POSTROUTING -t mangle -p udp --dport bootpc -j CHECKSUM --check
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="nested-kvm"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="#id10"&gt;Nested &lt;span class="caps"&gt;KVM&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;If you run DevStack as a &lt;span class="caps"&gt;KVM&lt;/span&gt; guest, ensure that your host system has nested &lt;span class="caps"&gt;KVM&lt;/span&gt; enabled -
+&lt;h2&gt;&lt;a class="toc-backref" href="#id10"&gt;Nested KVM&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you run DevStack as a KVM guest, ensure that your host system has nested KVM enabled -
 that will greatly speed up those VMs you run inside your DevStack guest
-(of course your &lt;span class="caps"&gt;CPU&lt;/span&gt; has to support virtualization extensions and have them enabled in &lt;span class="caps"&gt;BIOS&lt;/span&gt;).&lt;/p&gt;
-&lt;p&gt;Check that nested &lt;span class="caps"&gt;KVM&lt;/span&gt; is&amp;nbsp;enabled:&lt;/p&gt;
+(of course your CPU has to support virtualization extensions and have them enabled in BIOS).&lt;/p&gt;
+&lt;p&gt;Check that nested KVM is enabled:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 cat /sys/module/kvm_intel/parameters/nested
 &lt;/pre&gt;
-&lt;p&gt;If it&amp;#8217;s &lt;tt class="docutils literal"&gt;N&lt;/tt&gt; then try to load the module&amp;nbsp;with&lt;/p&gt;
+&lt;p&gt;If it's &lt;tt class="docutils literal"&gt;N&lt;/tt&gt; then try to load the module with&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 modprobe kvm_intel nested=1
 &lt;/pre&gt;
@@ -1349,44 +1356,46 @@ you have to add the following line to some &lt;tt class="docutils literal"&gt;.c
 &lt;pre class="literal-block"&gt;
 options kvm-intel nested=1
 &lt;/pre&gt;
-&lt;p&gt;Reboot and check&amp;nbsp;again.&lt;/p&gt;
+&lt;p&gt;Reboot and check again.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="https://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted &lt;span class="caps"&gt;HP&lt;/span&gt; notebook in &lt;span class="caps"&gt;UEFI&lt;/span&gt;&amp;nbsp;mode&lt;/p&gt;
+</content><category term="work"></category><category term="devstack"></category><category term="openstack"></category></entry><entry><title>UEFI boot order on dualbooted HP EliteBook 840</title><link href="https://pshchelo.github.io/uefi-boot-hp.html" rel="alternate"></link><published>2014-04-14T00:00:00+03:00</published><updated>2014-04-14T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-14:/uefi-boot-hp.html</id><summary type="html">&lt;p class="first last"&gt;setting up dualbooted HP notebook in UEFI mode&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="problem"&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
-&lt;p&gt;Using &lt;span class="caps"&gt;UEFI&lt;/span&gt;+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
-can be configured in &lt;span class="caps"&gt;BIOS&lt;/span&gt; per device (&lt;span class="caps"&gt;HDD&lt;/span&gt;/&lt;span class="caps"&gt;ODD&lt;/span&gt;/&lt;span class="caps"&gt;PXI&lt;/span&gt;/&lt;span class="caps"&gt;USB&lt;/span&gt; etc) but there is
-no way to specify boot order of systems present on &lt;span class="caps"&gt;HDD&lt;/span&gt;. &lt;span class="caps"&gt;UEFI&lt;/span&gt; boot loader
-finds both Windows (present as &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OS&lt;/span&gt; Manager&lt;/tt&gt;) and Ubuntu (as
-&lt;tt class="docutils literal"&gt;ubuntu&lt;/tt&gt;), but always uses &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;OS&lt;/span&gt; Manager&lt;/tt&gt; first. As I intend to use
-Ubuntu most of the time, I need a way to make booting Ubuntu the default&amp;nbsp;option.&lt;/p&gt;
+&lt;p&gt;Using UEFI+SecureBoot, dual boot Windows 8.1 / Ubuntu 13.10. Boot order
+can be configured in BIOS per device (HDD/ODD/PXI/USB etc) but there is
+no way to specify boot order of systems present on HDD. UEFI boot loader
+finds both Windows (present as &lt;tt class="docutils literal"&gt;OS Manager&lt;/tt&gt;) and Ubuntu (as
+&lt;tt class="docutils literal"&gt;ubuntu&lt;/tt&gt;), but always uses &lt;tt class="docutils literal"&gt;OS Manager&lt;/tt&gt; first. As I intend to use
+Ubuntu most of the time, I need a way to make booting Ubuntu the default
+option.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="research"&gt;
 &lt;h2&gt;Research&lt;/h2&gt;
 &lt;p&gt;According to &lt;em&gt;teh Internets&lt;/em&gt; such problems seem to occur reasonably
-often, when vendors &amp;#8220;under-implement&amp;#8221; &lt;span class="caps"&gt;UEFI&lt;/span&gt; on their products. One
+often, when vendors &amp;quot;under-implement&amp;quot; UEFI on their products. One
 commonly proposed solution is using recent versions of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;boot-repair&lt;/span&gt;&lt;/tt&gt;
 Ubuntu package (a really nice piece of engineering, saved my ass couple
 of times in the past). What it does is it substitutes (with backup of
 course) the windows &lt;em&gt;efi&lt;/em&gt; file with accordingly renamed Ubuntu &lt;em&gt;efi&lt;/em&gt;
-file, thus loading &lt;span class="caps"&gt;GRUB&lt;/span&gt; automatically, and from there user can choose
+file, thus loading GRUB automatically, and from there user can choose
 what system to boot. But I find such solution a bit too risky, so I want
-something more&amp;nbsp;native.&lt;/p&gt;
+something more native.&lt;/p&gt;
 &lt;p&gt;Another program that is related is &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 sudo apt-get install efibootmgr
 &lt;/pre&gt;
 &lt;p&gt;It has the option to modify boot order of &lt;em&gt;efi&lt;/em&gt; files with
-&lt;tt class="docutils literal"&gt;efibootmgr &lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt;, but at least on my particular &lt;span class="caps"&gt;HP&lt;/span&gt; notebook it has no
+&lt;tt class="docutils literal"&gt;efibootmgr &lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt;, but at least on my particular HP notebook it has no
 effect, and system boots to Windows by default despite any changes in
 the boot order introduced by &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;. Strangely though, the
 option to force the boot order only on next reboot (&lt;tt class="docutils literal"&gt;efibootmgr &lt;span class="pre"&gt;-n&lt;/span&gt;&lt;/tt&gt;)
 is working alright. So, here comes the solution I figured out with the
-help of &lt;a class="reference external" href="http://ubuntuforums.org/showthread.php?t=2173267"&gt;this Ubuntu Forums&amp;nbsp;thread&lt;/a&gt;&lt;/p&gt;
+help of &lt;a class="reference external" href="http://ubuntuforums.org/showthread.php?t=2173267"&gt;this Ubuntu Forums
+thread&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="solution"&gt;
 &lt;h2&gt;Solution&lt;/h2&gt;
-&lt;p&gt;My current &lt;span class="caps"&gt;EFI&lt;/span&gt; setup looks like&amp;nbsp;following&lt;/p&gt;
+&lt;p&gt;My current EFI setup looks like following&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 shell$: sudo efibootmgr
 BootCurrent: 0001
@@ -1395,7 +1404,7 @@ BootOrder: 0001,0002
 Boot0001* ubuntu
 Boot0002* Windows Boot Manager
 &lt;/pre&gt;
-&lt;p&gt;So I &amp;#8216;ve placed the following line in &lt;tt class="docutils literal"&gt;/etc/rc.local&lt;/tt&gt; (before the
+&lt;p&gt;So I 've placed the following line in &lt;tt class="docutils literal"&gt;/etc/rc.local&lt;/tt&gt; (before the
 final &lt;tt class="docutils literal"&gt;exit 0&lt;/tt&gt; line):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 /bin/efibootmgr -n 0001
@@ -1406,27 +1415,27 @@ so the next booted by default system after Windows boot is Windows
 again. But actually this is &lt;strong&gt;exactly what I want&lt;/strong&gt; - it sort of
 replicates &lt;tt class="docutils literal"&gt;GRUB_SAVE_DEFAULT&lt;/tt&gt; feature which I was always using
 before, so that every next boot by default is the same as previous boot.
-Installing zero delay on &lt;span class="caps"&gt;UEFI&lt;/span&gt; bootloader (there is still couple of
-seconds to press F9 and go into &lt;span class="caps"&gt;UEFI&lt;/span&gt; boot menu manually), and very short
-delay on &lt;span class="caps"&gt;GRUB&lt;/span&gt; (2 sec just for an emergency need to boot not into
-standard Ubuntu) gives me a system that&amp;#8217;s fast enough to boot in
-unattended&amp;nbsp;mode.&lt;/p&gt;
+Installing zero delay on UEFI bootloader (there is still couple of
+seconds to press F9 and go into UEFI boot menu manually), and very short
+delay on GRUB (2 sec just for an emergency need to boot not into
+standard Ubuntu) gives me a system that's fast enough to boot in
+unattended mode.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="update"&gt;
 &lt;h2&gt;Update&lt;/h2&gt;
-&lt;p&gt;After living with this configuration for several months I realized two&amp;nbsp;things:&lt;/p&gt;
+&lt;p&gt;After living with this configuration for several months I realized two things:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;I do not use Windows more than once a&amp;nbsp;month;&lt;/li&gt;
-&lt;li&gt;Using hibernate via TuxOnIce has some&amp;nbsp;problems.&lt;/li&gt;
+&lt;li&gt;I do not use Windows more than once a month;&lt;/li&gt;
+&lt;li&gt;Using hibernate via TuxOnIce has some problems.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The last one is due to rc.local not being processed on resume from hibernate,
 and unfortunately I failed to configure TuxOnIce to execute the &lt;tt class="docutils literal"&gt;efibootmgr&lt;/tt&gt;
-properly on&amp;nbsp;resume.&lt;/p&gt;
-&lt;p&gt;I again turned to &lt;span class="caps"&gt;BIOS&lt;/span&gt; settings and this time noticed that I can
-in fact configure &amp;#8220;Custom&amp;#8221; boot section and make it the first one to boot.
+properly on resume.&lt;/p&gt;
+&lt;p&gt;I again turned to BIOS settings and this time noticed that I can
+in fact configure &amp;quot;Custom&amp;quot; boot section and make it the first one to boot.
 So now I have Ubuntu booting by default, and from Grub I can start Windows
 if I need, and also I can safely use SAVE_DEFAULT option of Grub.
-For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from &lt;span class="caps"&gt;EFI&lt;/span&gt;,
-there is still possibility to override first boot option during &lt;span class="caps"&gt;POST&lt;/span&gt;.&lt;/p&gt;
+For those times when Windows &lt;em&gt;has&lt;/em&gt; to be booted directly from EFI,
+there is still possibility to override first boot option during POST.&lt;/p&gt;
 &lt;/div&gt;
 </content><category term="work"></category><category term="hp"></category><category term="dualboot"></category><category term="uefi"></category></entry></feed>
