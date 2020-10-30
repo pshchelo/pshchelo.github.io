@@ -1,16 +1,19 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*- #
-from __future__ import unicode_literals
+from datetime import datetime
 
-AUTHOR = u'pshchelo'
-SITENAME = u'Bits and Pieces'
-SITEURL = ''
+AUTHOR = "pshchelo"
+SITEURL = ""
+SITENAME = "Bits and Pieces"
+SITETITLE = ""
+SITESUBTITLE = ""
+SITEDESCRIPTION = ""
+SITELOGO = "/images/avatar.jpg"
+FAVICON = "/images/favicon.ico"
+ROBOTS = "index, follow"
 
-PATH = 'content'
+PATH = "content"
+TIMEZONE = "Europe/Kiev"
 
-TIMEZONE = 'Europe/Kiev'
-
-DEFAULT_LANG = 'en'
+DEFAULT_LANG = "en"
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -21,21 +24,22 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (
-    ('Python.org', 'http://python.org/'),
-    ('OpenStack', 'http://www.openstack.org/'),
+    ("Python", "http://python.org/"),
+    ("OpenStack", "http://www.openstack.org/"),
 )
 
 # Social widget
 SOCIAL_WIDGET_NAME = "Contacts"
 SOCIAL = (
-    ('GitHub', 'https://github.com/pshchelo'),
-    ('BitBucket', 'https://bitbucket.org/pshchelo'),
-    ('Twitter', 'https://twitter.com/pshchelo'),
-    ('LinkedIn', 'https://www.linkedin.com/in/pshchelo'),
+    ("github", "https://github.com/pshchelo"),
+    ("bitbucket", "https://bitbucket.org/pshchelo"),
+    ("twitter", "https://twitter.com/pshchelo"),
+    ("linkedin", "https://www.linkedin.com/in/pshchelo"),
+    # ("rss", "/blog/feeds/all.atom.xml"),
 )
 
 # To enable "Fork Me" ribbon
-#GITHUB_URL = "https://github.com/pshchelo/pshchelo.github.io
+#GITHUB_URL = "https://github.com/pshchelo/pshchelo.github.io"
 
 # Enable "share on twitter link"
 #TWITTER_USERNAME = "pshchelo"
@@ -43,16 +47,28 @@ SOCIAL = (
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-TYPOGRIFY = True
-# Use default theme
-# THEME = "notmyidea"
-
 STATIC_PATHS = [
-        'images',
-        'extra/robots.txt',
-        'extra/favicon.ico'
+    "images",
+    "robots.txt"
 ]
-EXTRA_PATH_METADATA = {
-        'extra/robots.txt': {'path': 'robots.txt'},
-        'extra/favicon.ico': {'path': 'favicon.ico'}
-}
+
+THEME = "Flex"
+##########
+MAIN_MENU = True
+PYGMENTS_STYLE = "solarized-light"
+USE_FOLDER_AS_CATEGORY = True
+THEME_COLOR_AUTO_DETECT_BROWSER_PREFERENCE = True
+THEME_COLOR_ENABLE_USER_OVERRIDE = True
+
+MENUITEMS = (
+    ("Archives", "/archives.html"),
+    ("Categories", "/categories.html"),
+    ("Tags", "/tags.html"),
+)
+
+GITHUB_CORNER_URL = "https://github.com/pshchelo/pshchelo.github.io"
+COPYRIGHT_YEAR = datetime.now().year
+# LINKS_IN_NEW_TAB = "external"
+# USE_LESS = True
+# HOME_HIDE_TAGS = True
+# BROWSER_COLOR = "#123456"  # hex web color to set on the browser
