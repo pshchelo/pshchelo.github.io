@@ -27,6 +27,15 @@ testing my patch against.
 I myself never set up something like this, so this seemed like a good
 opportunity to get creative and learn something new in the process :-)
 
+UPDATE
+------
+
+The PR in question was merged and is available in ``pykybe-ng >= 20.10.0``.
+
+Also note the new home for `pykube-ng <https://codeberg.org/hjacobs/pykube-ng>`_
+at Codeberg.org.
+
+
 Choosing an OpenID provider
 ===========================
 
