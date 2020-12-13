@@ -2,7 +2,7 @@ Solving the Rubik's Cube
 =========================
 
 :date: 2014-04-03
-:tags: puzzles, rubick
+:tags: puzzles, rubik
 :category: play
 :slug: rubik-solve
 :summary: Algorithm for solving Rubik's Cube.
