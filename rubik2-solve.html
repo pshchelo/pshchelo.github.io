@@ -37,17 +37,26 @@
 
 
 
-    <meta name="author" content="pshchelo" />
-    <meta name="description" content="" />
+<meta name="author" content="pshchelo" />
+<meta name="description" content="Algorithm for solving 2x2 Rubik&#39;s Cube." />
+<meta name="keywords" content="puzzles, rubik">
+
+
 <meta property="og:site_name" content="Bits and Pieces"/>
-<meta property="og:type" content="blog"/>
-<meta property="og:title" content="Bits and Pieces"/>
-<meta property="og:description" content=""/>
+<meta property="og:title" content="Solving 2x2 Rubik&#39;s cube"/>
+<meta property="og:description" content="Algorithm for solving 2x2 Rubik&#39;s Cube."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://pshchelo.github.io"/>
+<meta property="og:url" content="https://pshchelo.github.io/rubik2-solve.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-04-03 00:00:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://pshchelo.github.io/author/pshchelo.html">
+<meta property="article:section" content="play"/>
+<meta property="article:tag" content="puzzles"/>
+<meta property="article:tag" content="rubik"/>
 <meta property="og:image" content="/images/avatar.jpg">
 
-  <title>Bits and Pieces &ndash; Tag rubick</title>
+  <title>Bits and Pieces &ndash; Solving 2x2 Rubik&#39;s cube</title>
 
 </head>
 <body >
@@ -121,31 +130,76 @@
 
     </nav>
 
-
-
-<article>
+<article class="single">
   <header>
-    <h2><a href="https://pshchelo.github.io/rubik-solve.html#rubik-solve">Solving the Rubik's Cube</a></h2>
+      
+    <h1 id="rubik2-solve">Solving 2x2 Rubik's cube</h1>
     <p>
       Posted on Thu 03 April 2014 in <a href="https://pshchelo.github.io/category/play.html">play</a>
 
-          &#8226; Tagged with
-              <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a>,              <a href="https://pshchelo.github.io/tag/rubick.html">rubick</a>
     </p>
   </header>
+
+
   <div>
-      <p class="first last">Algorithm for solving Rubik's Cube.</p>
+    <div class="section" id="base-combinations">
+<h2>Base combinations</h2>
+<ol class="arabic">
+<li><p class="first">Swap FRU &lt;-&gt; FRD  - <tt class="docutils literal">R U R' U'</tt> (with rotation)</p>
+<p>Repeat, and cubes are back to previous places but rotated.
+Repeat 6 times changes nothing, everything comes back to original places</p>
+</li>
+<li><p class="first">Swap FRU &lt;-&gt; FLU - <tt class="docutils literal">U R U' L' U R' U' L U</tt> (with some rotation)</p>
+<p>The D layer stays unchanged, the BRU and BLU rotate too.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="base-algorithm">
+<h2>Base algorithm</h2>
+<ol class="arabic simple">
+<li>Build one layer, it becomes D-layer for now,
+should be easy enough w/o any explicit algorithm.</li>
+<li>Use combo 2 to place the cubes of U layer in the correct places,
+disregarding their rotation for now.</li>
+<li>Turn the cube upside down, the already built D-layer becomes U-layer.</li>
+<li>Start rotating the now D-layer using combo 1 x2 or x4 - do not worry that
+U-layer becomes undone.</li>
+<li><strong>w/o rotating the whole cube</strong>, use <cite>D</cite> or <cite>D'</cite> to place the next
+incorrectly rotated cube of D layer to position FRD.</li>
+<li>Repeat step 4 and 5.</li>
+<li>Apart from some U or D rotation it should come together eventually when
+rotating the last incorrect D-layer cube.</li>
+</ol>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=AJCW5xTjmTk&amp;list=WL">Source</a>.</p>
+</div>
 
-        <br>
-        <a class="btn"
-           href="https://pshchelo.github.io/rubik-solve.html#rubik-solve">
-          Continue reading
-        </a>
   </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://pshchelo.github.io/tag/puzzles.html">puzzles</a>
+      <a href="https://pshchelo.github.io/tag/rubik.html">rubik</a>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'pshchelo';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
-
-
-
 
     <footer>
 <p>&copy; 2020 </p>
