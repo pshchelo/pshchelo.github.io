@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-12-13T00:00:00+02:00</updated><subtitle></subtitle><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in PyKube&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-12-13T00:00:00+02:00</updated><subtitle></subtitle><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2020-12-13T00:00:00+02:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-12-13:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="base-combinations"&gt;
+&lt;h2&gt;Base combinations&lt;/h2&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Swap FRU &amp;lt;-&amp;gt; FRD  - &lt;tt class="docutils literal"&gt;R U R' U'&lt;/tt&gt; (with rotation)&lt;/p&gt;
+&lt;p&gt;Repeat, and cubes are back to previous places but rotated.
+Repeat 6 times changes nothing, everything comes back to original places&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Swap FRU &amp;lt;-&amp;gt; FLU - &lt;tt class="docutils literal"&gt;U R U' L' U R' U' L U&lt;/tt&gt; (with some rotation)&lt;/p&gt;
+&lt;p&gt;The D layer stays unchanged, the BRU and BLU rotate too.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="base-algorithm"&gt;
+&lt;h2&gt;Base algorithm&lt;/h2&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Build one layer, it becomes D-layer for now,
+should be easy enough w/o any explicit algorithm.&lt;/li&gt;
+&lt;li&gt;Use combo 2 to place the cubes of U layer in the correct places,
+disregarding their rotation for now.&lt;/li&gt;
+&lt;li&gt;Turn the cube upside down, the already built D-layer becomes U-layer.&lt;/li&gt;
+&lt;li&gt;Start rotating the now D-layer using combo 1 x2 or x4 - do not worry that
+U-layer becomes undone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;w/o rotating the whole cube&lt;/strong&gt;, use &lt;cite&gt;D&lt;/cite&gt; or &lt;cite&gt;D'&lt;/cite&gt; to place the next
+incorrectly rotated cube of D layer to position FRD.&lt;/li&gt;
+&lt;li&gt;Repeat step 4 and 5.&lt;/li&gt;
+&lt;li&gt;Apart from some U or D rotation it should come together eventually when
+rotating the last incorrect D-layer cube.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=AJCW5xTjmTk&amp;amp;list=WL"&gt;Source&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="play"></category><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in PyKube&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="why"&gt;
 &lt;h2&gt;Why&lt;/h2&gt;
 &lt;p&gt;During review of my &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;PR#49&lt;/a&gt;
@@ -1604,37 +1635,6 @@ F' M'&lt;sub&gt;D&lt;/sub&gt; F M&lt;sub&gt;D&lt;/sub&gt;&lt;/dd&gt;
 &lt;li&gt;U' - rotates FUR and FUL&lt;/li&gt;
 &lt;li&gt;U&lt;sup&gt;2&lt;/sup&gt; - rotates FUR and LUB&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/div&gt;
-</content><category term="play"></category><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2014-04-03T00:00:00+03:00</published><updated>2014-04-03T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-03:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
-</summary><content type="html">&lt;div class="section" id="base-combinations"&gt;
-&lt;h2&gt;Base combinations&lt;/h2&gt;
-&lt;ol class="arabic"&gt;
-&lt;li&gt;&lt;p class="first"&gt;Swap FRU &amp;lt;-&amp;gt; FRD  - &lt;tt class="docutils literal"&gt;R U R' U'&lt;/tt&gt; (with rotation)&lt;/p&gt;
-&lt;p&gt;Repeat, and cubes are back to previous places but rotated.
-Repeat 6 times changes nothing, everything comes back to original places&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Swap FRU &amp;lt;-&amp;gt; FLU - &lt;tt class="docutils literal"&gt;U R U' L' U R' U' L U&lt;/tt&gt; (with some rotation)&lt;/p&gt;
-&lt;p&gt;The D layer stays unchanged, the BRU and BLU rotate too.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div class="section" id="base-algorithm"&gt;
-&lt;h2&gt;Base algorithm&lt;/h2&gt;
-&lt;ol class="arabic simple"&gt;
-&lt;li&gt;Build one layer, it becomes D-layer for now,
-should be easy enough w/o any explicit algorithm.&lt;/li&gt;
-&lt;li&gt;Use combo 2 to place the cubes of U layer in the correct places,
-disregarding their rotation for now.&lt;/li&gt;
-&lt;li&gt;Turn the cube upside down, the already built D-layer becomes U-layer.&lt;/li&gt;
-&lt;li&gt;Start rotating the now D-layer using combo 1 x2 or x4 - do not worry that
-U-layer becomes undone.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;w/o rotating the whole cube&lt;/strong&gt;, use &lt;cite&gt;D&lt;/cite&gt; or &lt;cite&gt;D'&lt;/cite&gt; to place the next
-incorrectly rotated cube of D layer to position FRD.&lt;/li&gt;
-&lt;li&gt;Repeat step 4 and 5.&lt;/li&gt;
-&lt;li&gt;Apart from some U or D rotation it should come together eventually when
-rotating the last incorrect D-layer cube.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=AJCW5xTjmTk&amp;amp;list=WL"&gt;Source&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </content><category term="play"></category><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Figures from the solved Rubik's Cube</title><link href="https://pshchelo.github.io/rubik-figures.html" rel="alternate"></link><published>2014-04-02T00:00:00+03:00</published><updated>2014-04-02T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2014-04-02:/rubik-figures.html</id><summary type="html">&lt;p class="first last"&gt;Figures from solved Rubik's Cube&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;See the &lt;a class="reference external" href="https://pshchelo.github.io/rubik-notation.html"&gt;notation&lt;/a&gt;.&lt;/p&gt;
