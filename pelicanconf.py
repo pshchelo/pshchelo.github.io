@@ -7,7 +7,6 @@ SITETITLE = ""
 SITESUBTITLE = ""
 SITEDESCRIPTION = ""
 SITELOGO = "/images/avatar.jpg"
-FAVICON = "/images/favicon.ico"
 ROBOTS = "index, follow"
 
 PATH = "content"
@@ -51,6 +50,10 @@ STATIC_PATHS = [
     "images",
     "robots.txt"
 ]
+
+EXTRA_PATH_METADATA = {
+    "images/favicon.ico": {"path": "favicon.ico"},
+}
 
 THEME = "Flex"
 ##########
