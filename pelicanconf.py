@@ -54,6 +54,7 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     "images/favicon.ico": {"path": "favicon.ico"},
     "extra/robots.txt": {"path": "robots.txt"},
+    "extra/nojekyll": {"path": ".nojekyll"},
 }
 
 THEME = "Flex"
