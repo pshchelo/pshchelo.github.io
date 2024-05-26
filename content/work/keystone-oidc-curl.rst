@@ -33,7 +33,8 @@ Pre-requisites
 
 - OpenStack deployed and configured to use federation via OpenID Connect.
 - Account in the Identity Provider allowing you to login to OpenStack.
-- `v3oidcpassword <>`_ authentication enabled and working
+- `v3oidcpassword <https://docs.openstack.org/keystoneauth/latest/authentication-plugins.html#federation>`_
+  authenticationauthentication enabled and working
 - ``curl`` and ``jq`` installed and available
 
 Required access info
@@ -132,8 +133,9 @@ Get the OIDC access token
        -H "Content-Type: application/x-www-form-urlencoded" \
        | jq -r .access_token)
 
-The trick is the Content-Type - as per the `OpenID Connect RFC`_ this is how
-it must be done (no JSON).
+The trick is the Content-Type - as per The
+`OpenID Connect RFC <https://openid.net/specs/openid-connect-core-1_0.html#TokenRequest>`_
+this is how it must be done with Form Serialization, not JSON.
 
 The client id and client secret are used for HTTP Basic Authentication, again,
 as per that RFC.
