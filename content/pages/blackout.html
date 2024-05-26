@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Volyn blackouts</title>
+        <meta name="slug" content="blackout" />
+        <meta name="date" content="2024-05-26 00:00:00" />
+        <meta name="status" content="hidden" />
+    </head>
+    <body>
+        <label for="year">Year (20NN)</label>
+        <input id="year" type="number" min=24, step=1>
+        <label for="month">Month</label>
+        <input id="month" type="number" min=1, max=12 step=1>
+        <label for="day">Day</label>
+        <input id="day" type="number" min=1, max=31 step=1>
+        <button id="fetch">Fetch</button
+        <br>
+        <img id="tableImage" src=""></img>
+        <script type="text/javascript">
+            document.getElementById("fetch").addEventListener("click", function() {
+                var image = document.getElementById("tableImage");
+                var dayIn = document.getElementById("day").value;
+                var monthIn = document.getElementById("month").value;
+                var yearIn = document.getElementById("year").value;
+                const imgBaseUrl = "https://energy.volyn.ua/spozhyvacham/perervy-u-elektropostachanni/hrafik-vidkliuchen/!img/"
+                image.src = imgBaseUrl + [dayIn, monthIn, yearIn].join("-") + ".jpg";
+            });
+        </script>
+    </body>
+</html>
