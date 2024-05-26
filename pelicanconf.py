@@ -25,6 +25,7 @@ AUTHOR_FEED_RSS = None
 LINKS = (
     ("Python", "http://python.org/"),
     ("OpenStack", "http://www.openstack.org/"),
+    ("Blackouts", "/pages/blackout"),
 )
 
 # Social widget
@@ -38,10 +39,10 @@ SOCIAL = (
 )
 
 # To enable "Fork Me" ribbon
-#GITHUB_URL = "https://github.com/pshchelo/pshchelo.github.io"
+# GITHUB_URL = "https://github.com/pshchelo/pshchelo.github.io"
 
 # Enable "share on twitter link"
-#TWITTER_USERNAME = "pshchelo"
+# TWITTER_USERNAME = "pshchelo"
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
