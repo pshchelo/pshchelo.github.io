@@ -49,7 +49,7 @@
 <meta property="og:url" content="https://pshchelo.github.io/pykube-oidc-refresh.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2020-05-11 00:00:00+03:00"/>
-<meta property="article:modified_time" content="2020-12-13 00:00:00+02:00"/>
+<meta property="article:modified_time" content="2024-05-27 00:00:00+03:00"/>
 <meta property="article:author" content="https://pshchelo.github.io/author/pshchelo.html">
 <meta property="article:section" content="work"/>
 <meta property="article:tag" content="kubernetes"/>
@@ -230,7 +230,7 @@ to play with.</p>
 <h2>Installing and configuring microk8s</h2>
 <p>I am using <tt class="docutils literal">microk8s</tt> installed on my local Ubuntu machine for testing.</p>
 <pre class="code bash literal-block">
-sudo snap install microk8s
+sudo<span class="w"> </span>snap<span class="w"> </span>install<span class="w"> </span>microk8s
 </pre>
 <p>I use it with all plugins disabled, including RBAC one to simplify things.</p>
 <p><a class="reference external" href="https://microk8s.io/docs/configuring-services">Edit</a> arguments of
@@ -259,15 +259,15 @@ providers with minimal changes.</p>
 <script src="https://gist.github.com/pshchelo/952d247b4dec1bacc6e023a343e29ba8.js"></script><p>If you've been following this guide, you'd need to set some shell variables
 first (here and forth I assume we are running in a virtualenv):</p>
 <pre class="code bash literal-block">
-pip install pykube-ng requests-oauthlib oauthlib
-<span class="c1"># the same as oidc-issuer-url we've set up for kube-apiserver
-</span><span class="nb">export</span> <span class="nv">OAUTH_URI</span><span class="o">=</span>&lt;your okta site url&gt;/oauth2/default
-<span class="c1"># copy from Login redirect URI on General tab of our Okta applicaiton settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_REDIRECT_URI</span><span class="o">=</span>https://localhost:8080/authorization-code/callback
-<span class="c1"># copy Client ID from General tab of your Okta application settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_ID</span><span class="o">=</span>&lt;your client id&gt;
-<span class="c1"># copy Client secret from General tab of your Okta application settings
-</span><span class="nb">export</span> <span class="nv">OAUTH_CLIENT_SECRET</span><span class="o">=</span>&lt;your client secret&gt;
+pip<span class="w"> </span>install<span class="w"> </span>pykube-ng<span class="w"> </span>requests-oauthlib<span class="w"> </span>oauthlib<span class="w">
+</span><span class="c1"># the same as oidc-issuer-url we've set up for kube-apiserver
+</span><span class="nb">export</span><span class="w"> </span><span class="nv">OAUTH_URI</span><span class="o">=</span>&lt;your<span class="w"> </span>okta<span class="w"> </span>site<span class="w"> </span>url&gt;/oauth2/default<span class="w">
+</span><span class="c1"># copy from Login redirect URI on General tab of our Okta applicaiton settings
+</span><span class="nb">export</span><span class="w"> </span><span class="nv">OAUTH_REDIRECT_URI</span><span class="o">=</span>https://localhost:8080/authorization-code/callback<span class="w">
+</span><span class="c1"># copy Client ID from General tab of your Okta application settings
+</span><span class="nb">export</span><span class="w"> </span><span class="nv">OAUTH_CLIENT_ID</span><span class="o">=</span>&lt;your<span class="w"> </span>client<span class="w"> </span>id&gt;<span class="w">
+</span><span class="c1"># copy Client secret from General tab of your Okta application settings
+</span><span class="nb">export</span><span class="w"> </span><span class="nv">OAUTH_CLIENT_SECRET</span><span class="o">=</span>&lt;your<span class="w"> </span>client<span class="w"> </span>secret&gt;
 </pre>
 <p>Now run the script. It will open your default browser with the login to your
 Okta site prompt. After logging in copy the <strong>whole URL</strong> your browser
@@ -275,9 +275,9 @@ was redirected to and tried to open but failed (as there should be nothing
 serving requests on <tt class="docutils literal"><span class="pre">https://localhost:8080</span></tt>)
 and paste it back to the script prompt at the terminal</p>
 <pre class="code shell literal-block">
-$ python3 k8s-oidc-helper.py
-Please go to <span class="s2">&quot;&lt;REDUCTED&gt;&quot;</span> and authorize access.
-Enter the full callback URL as attempted by the browser: https://localhost:8080/authorization-code/callback?code<span class="o">=</span>&lt;REDUCTED&gt;
+$<span class="w"> </span>python3<span class="w"> </span>k8s-oidc-helper.py<span class="w">
+</span>Please<span class="w"> </span>go<span class="w"> </span>to<span class="w"> </span><span class="s2">&quot;&lt;REDUCTED&gt;&quot;</span><span class="w"> </span>and<span class="w"> </span>authorize<span class="w"> </span>access.<span class="w">
+</span>Enter<span class="w"> </span>the<span class="w"> </span>full<span class="w"> </span>callback<span class="w"> </span>URL<span class="w"> </span>as<span class="w"> </span>attempted<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>browser:<span class="w"> </span>https://localhost:8080/authorization-code/callback?code<span class="o">=</span>&lt;REDUCTED&gt;
 </pre>
 <p>The script will output the token it got in return, as well as a snippet
 to merge into the <tt class="docutils literal">users</tt> section of your kubeconfig (and persist some of
@@ -285,8 +285,8 @@ that info in the <tt class="docutils literal">/tmp/kubeuser</tt> file).</p>
 <p>Now edit your kubeconfig to add appropriate new context with the new user we've
 just created and the microk8s cluster we've set up and we are ready to go:</p>
 <pre class="code bash literal-block">
-kubectl config use-context &lt;your new context&gt;
-kubectl get ns
+kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>&lt;your<span class="w"> </span>new<span class="w"> </span>context&gt;<span class="w">
+</span>kubectl<span class="w"> </span>get<span class="w"> </span>ns
 </pre>
 </div>
 <div class="section" id="testing-token-refresh-in-pukube-ng">
@@ -299,9 +299,9 @@ kubectl get ns
 <ul>
 <li><p class="first">for example something global like Namespaces</p>
 <pre class="code shell literal-block">
-$ python3 -m pykube
-&gt;&gt;&gt; <span class="o">[</span>n.name <span class="k">for</span> n in Namespace.objects<span class="o">(</span>api<span class="o">)]</span>
-<span class="o">[</span><span class="s1">'default'</span>, <span class="s1">'kube-node-lease'</span>, <span class="s1">'kube-public'</span>, <span class="s1">'kube-system'</span><span class="o">]</span>
+$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>pykube<span class="w">
+</span>&gt;&gt;&gt;<span class="w"> </span><span class="o">[</span>n.name<span class="w"> </span><span class="k">for</span><span class="w"> </span>n<span class="w"> </span><span class="k">in</span><span class="w"> </span>Namespace.objects<span class="o">(</span>api<span class="o">)]</span><span class="w">
+</span><span class="o">[</span><span class="s1">'default'</span>,<span class="w"> </span><span class="s1">'kube-node-lease'</span>,<span class="w"> </span><span class="s1">'kube-public'</span>,<span class="w"> </span><span class="s1">'kube-system'</span><span class="o">]</span>
 </pre>
 </li>
 </ul>
@@ -372,7 +372,7 @@ actually login (with password <em>etc</em>) to get a new refresh token.</p>
 </article>
 
     <footer>
-<p>&copy; 2020 </p>
+<p>&copy; 2024 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
   <span class="footer-separator">|</span>

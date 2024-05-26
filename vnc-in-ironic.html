@@ -148,14 +148,14 @@ deployed on ironic baremetal nodes have certain limitations compared to
 standard virtual machines created by nova.
 In particular it is not currently possible to access the graphical console
 of such instance for example via horizon Dashboard.</p>
-<p>This is about to change with ironic community starting to work <a class="footnote-reference" href="#id6" id="id1">[1]</a>
+<p>This is about to change with ironic community starting to work <a class="footnote-reference" href="#footnote-1" id="footnote-reference-1">[1]</a>
 on introducing a framework for graphical console access for baremetal nodes.
 As each hardware vendor implements a different way to provide graphical
 console access, the framework is planned to be quite generic,
 leaving details of actual graphical console configuration and management
 to a proposed GraphicalConsole interface of an ironic driver.</p>
 <p>One interesting hardware to consider in this regard is Dell servers supporting
-iDRACv7 or newer <a class="footnote-reference" href="#id7" id="id2">[2]</a>.
+iDRACv7 or newer <a class="footnote-reference" href="#footnote-2" id="footnote-reference-2">[2]</a>.
 The iDRAC firmware on such servers supports native access to the server’s
 graphical console over OpenVNC-compatible protocol directly,
 without a need of proprietary VNC proxies or clients.
@@ -163,10 +163,10 @@ An administrator who has appropriate access to the iDRAC configuration can
 enable this built-in VNC server and set the password, connection timeout and
 SSL encryption options.</p>
 <p>In order to test the VNC capabilities of such hardware I have implemented
-a prototype <a class="footnote-reference" href="#id8" id="id3">[3]</a> of a graphical console interface for the DRAC driver.
+a prototype <a class="footnote-reference" href="#footnote-3" id="footnote-reference-3">[3]</a> of a graphical console interface for the DRAC driver.
 It uses WS-MAN HTTP API (as the rest of DRAC-specific driver interfaces)
 to toggle the VNC server feature on and off and set its properties.
-I have also created a prototype <a class="footnote-reference" href="#id9" id="id4">[4]</a> of <tt class="docutils literal">get_vnc_console</tt> method for ironic
+I have also created a prototype <a class="footnote-reference" href="#footnote-4" id="footnote-reference-4">[4]</a> of <tt class="docutils literal">get_vnc_console</tt> method for ironic
 virt-driver in nova.
 As a result, I was able to get access to the graphical console in
 horizon Dashboard for the nova instance deployed on top of Dell R630 server
@@ -212,7 +212,7 @@ python-ironicclient.</p>
 <ul class="simple">
 <li>OpenVNC implementation in iDRAC does not seem to be complete as noVNC can
 not properly connect to it resulting in an apparently connected console
-with no graphical output <a class="footnote-reference" href="#id10" id="id5">[5]</a>.
+with no graphical output <a class="footnote-reference" href="#footnote-5" id="footnote-reference-5">[5]</a>.
 A single passed encoding parameter must be disabled in noVNC code.
 I had to resort to noVNC patched accordingly, but the implications of such
 patch on access to standard VM graphical console are yet to be tested.</li>
@@ -245,34 +245,34 @@ experience for compute service.</p>
 </div>
 <div class="section" id="references">
 <h3>References</h3>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/306074/">https://review.openstack.org/#/c/306074/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-1">[1]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/306074/">https://review.openstack.org/#/c/306074/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf">http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-2">[2]</a></td><td><a class="reference external" href="http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf">http://en.community.dell.com/cfs-file/__key/telligent-evolution-components-attachments/13-4491-00-00-20-44-10-34/AccessingRemoteDesktop_5F00_using_5F00_VNC_5F00_on_5F00_iDRAC.pdf</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/396661/">https://review.openstack.org/#/c/396661/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-3">[3]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/396661/">https://review.openstack.org/#/c/396661/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/398270/">https://review.openstack.org/#/c/398270/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-4">[4]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/398270/">https://review.openstack.org/#/c/398270/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://github.com/kanaka/noVNC/issues/712">https://github.com/kanaka/noVNC/issues/712</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-5">[5]</a></td><td><a class="reference external" href="https://github.com/kanaka/noVNC/issues/712">https://github.com/kanaka/noVNC/issues/712</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -308,7 +308,7 @@ experience for compute service.</p>
 </article>
 
     <footer>
-<p>&copy; 2020 </p>
+<p>&copy; 2024 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
   <span class="footer-separator">|</span>

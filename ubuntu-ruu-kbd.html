@@ -163,14 +163,14 @@ I could not find any suitable layout in Ubuntu enabled out of the box.</p>
 <ul>
 <li><p class="first">open file <tt class="docutils literal">/usr/share/X11/xkb/rules/evdev.extras.xml</tt>, find the layout named <tt class="docutils literal">ruu</tt></p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;variant&gt;</span>
-  <span class="nt">&lt;configItem&gt;</span>
-    <span class="nt">&lt;name&gt;</span>ruu<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
-    <span class="nt">&lt;description&gt;</span>Russian (with Ukrainian-Belorussian layout)<span class="nt">&lt;/description&gt;</span>
-    <span class="nt">&lt;languageList&gt;&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
-                  <span class="nt">&lt;iso639Id&gt;</span>ukr<span class="nt">&lt;/iso639Id&gt;</span>
-                  <span class="nt">&lt;iso639Id&gt;</span>bel<span class="nt">&lt;/iso639Id&gt;&lt;/languageList&gt;</span>
-  <span class="nt">&lt;/configItem&gt;</span>
+<span class="w">  </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>ruu<span class="nt">&lt;/name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
+<span class="w">    </span><span class="nt">&lt;description&gt;</span>Russian<span class="w"> </span>(with<span class="w"> </span>Ukrainian-Belorussian<span class="w"> </span>layout)<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;languageList&gt;&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;iso639Id&gt;</span>ukr<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;iso639Id&gt;</span>bel<span class="nt">&lt;/iso639Id&gt;&lt;/languageList&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/configItem&gt;</span>
 <span class="nt">&lt;/variant&gt;</span>
 </pre></div>
 </li>
@@ -180,48 +180,48 @@ I could not find any suitable layout in Ubuntu enabled out of the box.</p>
 </li>
 <li><p class="first">find Russian section</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;layout&gt;</span>
-  <span class="nt">&lt;configItem&gt;</span>
-    <span class="nt">&lt;name&gt;</span>ru<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>ru<span class="nt">&lt;/name&gt;</span>
 
-    <span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
-    <span class="nt">&lt;description&gt;</span>Russian<span class="nt">&lt;/description&gt;</span>
-    <span class="nt">&lt;languageList&gt;</span>
-      <span class="nt">&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
-    <span class="nt">&lt;/languageList&gt;</span>
-  <span class="nt">&lt;/configItem&gt;</span>
-  <span class="nt">&lt;variantList&gt;</span>
-    <span class="nt">&lt;variant&gt;</span>
-      <span class="nt">&lt;configItem&gt;</span>
-        <span class="nt">&lt;name&gt;</span>phonetic<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;description&gt;</span>Russian (phonetic)<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
+<span class="w">    </span><span class="nt">&lt;description&gt;</span>Russian<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;languageList&gt;</span>
+<span class="w">      </span><span class="nt">&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/languageList&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/configItem&gt;</span>
+<span class="w">  </span><span class="nt">&lt;variantList&gt;</span>
+<span class="w">    </span><span class="nt">&lt;variant&gt;</span>
+<span class="w">      </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">        </span><span class="nt">&lt;name&gt;</span>phonetic<span class="nt">&lt;/name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;description&gt;</span>Russian<span class="w"> </span>(phonetic)<span class="nt">&lt;/description&gt;</span>
 </pre></div>
 </li>
 <li><p class="first">paste there copied <tt class="docutils literal">ruu</tt> variant alongside other available variants</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;layout&gt;</span>
-  <span class="nt">&lt;configItem&gt;</span>
-    <span class="nt">&lt;name&gt;</span>ru<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>ru<span class="nt">&lt;/name&gt;</span>
 
-    <span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
-    <span class="nt">&lt;description&gt;</span>Russian<span class="nt">&lt;/description&gt;</span>
-    <span class="nt">&lt;languageList&gt;</span>
-      <span class="nt">&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
-    <span class="nt">&lt;/languageList&gt;</span>
-  <span class="nt">&lt;/configItem&gt;</span>
-  <span class="nt">&lt;variantList&gt;</span>
-    <span class="nt">&lt;variant&gt;</span>
-      <span class="nt">&lt;configItem&gt;</span>
-        <span class="nt">&lt;name&gt;</span>ruu<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
-        <span class="nt">&lt;description&gt;</span>Russian (with Ukrainian-Belorussian layout)<span class="nt">&lt;/description&gt;</span>
-        <span class="nt">&lt;languageList&gt;&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
-                      <span class="nt">&lt;iso639Id&gt;</span>ukr<span class="nt">&lt;/iso639Id&gt;</span>
-                      <span class="nt">&lt;iso639Id&gt;</span>bel<span class="nt">&lt;/iso639Id&gt;&lt;/languageList&gt;</span>
-      <span class="nt">&lt;/configItem&gt;</span>
-    <span class="nt">&lt;/variant&gt;</span>
-    <span class="nt">&lt;variant&gt;</span>
-      <span class="nt">&lt;configItem&gt;</span>
-        <span class="nt">&lt;name&gt;</span>phonetic<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;description&gt;</span>Russian (phonetic)<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
+<span class="w">    </span><span class="nt">&lt;description&gt;</span>Russian<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;languageList&gt;</span>
+<span class="w">      </span><span class="nt">&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/languageList&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/configItem&gt;</span>
+<span class="w">  </span><span class="nt">&lt;variantList&gt;</span>
+<span class="w">    </span><span class="nt">&lt;variant&gt;</span>
+<span class="w">      </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">        </span><span class="nt">&lt;name&gt;</span>ruu<span class="nt">&lt;/name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;shortDescription&gt;</span>ru<span class="nt">&lt;/shortDescription&gt;</span>
+<span class="w">        </span><span class="nt">&lt;description&gt;</span>Russian<span class="w"> </span>(with<span class="w"> </span>Ukrainian-Belorussian<span class="w"> </span>layout)<span class="nt">&lt;/description&gt;</span>
+<span class="w">        </span><span class="nt">&lt;languageList&gt;&lt;iso639Id&gt;</span>rus<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">                      </span><span class="nt">&lt;iso639Id&gt;</span>ukr<span class="nt">&lt;/iso639Id&gt;</span>
+<span class="w">                      </span><span class="nt">&lt;iso639Id&gt;</span>bel<span class="nt">&lt;/iso639Id&gt;&lt;/languageList&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/configItem&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/variant&gt;</span>
+<span class="w">    </span><span class="nt">&lt;variant&gt;</span>
+<span class="w">      </span><span class="nt">&lt;configItem&gt;</span>
+<span class="w">        </span><span class="nt">&lt;name&gt;</span>phonetic<span class="nt">&lt;/name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;description&gt;</span>Russian<span class="w"> </span>(phonetic)<span class="nt">&lt;/description&gt;</span>
 </pre></div>
 </li>
 <li><p class="first">restart X server</p>
@@ -264,7 +264,7 @@ Check out the &quot;Keyboard Layout Chart&quot; for this layout to see all avail
 </article>
 
     <footer>
-<p>&copy; 2020 </p>
+<p>&copy; 2024 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
   <span class="footer-separator">|</span>

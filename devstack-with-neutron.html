@@ -154,24 +154,24 @@ some changes might be necessary.</p>
 <dd>Tried DevStack on fresh Ubuntu 14.04 LTS (Trusty Thar), updated tips.</dd>
 </dl>
 <div class="contents topic" id="contents">
-<p class="topic-title">Contents</p>
+<p class="topic-title"><a class="reference internal" href="#top">Contents</a></p>
 <ul class="simple">
-<li><a class="reference internal" href="#install-devstack" id="id1">Install DevStack</a></li>
-<li><a class="reference internal" href="#allow-vm-internet-connectivity" id="id2">Allow VM Internet connectivity</a></li>
-<li><a class="reference internal" href="#note-on-unstack-sh-and-rebooting" id="id3">Note on <tt class="docutils literal">unstack.sh</tt> and rebooting</a></li>
-<li><a class="reference internal" href="#restore-settings-after-reboot" id="id4">Restore settings after reboot</a><ul>
-<li><a class="reference internal" href="#stack-volumes" id="id5">Stack volumes</a></li>
-<li><a class="reference internal" href="#nat-settings" id="id6">NAT settings</a></li>
-<li><a class="reference internal" href="#bridges" id="id7">Bridges</a></li>
+<li><a class="reference internal" href="#install-devstack" id="toc-entry-1">Install DevStack</a></li>
+<li><a class="reference internal" href="#allow-vm-internet-connectivity" id="toc-entry-2">Allow VM Internet connectivity</a></li>
+<li><a class="reference internal" href="#note-on-unstack-sh-and-rebooting" id="toc-entry-3">Note on <tt class="docutils literal">unstack.sh</tt> and rebooting</a></li>
+<li><a class="reference internal" href="#restore-settings-after-reboot" id="toc-entry-4">Restore settings after reboot</a><ul>
+<li><a class="reference internal" href="#stack-volumes" id="toc-entry-5">Stack volumes</a></li>
+<li><a class="reference internal" href="#nat-settings" id="toc-entry-6">NAT settings</a></li>
+<li><a class="reference internal" href="#bridges" id="toc-entry-7">Bridges</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sharing-files-between-your-physical-machine-and-devstack-host" id="id8">Sharing files between your physical machine and DevStack host</a></li>
-<li><a class="reference internal" href="#problems-with-receiving-ips-for-vms" id="id9">Problems with receiving IPs for VMs</a></li>
-<li><a class="reference internal" href="#nested-kvm" id="id10">Nested KVM</a></li>
+<li><a class="reference internal" href="#sharing-files-between-your-physical-machine-and-devstack-host" id="toc-entry-8">Sharing files between your physical machine and DevStack host</a></li>
+<li><a class="reference internal" href="#problems-with-receiving-ips-for-vms" id="toc-entry-9">Problems with receiving IPs for VMs</a></li>
+<li><a class="reference internal" href="#nested-kvm" id="toc-entry-10">Nested KVM</a></li>
 </ul>
 </div>
 <div class="section" id="install-devstack">
-<h2><a class="toc-backref" href="#id1">Install DevStack</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-1">Install DevStack</a></h2>
 <ul>
 <li><p class="first">Prepare a VM for DevStack deployment</p>
 </li>
@@ -215,7 +215,7 @@ There are some networks and routers created by default, so you can
 start VMs and attach floating IPs to them.</p>
 </div>
 <div class="section" id="allow-vm-internet-connectivity">
-<h2><a class="toc-backref" href="#id2">Allow VM Internet connectivity</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-2">Allow VM Internet connectivity</a></h2>
 <p>You might stumble on networking issues concerning outside access,
 like pinging or accessing Internet resources outside of your DevStack.
 First you need to change the Security Group settings -
@@ -229,7 +229,7 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 <p>(after this <a class="reference external" href="https://answers.launchpad.net/neutron/+question/208377">launchpad question</a>).</p>
 </div>
 <div class="section" id="note-on-unstack-sh-and-rebooting">
-<h2><a class="toc-backref" href="#id3">Note on <tt class="docutils literal">unstack.sh</tt> and rebooting</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-3">Note on <tt class="docutils literal">unstack.sh</tt> and rebooting</a></h2>
 <p>As I've found the hard way, if you ever need to reboot your DevStack VM,
 <strong>do not</strong> run <tt class="docutils literal">unstack.sh</tt> before that.
 Simply detach from screen and/or reboot as usual.
@@ -256,7 +256,7 @@ and then run <tt class="docutils literal">stack.sh</tt>.</li>
 </ol>
 </div>
 <div class="section" id="restore-settings-after-reboot">
-<h2><a class="toc-backref" href="#id4">Restore settings after reboot</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Restore settings after reboot</a></h2>
 <p>After reboot of the DevStack VM the following will be lost:</p>
 <ul class="simple">
 <li>stack volumes (this includes created storage volumes etc.)</li>
@@ -274,7 +274,7 @@ you've created inside) and just run <tt class="docutils literal">stack.sh</tt> a
 before reboot).</dd>
 </dl>
 <div class="section" id="stack-volumes">
-<h3><a class="toc-backref" href="#id5">Stack volumes</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-5">Stack volumes</a></h3>
 <p><strong>Note</strong> - with <tt class="docutils literal">Swift</tt> enabled actual loopback device may be other
 than <tt class="docutils literal">/dev/loop0</tt></p>
 <p>Check that volumes are created after fresh running of <tt class="docutils literal">./stack.sh</tt>:</p>
@@ -293,7 +293,7 @@ losetup /dev/loop0 /opt/stack/data/stack-volumes-backing-file
 </pre>
 </div>
 <div class="section" id="nat-settings">
-<h3><a class="toc-backref" href="#id6">NAT settings</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-6">NAT settings</a></h3>
 <p>After <a class="reference external" href="https://lists.launchpad.net/openstack/msg17016.html">this mail-list
 post</a></p>
 <ul>
@@ -310,7 +310,7 @@ post up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 </ul>
 </div>
 <div class="section" id="bridges">
-<h3><a class="toc-backref" href="#id7">Bridges</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-7">Bridges</a></h3>
 <p>After <a class="reference external" href="https://gist.github.com/charlesflynn/5576114">this ghist</a>.</p>
 <p>Bridge <tt class="docutils literal"><span class="pre">br-ex</span></tt> has no IP after reboot.
 Use the following commands to set bridges according to default settings
@@ -326,7 +326,7 @@ sudo route add -net 10.0.0.0/24 gw 172.24.4.1
 </div>
 </div>
 <div class="section" id="sharing-files-between-your-physical-machine-and-devstack-host">
-<h2><a class="toc-backref" href="#id8">Sharing files between your physical machine and DevStack host</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-8">Sharing files between your physical machine and DevStack host</a></h2>
 <p>As I use <tt class="docutils literal">vim</tt> as my Python IDE I personally prefer to work directly
 in the console of the guest DevStack instance, but if you prefer GUI IDE
 (like PyCharm) you might want to have access to the code on the DevStack
@@ -349,7 +349,7 @@ You can then reboot the DevStack guest or just mount
 <tt class="docutils literal">full_path_to_project_on_guest</tt>.</p>
 </div>
 <div class="section" id="problems-with-receiving-ips-for-vms">
-<h2><a class="toc-backref" href="#id9">Problems with receiving IPs for VMs</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-9">Problems with receiving IPs for VMs</a></h2>
 <p>Some versions of VirtIO network interface seem not to fill in checksums correctly in UDP
 packets (something called checksum offloading), which interferes with
 receiving DHCP lease from neutron/nova-network when everything is
@@ -360,7 +360,7 @@ sudo iptables -A POSTROUTING -t mangle -p udp --dport bootpc -j CHECKSUM --check
 </pre>
 </div>
 <div class="section" id="nested-kvm">
-<h2><a class="toc-backref" href="#id10">Nested KVM</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-10">Nested KVM</a></h2>
 <p>If you run DevStack as a KVM guest, ensure that your host system has nested KVM enabled -
 that will greatly speed up those VMs you run inside your DevStack guest
 (of course your CPU has to support virtualization extensions and have them enabled in BIOS).</p>
@@ -409,7 +409,7 @@ options kvm-intel nested=1
 </article>
 
     <footer>
-<p>&copy; 2020 </p>
+<p>&copy; 2024 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
   <span class="footer-separator">|</span>

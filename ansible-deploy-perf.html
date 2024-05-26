@@ -49,7 +49,7 @@
 <meta property="og:url" content="https://pshchelo.github.io/ansible-deploy-perf.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2017-09-01 00:00:00+03:00"/>
-<meta property="article:modified_time" content="2020-12-13 00:00:00+02:00"/>
+<meta property="article:modified_time" content="2024-05-27 00:00:00+03:00"/>
 <meta property="article:author" content="https://pshchelo.github.io/author/pshchelo.html">
 <meta property="article:section" content="work"/>
 <meta property="article:tag" content="openstack"/>
@@ -156,8 +156,8 @@ playbooks/roles/tasks <em>etc</em>.
 The main advantage of this approach is greater flexibility regarding
 fine-tuning of the provisioning process this deploy interface allows.</p>
 <p>This <tt class="docutils literal">ansible</tt> deploy interface and classic ironic drivers using it are
-already available as part of <tt class="docutils literal"><span class="pre">ironic-staging-driver</span></tt> project <a class="footnote-reference" href="#id9" id="id1">[1]</a>,
-and we are in the process of proposing <a class="footnote-reference" href="#id10" id="id2">[2]</a> to include this interface
+already available as part of <tt class="docutils literal"><span class="pre">ironic-staging-driver</span></tt> project <a class="footnote-reference" href="#footnote-1" id="footnote-reference-1">[1]</a>,
+and we are in the process of proposing <a class="footnote-reference" href="#footnote-2" id="footnote-reference-2">[2]</a> to include this interface
 to the ironic project itself.</p>
 <p>One of the topics raised during discussions is the performance
 of this new driver interface.
@@ -170,7 +170,7 @@ performance degradation on the side of ironic-conductor service/host.</p>
 </div>
 <div class="section" id="testbed">
 <h2>Testbed</h2>
-<p>Lab setup and tests were performed by my colleague Vasyl Saienko <a class="footnote-reference" href="#id11" id="id3">[3]</a>,
+<p>Lab setup and tests were performed by my colleague Vasyl Saienko <a class="footnote-reference" href="#footnote-3" id="footnote-reference-3">[3]</a>,
 with me mostly consulting on setting up and tuning the <tt class="docutils literal">ansible</tt> deploy
 interface and Ansible itself.</p>
 <p>The lab consisted of 4 baremetal nodes with the following relevant stats:</p>
@@ -183,7 +183,7 @@ interface and Ansible itself.</p>
 <strong>RAM</strong>: 64GB</dd>
 </dl>
 <p>We have deployed a minimal single host ironic installation as of 7.0.2 version
-(Ocata release) on the ironic host node using Mirantis Cloud Platform 1.1 <a class="footnote-reference" href="#id12" id="id4">[4]</a>.
+(Ocata release) on the ironic host node using Mirantis Cloud Platform 1.1 <a class="footnote-reference" href="#footnote-4" id="footnote-reference-4">[4]</a>.
 The Ansible-deploy interface was taken from <tt class="docutils literal"><span class="pre">ironic-staging-drivers</span></tt> project
 as of stable/ocata branch.
 The deployment also included OpenStack Identity (keystone)
@@ -219,7 +219,7 @@ this separate storage had better connection speed with baremetal nodes,
 and thus was performing better</li>
 </ul>
 </li>
-<li>The timeout for downloading the image <a class="footnote-reference" href="#id13" id="id5">[5]</a> was increased.<ul>
+<li>The timeout for downloading the image <a class="footnote-reference" href="#footnote-5" id="footnote-reference-5">[5]</a> was increased.<ul>
 <li>Current hard-coded value is more suitable for small <tt class="docutils literal">cirros</tt> image
 used in OpenStack CI,
 and turned out to be not sufficient for downloading the image
@@ -228,17 +228,17 @@ we were using given performance of our image store</li>
 </ul>
 </li>
 <li>We switched Ansible to use <tt class="docutils literal">paramiko</tt> transport instead of the default
-<tt class="docutils literal">smart</tt> <a class="footnote-reference" href="#id14" id="id6">[6]</a><ul>
+<tt class="docutils literal">smart</tt> <a class="footnote-reference" href="#footnote-6" id="footnote-reference-6">[6]</a><ul>
 <li>We experienced weird problems with SSH timeouts both on initial connection
 and when executing tasks.</li>
 <li>There are number of bugs reported against Ansible that might be relevant,
-<em>e.g.</em> <a class="footnote-reference" href="#id15" id="id7">[7]</a>.</li>
+<em>e.g.</em> <a class="footnote-reference" href="#footnote-7" id="footnote-reference-7">[7]</a>.</li>
 <li>Using <tt class="docutils literal">paramiko</tt> for SSH may have introduced an extra performance cost
 compared to the native SSH binaries.</li>
 </ul>
 </li>
 <li>We increased the <tt class="docutils literal">internal_poll_interval</tt> Ansible configuration setting
-<a class="footnote-reference" href="#id16" id="id8">[8]</a> to <tt class="docutils literal">0.01</tt> (from default <tt class="docutils literal">0.001</tt>).<ul>
+<a class="footnote-reference" href="#footnote-8" id="footnote-reference-8">[8]</a> to <tt class="docutils literal">0.01</tt> (from default <tt class="docutils literal">0.001</tt>).<ul>
 <li>Available since Ansible 2.2, this setting was specifically introduced for
 better CPU-wise performance of Ansible in use-cases that do not require
 responsiveness of <tt class="docutils literal"><span class="pre">ansible-playbook</span></tt> process console output.</li>
@@ -339,52 +339,52 @@ within acceptable limits on a quite standard server hardware.</p>
 </div>
 <div class="section" id="references">
 <h2>References</h2>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible">http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-1">[1]</a></td><td><a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible">http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/241946/">https://review.openstack.org/#/c/241946/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-2">[2]</a></td><td><a class="reference external" href="https://review.openstack.org/#/c/241946/">https://review.openstack.org/#/c/241946/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://launchpad.net/~vsaienko">https://launchpad.net/~vsaienko</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-3">[3]</a></td><td><a class="reference external" href="https://launchpad.net/~vsaienko">https://launchpad.net/~vsaienko</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://www.mirantis.com/software/mcp/">https://www.mirantis.com/software/mcp/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-4">[4]</a></td><td><a class="reference external" href="https://www.mirantis.com/software/mcp/">https://www.mirantis.com/software/mcp/</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id13" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10">http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-5">[5]</a></td><td><a class="reference external" href="http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10">http://git.openstack.org/cgit/openstack/ironic-staging-drivers/tree/ironic_staging_drivers/ansible/playbooks/roles/deploy/tasks/download.yaml?h=stable/ocata#n10</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#transport">http://docs.ansible.com/ansible/latest/intro_configuration.html#transport</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-6">[6]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#transport">http://docs.ansible.com/ansible/latest/intro_configuration.html#transport</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id15" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="https://github.com/ansible/ansible/issues/24035">https://github.com/ansible/ansible/issues/24035</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-7">[7]</a></td><td><a class="reference external" href="https://github.com/ansible/ansible/issues/24035">https://github.com/ansible/ansible/issues/24035</a></td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id16" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval">http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-8">[8]</a></td><td><a class="reference external" href="http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval">http://docs.ansible.com/ansible/latest/intro_configuration.html#internal-poll-interval</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -420,7 +420,7 @@ within acceptable limits on a quite standard server hardware.</p>
 </article>
 
     <footer>
-<p>&copy; 2020 </p>
+<p>&copy; 2024 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
   <span class="footer-separator">|</span>

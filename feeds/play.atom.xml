@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - play</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/play.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-12-13T00:00:00+02:00</updated><subtitle></subtitle><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2020-12-13T00:00:00+02:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-12-13:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces - play</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/play.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2020-12-13T00:00:00+02:00</updated><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2020-12-13T00:00:00+02:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-12-13:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="base-combinations"&gt;
 &lt;h2&gt;Base combinations&lt;/h2&gt;
 &lt;ol class="arabic"&gt;
@@ -152,10 +152,8 @@ of 3x3x3 matrix of colored cubes, that can be rotated per layer.&lt;/p&gt;
 &lt;div class="section" id="notation-used"&gt;
 &lt;h2&gt;Notation used&lt;/h2&gt;
 &lt;p&gt;Choose the front face - the one facing you. Then the letters denote:&lt;/p&gt;
-&lt;object class="align-center" data="https://pshchelo.github.io/images/rubik-files/rubik-rotations.svg" style="height: 300px;" type="image/svg+xml"&gt;
-Slice rotations&lt;/object&gt;
-&lt;object class="align-center" data="https://pshchelo.github.io/images/rubik-files/rubik-3d.svg" style="height: 300px;" type="image/svg+xml"&gt;
-Whole cube rotations&lt;/object&gt;
+&lt;object class="align-center" data="https://pshchelo.github.io/images/rubik-files/rubik-rotations.svg" style="height: 300px;" type="image/svg+xml"&gt;Slice rotations&lt;/object&gt;
+&lt;object class="align-center" data="https://pshchelo.github.io/images/rubik-files/rubik-3d.svg" style="height: 300px;" type="image/svg+xml"&gt;Whole cube rotations&lt;/object&gt;
 &lt;dl class="docutils"&gt;
 &lt;dt&gt;F&lt;/dt&gt;
 &lt;dd&gt;rotate the front face of the cube clock-wise&lt;/dd&gt;
