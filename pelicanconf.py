@@ -48,11 +48,12 @@ RELATIVE_URLS = True
 
 STATIC_PATHS = [
     "images",
-    "robots.txt"
+    "extra",
 ]
 
 EXTRA_PATH_METADATA = {
     "images/favicon.ico": {"path": "favicon.ico"},
+    "extra/robots.txt": {"path": "robots.txt"},
 }
 
 THEME = "Flex"
