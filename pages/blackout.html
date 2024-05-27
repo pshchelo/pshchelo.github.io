@@ -132,46 +132,69 @@
   <div>
 
         <div align="center">
-        <label for="year">Year</label>
-        <input id="year" type="number" min="2024," step="1">
-        <label for="month">Month</label>
-        <input id="month" type="number" min="1," max="12" step="1">
-        <label for="day">Day</label>
-        <input id="day" type="number" min="1," max="31" step="1">
-        <button id="showBtn">Show</button>
+            <button id="yesterdayBtn">Yesterday</button>
+            <button id="todayBtn">Today</button>
+            <button id="tomorrowBtn">Tomorrow</button>
+        </div>
         <br>
         <div align="center">
         <img id="tableImage" src="" alt="https://energy.volyn.ua"></img>
         </div>
+        <br>
+        <div align="center">
+            <label for="year">Year</label>
+            <input id="year" type="number" min="2024," step="1" />
+            <label for="month">Month</label>
+            <input id="month" type="number" min="1," max="12" step="1" />
+            <label for="day">Day</label>
+            <input id="day" type="number" min="1," max="31" step="1" />
+            <button id="showBtn">Show</button>
+        </div>
         <script type="text/javascript">
-            function set_image_src (year, month, day) {
-                var image = document.getElementById("tableImage");
-                const imgBaseUrl = "https://energy.volyn.ua/spozhyvacham/perervy-u-elektropostachanni/hrafik-vidkliuchen/!img/"
+            function set_image_src (date) {
+                const image = document.getElementById("tableImage");
+                const imgBaseUrl = "https://energy.volyn.ua/spozhyvacham/perervy-u-elektropostachanni/hrafik-vidkliuchen/!img/";
                 image.src = imgBaseUrl + [
-                    String(day).padStart(2, "0"),
-                    String(month).padStart(2, "0"),
-                    String(year % 100).padStart(2, "0"),
+                    String(date.getDate()).padStart(2, "0"),
+                    String(date.getMonth() + 1).padStart(2, "0"), // 0-based!
+                    String(date.getFullYear() % 100).padStart(2, "0"),
                 ].join("-") + ".jpg";
             };
-            function set_default_values (year, month, day) {
-                document.getElementById("year").value = year
-                document.getElementById("month").value = month
-                document.getElementById("day").value = day
+            function set_input_values(date) {
+                document.getElementById("year").value = date.getFullYear();
+                document.getElementById("month").value = date.getMonth() + 1; // 0-based!
+                document.getElementById("day").value = date.getDate();
             };
             document.getElementById("showBtn").addEventListener("click", function() {
-                set_image_src(
+                const date = new Date([
                     document.getElementById("year").value,
                     document.getElementById("month").value,
                     document.getElementById("day").value,
-                )
+                    ].join("-")
+                );
+                set_image_src(date);
+            });
+            document.getElementById("yesterdayBtn").addEventListener("click", function() {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                set_input_values(yesterday);
+                set_image_src(yesterday);
+            });
+            document.getElementById("tomorrowBtn").addEventListener("click", function() {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                set_input_values(tomorrow);
+                set_image_src(tomorrow);
+            });
+            document.getElementById("todayBtn").addEventListener("click", function() {
+                const today = new Date();
+                set_input_values(today);
+                set_image_src(today);
             });
             document.addEventListener("DOMContentLoaded", function() {
-                var today = new Date();
-                var yearNow = today.getFullYear()
-                var monthNow = today.getMonth() + 1 // 0-based!!!
-                var dayNow = today.getDate()
-                set_default_values(yearNow, monthNow, dayNow)
-                set_image_src(yearNow, monthNow, dayNow)
+                const today = new Date();
+                set_input_values(today);
+                set_image_src(today);
             });
         </script>
       </div>
