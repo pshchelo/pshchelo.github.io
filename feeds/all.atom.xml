@@ -1,5 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2024-06-04T00:00:00+03:00</updated><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2020-12-13T00:00:00+02:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-12-13:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bits and Pieces</title><link href="https://pshchelo.github.io/" rel="alternate"></link><link href="https://pshchelo.github.io/feeds/all.atom.xml" rel="self"></link><id>https://pshchelo.github.io/</id><updated>2024-06-12T00:00:00+03:00</updated><entry><title>Authentication flow with Keystone and OpenID Connect - with cURL</title><link href="https://pshchelo.github.io/keystone-oidc-curl.html" rel="alternate"></link><published>2024-06-12T00:00:00+03:00</published><updated>2024-06-12T00:00:00+03:00</updated><author><name>pas-ha</name></author><id>tag:pshchelo.github.io,2024-06-12:/keystone-oidc-curl.html</id><summary type="html">&lt;p class="first last"&gt;auth to keystone federated via oidc with cURL calls&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently I was tasked to provide an example curl commands to realize the
+authentication process required to get an OpenStack Identity (Keystone) token
+for a user federated via OpenID Connect.
+Usually we tend to use already established libraries like
+&lt;tt class="docutils literal"&gt;keystoneauth&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;gophercloud&lt;/tt&gt; for that, but since I not so long ago
+had to dive into OpenID Connect anyway, this posed  an interesting task.&lt;/p&gt;
+&lt;p&gt;I use
+&lt;a class="reference external" href="https://www.mirantis.com/software/mirantis-openstack-for-kubernetes/"&gt;Mirantis OpenStack for Kubernetes&lt;/a&gt;
+(naturally :-) ), that integrates
+Keystone with Keycloak via OpenID Connect, OpenStack release is Caracal.&lt;/p&gt;
+&lt;div class="section" id="pre-requisites"&gt;
+&lt;h2&gt;Pre-requisites&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;OpenStack deployed and configured to use federation via OpenID Connect.&lt;/li&gt;
+&lt;li&gt;Account in the Identity Provider allowing you to login to OpenStack.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;curl&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;jq&lt;/tt&gt; installed and available.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="required-access-info"&gt;
+&lt;h3&gt;Required access info&lt;/h3&gt;
+&lt;p&gt;Obtain required access info.
+The commands below expect the following environment variables to be available.&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;OS_AUTH_URL&lt;/dt&gt;
+&lt;dd&gt;the OpenStack Identity endpoint address. Note that examples below expect
+a versioned endpoint (ends with &lt;tt class="docutils literal"&gt;/v3&lt;/tt&gt;), adapt URLs accordingly if yours
+is not versioned.&lt;/dd&gt;
+&lt;dt&gt;OS_DISCOVERY_ENDPOINT&lt;/dt&gt;
+&lt;dd&gt;the URL of OpenID configuration discovery of the Identity Provider configured
+in Keystone, usually ends with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;.../.well-known/openid-configuration&lt;/span&gt;&lt;/tt&gt;.&lt;/dd&gt;
+&lt;dt&gt;OS_IDENTITY_PROVIDER&lt;/dt&gt;
+&lt;dd&gt;Name of the identity provider configured in Keystone.&lt;/dd&gt;
+&lt;dt&gt;OS_PROTOCOL&lt;/dt&gt;
+&lt;dd&gt;Name of the protocol configured for this Identity Provider in Keystone.&lt;/dd&gt;
+&lt;dt&gt;OS_CLIENT_ID&lt;/dt&gt;
+&lt;dd&gt;The client name to use when contacting Identity Provider.
+Note - this is NOT your OpenStack login.&lt;/dd&gt;
+&lt;dt&gt;OS_CLIENT_SECRET&lt;/dt&gt;
+&lt;dd&gt;The password to use for the Identity Provider client.
+Usually it must be kept secret,
+as in standard Web SSO application of OpenID Connect,
+but here, as with Kubernetes + OpenID Connect,
+the CLI client is required to know it.
+Some Identity Providers allow to create clients without secrets (for example
+Keycloak does allow that).&lt;/dd&gt;
+&lt;dt&gt;OS_OPENID_SCOPE&lt;/dt&gt;
+&lt;dd&gt;The scope to use for authentication, governs how much info about you the
+Identity Provider will pass to the Service Provider - in this case you :-)
+At least (and usually only) must be &lt;tt class="docutils literal"&gt;openid&lt;/tt&gt;.&lt;/dd&gt;
+&lt;dt&gt;OS_USERNAME&lt;/dt&gt;
+&lt;dd&gt;Your username with Identity Provider you want to login to OpenStack with.&lt;/dd&gt;
+&lt;dt&gt;OS_PASSWORD&lt;/dt&gt;
+&lt;dd&gt;Your password for your account with the Identity Provider.&lt;/dd&gt;
+&lt;dt&gt;OS_PROJECT_NAME&lt;/dt&gt;
+&lt;dd&gt;The name of the OpenStack project you want to authenticate to.&lt;/dd&gt;
+&lt;dt&gt;OS_PROJECT_DOMAIN_ID&lt;/dt&gt;
+&lt;dd&gt;ID of the OpenStack Identity domain that project belongs to.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="section" id="get-it-from-horizon"&gt;
+&lt;h4&gt;Get it from Horizon&lt;/h4&gt;
+&lt;p&gt;The easiest way to obtain those is to login via federation to Horizon,
+and download the RC file from the UI:&lt;/p&gt;
+&lt;img alt="" src="https://pshchelo.github.io/images/keystone-oidc-curl/horizon-download-rc-file.png" /&gt;
+&lt;p&gt;source this file into the active shell, it will ask you for your password&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;project&amp;gt;-openrc.sh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In what follows, I am assuming you've done that already, so all the necessary
+environment variables are present.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="authentication-flow"&gt;
+&lt;h2&gt;Authentication Flow&lt;/h2&gt;
+&lt;p&gt;Now let's start with curl-ing. I use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-sk&lt;/span&gt;&lt;/tt&gt; to silence the progress indicator
+and, since I use development toy environment and self-signed TLS certificates,
+ignore TLS verification failures.&lt;/p&gt;
+&lt;p&gt;I am following the calls that would've been made when using &lt;tt class="docutils literal"&gt;keystoneauth&lt;/tt&gt;
+library with &lt;tt class="docutils literal"&gt;v3oidcpassword&lt;/tt&gt; authentication type.&lt;/p&gt;
+&lt;div class="section" id="get-oidc-token-endpoint"&gt;
+&lt;h3&gt;Get OIDC token endpoint&lt;/h3&gt;
+&lt;p&gt;Using the discovery endpoint, find the URL of token endpoint:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;token_endpoint&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sk&lt;span class="w"&gt; &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;GET&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_DISCOVERY_ENDPOINT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;.token_endpoint&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="get-the-oidc-access-token"&gt;
+&lt;h3&gt;Get the OIDC access token&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;access_token&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sk&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;POST&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$token_endpoint&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-u&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_CLIENT_ID&lt;/span&gt;:&lt;span class="nv"&gt;$OS_CLIENT_SECRET&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;username=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OS_USERNAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;password=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OS_PASSWORD&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;scope=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OS_OPENID_SCOPE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;grant_type=password&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type: application/x-www-form-urlencoded&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;.access_token&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The trick is the Content-Type - as per the
+&lt;a class="reference external" href="https://openid.net/specs/openid-connect-core-1_0.html#TokenRequest"&gt;OpenID Connect RFC&lt;/a&gt;
+this is how it must be done with Form Serialization, not JSON.
+The client id and client secret are used for HTTP Basic Authentication, again,
+as per that RFC.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="get-the-unscoped-keystone-token"&gt;
+&lt;h3&gt;Get the unscoped Keystone token&lt;/h3&gt;
+&lt;p&gt;Now the OpenStack part. In OpenStack, tokens are issued and valid in various
+&amp;quot;scopes&amp;quot; - project, domain, system or unscoped.&lt;/p&gt;
+&lt;p&gt;With federation, API user is expected to first exchange the Identity Provider
+token for unscoped OpenStack Identity token:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unscoped_token&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sik&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-I&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;POST&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_AUTH_URL&lt;/span&gt;/OS-FEDERATION/identity_providers/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OS_IDENTITY_PROVIDER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/protocols/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OS_PROTOCOL&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/auth&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Authorization: Bearer &lt;/span&gt;&lt;span class="nv"&gt;$access_token&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;x-subject-token&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;awk&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;tr&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\r&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;(the result of grep + awk has new line in the end, so need to trim that out
+to put that value properly into JSON later).&lt;/p&gt;
+&lt;p&gt;Here already we have some inconveniences with Bash:
+the token arrives in the header, but the response body (in JSON)
+also has some info.
+We are ignoring it, but it may be quite useful in some applications.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="discover-authentication-scopes-optional"&gt;
+&lt;h3&gt;Discover authentication scopes (optional)&lt;/h3&gt;
+&lt;p&gt;If you do not have the intended scope of authentication at hand - project or
+domain or system - you can now discover the available to you scopes by making
+the following requests with unscoped token:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sik&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_AUTH_URL&lt;/span&gt;/auth/projects&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token: &lt;/span&gt;&lt;span class="nv"&gt;$unscoped_token&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;.projects
+curl&lt;span class="w"&gt; &lt;/span&gt;-sik&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_AUTH_URL&lt;/span&gt;/auth/domains&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token: &lt;/span&gt;&lt;span class="nv"&gt;$unscoped_token&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;.domains
+curl&lt;span class="w"&gt; &lt;/span&gt;-sik&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_AUTH_URL&lt;/span&gt;/auth/system&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token: &lt;/span&gt;&lt;span class="nv"&gt;$unscoped_token&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;.system
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="prepare-json-for-scoped-token-request"&gt;
+&lt;h3&gt;Prepare JSON for scoped token request&lt;/h3&gt;
+&lt;p&gt;Generating JSON in Bash is very awkward due to double-quotes and lots of
+escaping... just save the request JSON body to file (obviously not secure):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;token_request&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;mktemp&lt;span class="k"&gt;)&lt;/span&gt;
+cat&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$token_request&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOJSON&lt;/span&gt;
+&lt;span class="s"&gt;{&lt;/span&gt;
+&lt;span class="s"&gt;  &amp;quot;auth&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;    &amp;quot;identity&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;      &amp;quot;methods&amp;quot;: [&lt;/span&gt;
+&lt;span class="s"&gt;        &amp;quot;token&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;      ],&lt;/span&gt;
+&lt;span class="s"&gt;      &amp;quot;token&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;        &amp;quot;id&amp;quot;: &amp;quot;$unscoped_token&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;      }&lt;/span&gt;
+&lt;span class="s"&gt;    },&lt;/span&gt;
+&lt;span class="s"&gt;    &amp;quot;scope&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;      &amp;quot;project&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;        &amp;quot;domain&amp;quot;: {&lt;/span&gt;
+&lt;span class="s"&gt;          &amp;quot;id&amp;quot;: &amp;quot;$OS_PROJECT_DOMAIN_ID&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        },&lt;/span&gt;
+&lt;span class="s"&gt;        &amp;quot;name&amp;quot;: &amp;quot;$OS_PROJECT_NAME&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;      }&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;  }&lt;/span&gt;
+&lt;span class="s"&gt;}&lt;/span&gt;
+&lt;span class="s"&gt;EOJSON&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="get-scoped-token"&gt;
+&lt;h3&gt;Get scoped token&lt;/h3&gt;
+&lt;p&gt;Biggest disadvantages here, as again, the token is in the headers,
+but the response body contains a lot of useful info, including auth info
+(UUIDs of project, domain etc, group assignments, roles if explicit),
+and the Identity Catalog to discover the actual URL of the service endpoints
+we want to acces with the received token.
+Again, we skip all that useful info and only fetch the token:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;scoped_token&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sik&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;POST&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$OS_AUTH_URL&lt;/span&gt;/auth/tokens&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;@&lt;/span&gt;&lt;span class="nv"&gt;$token_request&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;x-subject-token&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;awk&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;tr&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\r&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Remove the temporary file with token request body (tiny security improvement):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$token_request&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="use-scoped-token-to-make-request-to-an-openstack-service"&gt;
+&lt;h2&gt;Use scoped token to make request to an OpenStack service&lt;/h2&gt;
+&lt;p&gt;Here hardcoded endpoint is used, however base part of it could've
+been discovered from the response body of the previous request.&lt;/p&gt;
+&lt;p&gt;Get the list of available images:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-sk&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;GET&lt;span class="w"&gt; &lt;/span&gt;https://glance.it.just.works/v2/images&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token: &lt;/span&gt;&lt;span class="nv"&gt;$scoped_token&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;.images
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I specifically use Glance in the example as it has no project UUID in the
+endpoint, but many more services will need that, so their endpoints are better
+to discover from the catalog that was in the body of the response when we got
+ourselves the scoped token in the previous step.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-same-but-in-python"&gt;
+&lt;h2&gt;The same but in Python&lt;/h2&gt;
+&lt;p&gt;For comparison here are examples using Python:&lt;/p&gt;
+&lt;div class="section" id="requests-only"&gt;
+&lt;h3&gt;requests only&lt;/h3&gt;
+&lt;p&gt;first, very manual example using &lt;tt class="docutils literal"&gt;requests&lt;/tt&gt; only, but now with proper
+discovery of service endpoint:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;requests&lt;/span&gt;
+
+&lt;span class="n"&gt;fed_auth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_discovery_endpoint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_DISCOVERY_ENDPOINT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_identity_provider&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_IDENTITY_PROVIDER&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_protocol&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROTOCOL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_openid_scope&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_OPENID_SCOPE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_client_secret&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_CLIENT_SECRET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_client_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_CLIENT_ID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_USERNAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_password&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PASSWORD&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_project_domain_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROJECT_DOMAIN_ID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_project_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROJECT_NAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_auth_url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_AUTH_URL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_region_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_REGION_NAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_interface&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_INTERFACE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_insecure&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;VERIFY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_cacert&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;VERIFY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_cacert&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_insecure&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;VERIFY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+
+&lt;span class="c1"&gt;# discover OIDC provider token endpoint&lt;/span&gt;
+&lt;span class="n"&gt;discovery_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_discovery_endpoint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;token_endpoint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;discovery_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;token_endpoint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c1"&gt;# get OIDC access token&lt;/span&gt;
+&lt;span class="n"&gt;access_req_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;username=&lt;/span&gt;&lt;span class="si"&gt;{os_username}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;password=&lt;/span&gt;&lt;span class="si"&gt;{os_password}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;scope=&lt;/span&gt;&lt;span class="si"&gt;{os_openid_scope}&lt;/span&gt;&lt;span class="s2"&gt;&amp;amp;grant_type=password&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;access_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;token_endpoint&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;application/x-www-form-urlencoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;access_req_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;auth&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_client_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_client_secret&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;access_token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;access_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;access_token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Exchange OIDC access token for OpenStack Identity unscoped token&lt;/span&gt;
+&lt;span class="n"&gt;unscoped_token_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{os_auth_url}&lt;/span&gt;&lt;span class="s2"&gt;/OS-FEDERATION/identity_providers/&lt;/span&gt;&lt;span class="si"&gt;{os_identity_provider}&lt;/span&gt;&lt;span class="s2"&gt;/protocols/&lt;/span&gt;&lt;span class="si"&gt;{os_protocol}&lt;/span&gt;&lt;span class="s2"&gt;/auth&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Authorization&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Bearer &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;access_token&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;unscoped_token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;unscoped_token_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;x-subject-token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# (optional) use unscoped token to discover possible authorizaton scopes&lt;/span&gt;
+&lt;span class="n"&gt;available_project_scopes_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{os_auth_url}&lt;/span&gt;&lt;span class="s2"&gt;/auth/projects&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;unscoped_token&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# exchange unscoped token and scope info for scoped token&lt;/span&gt;
+&lt;span class="n"&gt;scoped_auth_req&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;auth&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;identity&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;methods&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;
+            &lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;unscoped_token&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;scope&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;project&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;domain&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                    &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_project_domain_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+                &lt;span class="p"&gt;},&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_project_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;scoped_token_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{os_auth_url}&lt;/span&gt;&lt;span class="s2"&gt;/auth/tokens&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;application/json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;scoped_auth_req&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# more info on user, its roles and groups is in the JSON body of the response&lt;/span&gt;
+&lt;span class="n"&gt;scoped_token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;scoped_token_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;x-subject-token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;catalog&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;scoped_token_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;catalog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_interface&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;public&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;region&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;os_region_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;RegionOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# discover endpoint of the Image service&lt;/span&gt;
+&lt;span class="n"&gt;image_service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;catalog&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;image&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;image_service&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Could not find image service in catalog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;image_service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;image_service&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;image_api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;image_service&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;endpoints&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;interface&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;region_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;region&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;image_api&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Could not find required endpoint for image service&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;image_api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;image_api&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rstrip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;image_api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;endswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/v2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;image_api&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/v2&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# use scoped token to make request to image service endpoint&lt;/span&gt;
+&lt;span class="c1"&gt;# list available images&lt;/span&gt;
+&lt;span class="n"&gt;images_resp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;image_api&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/images&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;verify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;VERIFY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;X-Auth-Token&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;scoped_token&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;images_resp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="openstacksdk"&gt;
+&lt;h3&gt;openstacksdk&lt;/h3&gt;
+&lt;p&gt;and then, the example using &lt;tt class="docutils literal"&gt;openstacksdk&lt;/tt&gt; - a dedicated Python API library
+for working with OpenStack clouds.
+Note that with properly set up &lt;tt class="docutils literal"&gt;clouds.yaml&lt;/tt&gt;
+&lt;a class="reference external" href="https://docs.openstack.org/openstacksdk/latest/user/config/configuration.html#config-files"&gt;configuration file&lt;/a&gt;
+that could've been just 3 lines of code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;openstack&lt;/span&gt;
+
+&lt;span class="n"&gt;fed_auth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_auth_type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;v3oidcpassword&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_discovery_endpoint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_DISCOVERY_ENDPOINT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_identity_provider&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_IDENTITY_PROVIDER&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_protocol&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROTOCOL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_openid_scope&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_OPENID_SCOPE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_client_secret&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_CLIENT_SECRET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_client_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_CLIENT_ID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_USERNAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_password&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PASSWORD&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_project_domain_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROJECT_DOMAIN_ID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_project_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_PROJECT_NAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_auth_url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_AUTH_URL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_region_name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_REGION_NAME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_interface&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;OS_INTERFACE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;os_insecure&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;fed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;openstack&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;load_yaml_config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;fed_auth&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# if you save the auth and access info to a clouds.yaml file,&lt;/span&gt;
+&lt;span class="c1"&gt;# https://docs.openstack.org/openstacksdk/latest/user/config/configuration.html#config-files&lt;/span&gt;
+&lt;span class="c1"&gt;# then you don&amp;#39;t need env variables, and all the code above can be replaced&lt;/span&gt;
+&lt;span class="c1"&gt;# with single call&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# fed = openstack.connect(cloud=&amp;lt;cloud name&amp;gt;)&lt;/span&gt;
+
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list_images&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="keystone"></category><category term="federation"></category><category term="openid"></category><category term="oidc"></category><category term="curl"></category></entry><entry><title>Solving 2x2 Rubik's cube</title><link href="https://pshchelo.github.io/rubik2-solve.html" rel="alternate"></link><published>2020-12-13T00:00:00+02:00</published><updated>2020-12-13T00:00:00+02:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-12-13:/rubik2-solve.html</id><summary type="html">&lt;p class="first last"&gt;Algorithm for solving 2x2 Rubik's Cube.&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="base-combinations"&gt;
 &lt;h2&gt;Base combinations&lt;/h2&gt;
 &lt;ol class="arabic"&gt;
@@ -30,7 +389,7 @@ rotating the last incorrect D-layer cube.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=AJCW5xTjmTk"&gt;Source&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="play"></category><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2024-06-04T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in PyKube&lt;/p&gt;
+</content><category term="play"></category><category term="puzzles"></category><category term="rubik"></category></entry><entry><title>Testing pykube for OpenID Connect support</title><link href="https://pshchelo.github.io/pykube-oidc-refresh.html" rel="alternate"></link><published>2020-05-11T00:00:00+03:00</published><updated>2024-06-12T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2020-05-11:/pykube-oidc-refresh.html</id><summary type="html">&lt;p class="first last"&gt;Setting up local dev env to test OpenID Connect support in PyKube&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="why"&gt;
 &lt;h2&gt;Why&lt;/h2&gt;
 &lt;p&gt;During review of my &lt;a class="reference external" href="https://github.com/hjacobs/pykube/pull/49"&gt;PR#49&lt;/a&gt;
@@ -223,7 +582,7 @@ actually login (with password &lt;em&gt;etc&lt;/em&gt;) to get a new refresh tok
 &lt;li&gt;&lt;a class="reference external" href="https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe"&gt;https://medium.com/&amp;#64;mrbobbytables/kubernetes-day-2-operations-authn-authz-with-oidc-and-a-little-help-from-keycloak-de4ea1bdbbe&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="kubernetes"></category><category term="openid"></category><category term="oidc"></category><category term="okta"></category><category term="microk8s"></category><category term="pykube"></category></entry><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2024-06-04T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic drivers&lt;/p&gt;
+</content><category term="work"></category><category term="kubernetes"></category><category term="openid"></category><category term="oidc"></category><category term="okta"></category><category term="microk8s"></category><category term="pykube"></category></entry><entry><title>Performance testing of Ansible-deploy driver for OpenStack Ironic</title><link href="https://pshchelo.github.io/ansible-deploy-perf.html" rel="alternate"></link><published>2017-09-01T00:00:00+03:00</published><updated>2024-06-12T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-09-01:/ansible-deploy-perf.html</id><summary type="html">&lt;p class="first last"&gt;Comparative performance testing of ansible-deploy and agent ironic drivers&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="what-and-why-are-we-testing"&gt;
 &lt;h2&gt;What and why are we testing&lt;/h2&gt;
 &lt;p&gt;For more than a year me and my colleagues are developing and promoting a new
@@ -468,7 +827,7 @@ within acceptable limits on a quite standard server hardware.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2024-06-04T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving along&lt;/p&gt;
+</content><category term="work"></category><category term="openstack"></category><category term="ironic"></category><category term="ansible"></category><category term="deploy"></category></entry><entry><title>Moving on with OpenStack</title><link href="https://pshchelo.github.io/oo-moving-on.html" rel="alternate"></link><published>2017-03-07T00:00:00+02:00</published><updated>2024-06-12T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2017-03-07:/oo-moving-on.html</id><summary type="html">&lt;p class="first last"&gt;stay in community while moving along&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;So, you are changing jobs and moving to a next big thing,
 but would like to keep your community profile in OpenStack or
 probably will continue working on OpenStack on your new place?&lt;/p&gt;
@@ -683,7 +1042,7 @@ experience for compute service.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2024-06-04T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in Russian.&lt;/p&gt;
+</content><category term="work"></category><category term="ironic"></category><category term="vnc"></category><category term="drac"></category></entry><entry><title>Азы Git и Gerrit workflow в проектах OpenStack</title><link href="https://pshchelo.github.io/git-gerrit-basics-ru.html" rel="alternate"></link><published>2016-09-20T00:00:00+03:00</published><updated>2024-06-12T00:00:00+03:00</updated><author><name>pshchelo</name></author><id>tag:pshchelo.github.io,2016-09-20:/git-gerrit-basics-ru.html</id><summary type="html">&lt;p class="first last"&gt;Quick-n-Dirty opinionated introduction for beginners, in Russian.&lt;/p&gt;
 </summary><content type="html">&lt;!--  --&gt;
 &lt;blockquote&gt;
 &amp;quot;git gets easier once you get the basic idea
