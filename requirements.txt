@@ -1,4 +1,5 @@
 pelican[markdown]>=4.2
+tzdata
 ghp-import
 typogrify
 invoke
