@@ -25,7 +25,6 @@ AUTHOR_FEED_RSS = None
 LINKS = (
     ("Python", "http://python.org/"),
     ("OpenStack", "http://www.openstack.org/"),
-    ("Blackouts", "/pages/blackout"),
 )
 
 # Social widget
